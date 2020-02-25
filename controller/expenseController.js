@@ -1,0 +1,109 @@
+const Expense = require("../model/expenseModel");
+const factory = require("./handlerFactory");
+const APIFeatures = require('../utils/apiFeatures')
+const catchAsync = require("../utils/catchAsync");
+const ObjectId = require('mongodb').ObjectID
+
+//exports.createExpense = factory.createOne(Expense);
+exports.getAllExpenses = factory.getAll(Expense);
+exports.getExpense = factory.getOne(Expense);
+exports.updateExpense = factory.updateOne(Expense);
+exports.deleteExpense = factory.deleteOne(Expense);
+
+
+//Get Expenses
+exports.getUserExpenses = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
+        Expense.find({ user: req.user.id }),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+
+//Get Filtered Expense
+exports.getFilteredExpenses = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
+        Expense.find({ project: req.params.id }),
+        req.query
+    )
+        .filter()
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+//Get Total Expenses
+exports.getTotalExpenses = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
+        Expense.aggregate([
+
+            {
+
+                $match: {
+                    project: new ObjectId(req.params.id)
+                },
+
+            },
+
+            {
+                $group: {
+                    _id: '$project',
+                    no_of_expenses: {
+                        $sum: 1
+                    },
+                    totalExpense: { $sum: "$convAmt" },
+                    project: {
+                        $push: '$project'
+                    },
+                    user: {
+                        $push: '$user',
+                    }
+                },
+            },
+            {
+                $lookup: {
+                    from: 'projects',
+                    localField: "project",
+                    foreignField: "_id",
+                    "as": 'projects_docs'
+                },
+
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: "user",
+                    foreignField: "_id",
+                    "as": 'users_docs'
+                },
+
+            },
+
+
+        ]),
+
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
