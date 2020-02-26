@@ -96,7 +96,7 @@ export const getProjectInvestments = (id) => async dispatch => {
 export const getCurrencies = () => dispatch => {
 
     let initialData = [];
-    const url = `http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP&format=1`;
+    const url = `https://openexchangerates.org/api/latest.json?app_id=7a45036659ec4cedb3ee6a59c76b9ddb&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP`;
 
     fetch(url)
         .then(data => {
