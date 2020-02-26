@@ -8,8 +8,20 @@ const ObjectId = require('mongodb').ObjectID
 exports.getAllInvestments = factory.getAll(Investment);
 exports.getInvestment = factory.getOne(Investment);
 exports.updateInvestment = factory.updateOne(Investment);
-exports.deleteInvestment = factory.deleteOne(Investment);
+//exports.deleteInvestment = factory.deleteOne(Investment);
 
+
+exports.deleteInvestment = catchAsync(async (req, res, next) => {
+    const doc = await Investment.findByIdAndDelete(req.params.id);
+
+    if (!doc) {
+        return next(new AppError("No document found with that ID", 404));
+    }
+    res.status(204).json({
+        status: "success",
+        data: null
+    });
+});
 
 //Get Investment
 exports.getUserInvestments = catchAsync(async (req, res, next) => {

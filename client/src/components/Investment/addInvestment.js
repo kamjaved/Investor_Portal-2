@@ -9,7 +9,6 @@ import { getProjects } from '../../_actions/projectAction'
 import { getAllUsers } from "../../_actions/authAction"
 import '../UI/Dashboard.css'
 
-
 const AddInvestment = ({
     history,
     getAllUsers,
@@ -119,7 +118,9 @@ const AddInvestment = ({
                                                     type="file"
                                                     tdata-button="Upload Recipt"
                                                     name="image"
-                                                    onChange={onChangeImage} className="border p-3 w-100 my-2" /></div>
+                                                    onChange={onChangeImage} className="border p-3 w-100 my-2" /> <br />
+
+                                            </div>
 
                                             <select
                                                 className="border p-3 w-100 my-2"

@@ -46,7 +46,7 @@ const PRojectWiseInvest = ({
                                     <td>{`${investment.amount} ${investment.currency}`}</td>
                                     <td>${`${investment.convAmt}`}</td>
                                     <td>{`${investment.date}`}</td>
-                                    <td><img src={investment.image} alt="rcp_img" className="profileImg"></img></td>
+                                    <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt="rcp_img" className="profileImg"></img></td>
 
 
                                 </tr>

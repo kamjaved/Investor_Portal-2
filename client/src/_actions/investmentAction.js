@@ -148,6 +148,8 @@ export const addInvestment = (formData, history) => async dispatch => {
             type: types.ADD_INVESTMENT,
             payload: res.data
         });
+
+
         history.push("/admin/viewinvestment");
 
         dispatch(setAlert("Investment Added!", "success"));
@@ -155,11 +157,11 @@ export const addInvestment = (formData, history) => async dispatch => {
         const errors = err.response.data.error;
         console.log(errors);
 
-        if (err.response.status === 500) {
-            dispatch(setAlert("Problem In Server!", "danger"));
+        if (err.response.status === 400) {
+            dispatch(setAlert(`${err.response.data.msg}`, "danger"));
         }
-        else if (err.response.status === 401) {
-            dispatch(setAlert(`No File Selected`, "danger"));
+        else if (err.response.status === 500) {
+            dispatch(setAlert(`No file Selected or File Too Large`, "danger"));
         }
 
         dispatch({
