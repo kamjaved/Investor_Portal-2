@@ -27,9 +27,32 @@ exports.getUserExpenses = catchAsync(async (req, res, next) => {
     });
 });
 
+// Get Sum of Over-All Expenses
+exports.getOverAllSumExpenses = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
 
+        Expense.aggregate([
 
-//Get Filtered Expense
+            {
+                $group: {
+                    _id: null,
+                    totalExpense: { $sum: "$convAmt" },
+                }
+            },
+        ]),
+        req.query
+    )
+        .paginate()
+
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+//Get Project Based Filtered Expense
 exports.getFilteredExpenses = catchAsync(async (req, res, next) => {
     const features = await new APIFeatures(
         Expense.find({ project: req.params.id }),
@@ -46,7 +69,7 @@ exports.getFilteredExpenses = catchAsync(async (req, res, next) => {
     });
 });
 
-//Get Total Expenses
+//Get  Project Based Total Expenses
 exports.getTotalExpenses = catchAsync(async (req, res, next) => {
     const features = await new APIFeatures(
         Expense.aggregate([

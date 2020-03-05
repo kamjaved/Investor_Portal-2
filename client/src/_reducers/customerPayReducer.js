@@ -4,6 +4,9 @@ const initialCustomerPay = {
     customerPay: null,
     customerPays: [],
     allcustomerPay: [],
+    projectwiseCustPay: [],
+    totalCustPay: [],
+    overAllCustPay: [],
     error: {},
     filtered: null,
     loading: true
@@ -31,6 +34,28 @@ export default function (state = initialCustomerPay, action) {
                 allcustomerPay: payload,
                 loading: false
             };
+
+        case types.GET_PROJECTWISE_CUSTPAY:
+            return {
+                ...state,
+                projectwiseCustPay: payload,
+                loading: false
+            };
+
+        case types.OVER_ALL_SUM_CUSTPAY:
+            return {
+                ...state,
+                overAllCustPay: payload,
+                loading: false
+            }
+        case types.GET_TOTALWISE_CUSTPAY:
+            return {
+                ...state,
+                totalCustPay: payload,
+                loading: false
+            };
+
+
         case types.ADD_CUSTOMER_PAY:
             return {
                 ...state,

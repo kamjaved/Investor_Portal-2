@@ -10,38 +10,114 @@ import moment from "moment";
 import { connect } from 'react-redux';
 import './Dashboard.css'
 import { loadUser } from '../../_actions/authAction'
+import { getOverAllSumInv } from '../../_actions/investmentAction'
+import { getOverAllSumExp } from '../../_actions/expenseAction'
+import { getOverAllSumCustPay } from '../../_actions/customerPayAction'
+
+
 import { logout } from '../../_actions/authAction';
 
 const Dashboard = ({
     loading,
+    overAllInvestment,
+    overAllExpenses,
+    overAllCustPay,
     auth: { firstName, lastName, username },
-    loadUser, logout
+    loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay
 }) => {
 
     useEffect(() => {
         loadUser()
-    }, [loadUser]);
+        getOverAllSumInv()
+        getOverAllSumCustPay()
+        getOverAllSumExp()
+
+    }, [loadUser, getOverAllSumInv, getOverAllSumCustPay, getOverAllSumExp]);
 
     const me = <Link to="/myprofile">{!username ? "" : username}</Link>;
 
+    const totalInvest = overAllInvestment.map(p => (
+        p.totalInvest
+    ))
 
+    const totalCustPay = overAllCustPay.map(p => (
+        p.totalCustPay
+    ))
+
+    const totalExpense = overAllExpenses.map(p => (
+        p.totalExpense
+    ))
+
+    // console.log(totalInvest)
+    // console.log(totalCustPay)
+    // console.log(totalExpense)
+    const balence = (totalInvest[0] + totalCustPay[0])
+    //console.log(balence)
+    const balanceRemaining = (Math.round((balence - totalExpense) * 100) / 100)
     return (
         <Fragment>
+
             {loading ? (
                 <Spinner />
             ) : (
                     <div>
-                        <section className="ml-4">
-                            <h1 className={`display-4`}>Dashboard </h1>
+                        <div className="ml-4 row ">
+                            <div className="col-sm-12 col-md-4 col-lg-4">
+                                <h1 className={`display-4`}>Dashboard </h1>
 
-                            <p className="lead">
-                                Welcome {me},{firstName} {""} {lastName}
-                            </p>
-                            <p>
-                                <i className="fa fa-calendar text-secondary"></i>{" "}
-                                <Moment format="DD/MM/YYYY, h:mm:ss a">{moment().format()}</Moment>
-                            </p>
-                        </section>
+                                <p className="lead">
+                                    Welcome {me},{firstName} {""} {lastName}
+                                </p>
+                                <p>
+                                    <i className="fa fa-calendar text-secondary"></i>{" "}
+                                    <Moment format="DD/MM/YYYY, h:mm:ss a">{moment().format()}</Moment>
+                                </p> <br /></div>
+
+                            <div className="col-sm-12 col-md-8 col-lg-8">
+                                <div className="row">
+                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                        <div className="circle-tile ">
+                                            <a href="#"><div className="circle-tile-heading green"><i className="fa fa-money fa-fw fa-2x"></i></div></a>
+                                            <div className="circle-tile-content green">
+                                                <div className="circle-tile-description text-faded"> Total Investment</div>
+                                                <div className="circle-tile-number text-faded ">{totalInvest}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                        <div className="circle-tile ">
+                                            <a href="#"><div className="circle-tile-heading cyan"><i className="fa fa-cart-arrow-down fa-fw fa-2x"></i></div></a>
+                                            <div className="circle-tile-content cyan">
+                                                <div className="circle-tile-description text-faded">Total Expense</div>
+                                                <div className="circle-tile-number text-faded ">{totalExpense}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                        <div className="circle-tile ">
+                                            <a href="#"><div className="circle-tile-heading orange"><i className="fa fa-credit-card-alt fa-fw fa-2x"></i></div></a>
+                                            <div className="circle-tile-content orange">
+                                                <div className="circle-tile-description text-faded">Customer Payment</div>
+                                                <div className="circle-tile-number text-faded ">{totalCustPay}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                        <div className="circle-tile ">
+                                            <a href="#"><div className="circle-tile-heading red"><i className="fa fa-usd fa-fw fa-2x"></i></div></a>
+                                            <div className="circle-tile-content red">
+                                                <div className="circle-tile-description text-faded">Balence</div>
+                                                <div className="circle-tile-number text-faded ">{balanceRemaining}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
 
                         <div>
                             <div className="container">
@@ -155,14 +231,29 @@ const Dashboard = ({
 }
 Dashboard.propTypes = {
     auth: PropTypes.object.isRequired,
-    loadUser: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
 
+    loadUser: PropTypes.func.isRequired,
+    getOverAllSumInv: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    getOverAllSumExp: PropTypes.func.isRequired,
+    getOverAllSumCustPay: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
     loading: state.auth.loading,
+    overAllCustPay: state.customerpay.overAllCustPay,
+    overAllInvestment: state.investment.overAllInvestment,
+    overAllExpenses: state.expense.overAllExpenses,
 
 });
-export default connect(mapStateToProps, { loadUser, logout })(withRouter(Dashboard));
+export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay })(withRouter(Dashboard));
+
+
+// <div className="row">
+//                                     <button type="submit" className="py-3 px-5 bg-success text-white font-weight-bold mt-3">Inv- ${totalInvest}</button>
+//                                     <button type="submit" className="d-block py-3 px-5 bg-info text-white border-0 rounded font-weight-bold mt-3">Exp- $  {totalExpense}</button>
+//                                     <button type="submit" className="d-block py-3 px-5 bg-warning text-white border-0 rounded font-weight-bold mt-3">CustPay- $  {totalCustPay}</button>
+//                                     <button type="submit" className="d-block py-3 px-5 bg-dark text-white border-0 rounded font-weight-bold mt-3">Rem- $  {balanceRemaining}</button>
+
+//                                 </div>

@@ -4,16 +4,22 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { getTotalInvestments } from '../../../_actions/investmentAction'
 import { getTotalExpenses } from '../../../_actions/expenseAction'
+import { getTotalCustPay } from '../../../_actions/customerPayAction'
+
 import { connect } from "react-redux";
 import ProjectInvesttable from "./projectInvesttable";
 import ProjectexpenseChart from "./projectexpenseChart";
 import ProjectExpenseTable from "./projectExpenseTable";
+import ProjectCusPayTable from "./projectCusPayTable";
+import ProjectCustPayChart from "./projectCustPayChart";
 
 const ProjectWiseInvestment = ({
 
     getTotalInvestments,
+    getTotalCustPay,
     getTotalExpenses,
     totalInvestment,
+    totalCustPay,
     totalExpenses,
     projectName,
     filtered,
@@ -34,6 +40,7 @@ const ProjectWiseInvestment = ({
     useEffect(() => {
         getTotalInvestments(match.params.id)
         getTotalExpenses(match.params.id)
+        getTotalCustPay(match.params.id)
 
         axios.get(`/api/investment/total/${match.params.id}`).then(res => {
             const x = res.data.data;
@@ -47,7 +54,7 @@ const ProjectWiseInvestment = ({
                     ))],
                     datasets: [{
                         label: 'Project Wise Investment ($USD)',
-                        backgroundColor: '#32CD32',
+                        backgroundColor: '#28A745',
                         borderColor: '#228B22',
                         borderWidth: 1,
                         hoverBackgroundColor: '#008000',
@@ -69,7 +76,7 @@ const ProjectWiseInvestment = ({
 
 
 
-    }, [getTotalInvestments, getTotalExpenses]);
+    }, [getTotalInvestments, getTotalExpenses, getTotalCustPay]);
 
     // console.log({ barChartDataInvest })
     // console.log({ totalAmount })
@@ -81,25 +88,35 @@ const ProjectWiseInvestment = ({
 
 
                 <div className="row animated fadeInRight">
-                    <div className="col-lg-6 col-md-10">
+                    <div className="col-lg-4 col-md-6 col-sm-12">
                         <h2 className="text-center pt-2">Investment</h2>
                         <ProjectInvesttable projectId={match.params.id} />
                     </div>
-                    <div className="col-lg-6 col-md-10">
+                    <div className="col-lg-4 col-md-6 col-sm-12">
                         <h2 className="text-center pt-2 ">Expenses</h2>
                         <ProjectExpenseTable projectId={match.params.id} />
+                    </div>
+                    <div className="col-lg-4 col-md-6 col-sm-12">
+                        <h2 className="text-center pt-2 ">Customer Payment</h2>
+                        <ProjectCusPayTable projectId={match.params.id} />
+
                     </div>
                 </div> <br />
 
                 <div className="row">
-                    <div className="col-sm-6 col-md-6 animated heartBeat">
+                    <div className="col-sm-12 col-md-4 animated heartBeat">
                         <h2 className="text-center py-2 px-3 bg-success text-white border-0 rounded font-weight-bold mt-2">$USD- {totalInvestment.map(p => (
                             (Math.round(p.totalAmount * 100) / 100))
                         )}</h2>
                     </div>
-                    <div className="col-sm-6 col-md-6 animated heartBeat">
+                    <div className="col-sm-12 col-md-4 animated heartBeat">
                         <h2 className="text-center py-2 px-3 bg-info text-white border-0 rounded font-weight-bold mt-2">$USD- {totalExpenses.map(p => (
                             (Math.round(p.totalExpense * 100) / 100))
+                        )}</h2>
+                    </div>
+                    <div className="col-sm-12 col-md-4 animated heartBeat">
+                        <h2 className="text-center py-2 px-3 bg-warning text-white border-0 rounded font-weight-bold mt-2">$USD- {totalCustPay.map(p => (
+                            (Math.round(p.totalAmount * 100) / 100))
                         )}</h2>
                     </div>
                 </div>
@@ -107,14 +124,14 @@ const ProjectWiseInvestment = ({
 
 
                 <div className="row" >
-                    <div className="col-sm-6 col-md-6">
+                    <div className="col-sm-12 col-md-4">
                         <div className="animated fadeIn">
                             <div className="chart">
                                 {barChartDataInvest.map((n, index) => {
                                     return <Bar key={index} data={n} options={{
                                         title: {
                                             display: 'Display',
-                                            text: "Project investment",
+                                            text: "Investment",
                                             fontSize: 25
                                         },
                                         legend: {
@@ -130,8 +147,12 @@ const ProjectWiseInvestment = ({
 
                     </div>
 
-                    <div className="col-sm-6 col-md-6">
+                    <div className="col-sm-12 col-md-4">
                         <ProjectexpenseChart projectId={match.params.id} />
+                    </div><br />
+
+                    <div className="col-sm-12 col-md-4">
+                        <ProjectCustPayChart projectId={match.params.id} />
                     </div><br />
 
 
@@ -145,20 +166,23 @@ const ProjectWiseInvestment = ({
 
 ProjectWiseInvestment.propTypes = {
     getTotalInvestments: PropTypes.func.isRequired,
+    getTotalCustPay: PropTypes.func.isRequired,
     getTotalExpenses: PropTypes.func.isRequired,
     totalInvestment: PropTypes.array.isRequired,
+    totalCustPay: PropTypes.array.isRequired,
     totalExpenses: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
     totalInvestment: state.investment.totalInvestment,
+    totalCustPay: state.customerpay.totalCustPay,
     projectName: state.investment.projectName,
     totalExpenses: state.expense.totalExpenses,
     filtered: state.investment.filtered,
     loading: state.investment.loading
 });
 export default connect(
-    mapStateToProps, { getTotalInvestments, getTotalExpenses }
+    mapStateToProps, { getTotalInvestments, getTotalExpenses, getTotalCustPay }
 )(ProjectWiseInvestment);
 
 

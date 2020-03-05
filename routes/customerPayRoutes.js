@@ -20,6 +20,15 @@ router
     .route("/getAll")
     .get(customerPayController.getAllCustomerPays)
 router
+    .route("/getOverAllSum")
+    .get(customerPayController.getOverAllSumCustomerPay)
+router
+    .route("/total/:id")
+    .get(customerPayController.getTotalCustPay)
+router
+    .route("/filter/:id")
+    .get(customerPayController.getFilteredCustPay)
+router
     .route("/:id")
     .get(customerPayController.getCustomerPay)
     .patch(customerPayController.updateCustomerPay)

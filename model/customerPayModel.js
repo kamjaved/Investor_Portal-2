@@ -34,7 +34,7 @@ const customerPaySchema = new mongoose.Schema({
         required: [true, "Must be Currency Type"]
     },
     convAmt: {
-        type: String,
+        type: Number,
         //required: [true, "Must be Currency Type"]
     },
 

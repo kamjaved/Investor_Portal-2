@@ -38,7 +38,7 @@ export const getCustomerPays = () => async dispatch => {
     }
 };
 
-//Get User CustomerPays
+//Get All CustomerPays
 export const getAllCustomerPays = () => async dispatch => {
     try {
         const res = await axios.get("/api/customerpayment/getAll");
@@ -82,6 +82,60 @@ export const addCustomerPay = (formData, history) => async dispatch => {
     }
 };
 
+
+//Get Sum of Over All Customer Payment
+export const getOverAllSumCustPay = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/getOverAllSum`);  // filter from ID 
+        console.log(res.data.data);
+        dispatch({
+            type: types.OVER_ALL_SUM_CUSTPAY,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+        // dispatch({
+        //   type: types.INVESTMENT_ERROR,
+        //   payload: { msg: err.response.data, status: err.response.status }
+        // });
+    }
+};
+
+//Get Sum of Project Wise CustPay
+export const getTotalCustPay = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/total/${id}`);  // filter from ID 
+        //console.log(res.data.data);
+        dispatch({
+            type: types.GET_TOTALWISE_CUSTPAY,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+        // dispatch({
+        //   type: types.INVESTMENT_ERROR,
+        //   payload: { msg: err.response.data, status: err.response.status }
+        // });
+    }
+};
+
+//Get Project Wise Customer Payment Details
+export const getProjectCustPay = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/filter/${id}`);  // filter from ID 
+        //console.log(res.data.data);
+        dispatch({
+            type: types.GET_PROJECTWISE_CUSTPAY,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+        // dispatch({
+        //   type: types.INVESTMENT_ERROR,
+        //   payload: { msg: err.response.data, status: err.response.status }
+        // });
+    }
+};
 // Edit customerPay
 export const editCustomerPay = (formData, history, id) => async dispatch => {
     try {

@@ -23,7 +23,7 @@ exports.deleteInvestment = catchAsync(async (req, res, next) => {
     });
 });
 
-//Get Investment
+//Get Users Investment
 exports.getUserInvestments = catchAsync(async (req, res, next) => {
     const features = await new APIFeatures(
         Investment.find({ user: req.user.id }),
@@ -39,8 +39,33 @@ exports.getUserInvestments = catchAsync(async (req, res, next) => {
     });
 });
 
+// Get Sum of Over-All Ivestment
+exports.getOverAllSumInvestments = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
 
-//Get Filtered Investment
+        Investment.aggregate([
+
+            {
+                $group: {
+                    _id: null,
+                    totalInvest: { $sum: "$convAmt" },
+                }
+            },
+        ]),
+        req.query
+    )
+        .paginate()
+
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+//Get Project Based  Filtered Investment
 exports.getFilteredInvestments = catchAsync(async (req, res, next) => {
     const features = await new APIFeatures(
         Investment.find({ project: req.params.id }),
@@ -57,7 +82,8 @@ exports.getFilteredInvestments = catchAsync(async (req, res, next) => {
     });
 });
 
-//Get Total Investment
+
+//Get Project Based Total Investment
 exports.getTotalInvestments = catchAsync(async (req, res, next) => {
     const features = await new APIFeatures(
         Investment.aggregate([

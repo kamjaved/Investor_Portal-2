@@ -4,7 +4,9 @@ const authController = require("./../controller/authController");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const multer = require("multer");
-const cloudinary = require("cloudinary");
+const sharp = require('sharp');
+// const cloudinary = require("cloudinary");
+var path = require('path');
 const catchAsync = require("../utils/catchAsync");
 const router = express.Router({ mergeParams: true });
 
@@ -18,58 +20,89 @@ router.use(authController.restrictTo("admin"));
 
 
 //IMAGE UPLOAD CONFIGURATION
-const storage = multer.diskStorage({
-    filename: function (req, file, callback) {
-        callback(null, Date.now() + file.originalname);
-    }
-});
-const imageFilter = function (req, file, cb) {
-    // accept image files only
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
-        return cb(new Error("Only image files are accepted!"), false);
-    }
-    cb(null, true);
-};
+// const storage = multer.diskStorage({
+//     filename: function (req, file, callback) {
+//         callback(null, Date.now() + file.originalname);
+//     }
+// });
+// const imageFilter = function (req, file, cb) {
+//     // accept image files only
+//     if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
+//         return cb(new Error("Only image files are accepted!"), false);
+//     }
+//     cb(null, true);
+// };
+
+// Image saved on memmory for image porcessing
+const storage = multer.memoryStorage();
+
 const upload = multer({
     storage: storage, limits: {
         fileSize: 1024 * 1024 * 1
-    }, fileFilter: imageFilter
+    }, fileFilter: (req, file, cb) => {
+        let ext = path.extname(file.originalname);
+        if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
+            req.fileValidationError = "Forbidden extension";
+            return cb(null, false, req.fileValidationError);
+        }
+        cb(null, true);
+
+    }
 });
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
+// cloudinary.config({
+//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET
+// });
 
+
+const resizeReciptPhoto = (req, res, next) => {
+    if (!req.file) return next();
+    req.file.filename = `Recipt-${Date.now()}.jpeg`;
+
+    sharp(req.file.buffer)
+        .resize(1000, 1000, {
+            fit: sharp.fit.inside,
+            withoutEnlargement: true
+        })
+        .toFormat('jpeg')
+        .jpeg({ quality: 80 })
+        .toFile(path.join(__dirname, `../client/public/uploads/${req.file.filename}`));
+    next();
+}
 
 // Post Expense
 
-router.route("/").post(upload.single("image"), catchAsync(async (req, res, next) => {
+router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
 
-    cloudinary.v2.uploader.upload(req.file.path, function (err, result) {
+    const { project, amount, currency, date, purpose, convAmt, image } = req.body;
+    try {
+        const newExpense = new Expense({
+            project, amount, currency, date, purpose, convAmt, image,
+            user: req.user.id,
+            image: req.file.filename,
 
+        });
 
-        const { project, amount, currency, date, purpose, convAmt, } = req.body;
-        try {
-            const newExpense = new Expense({
-                project, amount, currency, date, purpose, convAmt,
-                user: req.user.id,
-                image: result.secure_url,
-                imageId: result.public_id,
-
+        const doc = newExpense.save();
+        res.status(200).json({
+            status: "success",
+            doc
+        });
+    } catch (err) {
+        if (req.fileValidationError) {
+            console.log("Invalid File type Only Image file Accepted");
+            return res.status(400).send({
+                msg: "Invalid File type Only Image file Accepted",
+                success: false
             });
 
-            const doc = newExpense.save();
-            res.status(200).json({
-                status: "success",
-                doc
-            });
-        } catch (err) {
-            res.status(500).send(err);
         }
-    })
+        res.status(500).send(err);
+    }
+
 }));
 
 router
@@ -79,6 +112,9 @@ router
 router
     .route("/getAll")
     .get(expenseController.getAllExpenses)
+router
+    .route("/getOverAllSum")
+    .get(expenseController.getOverAllSumExpenses)
 
 router
     .route("/total/:id")

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 
-const ProjectExpenseChart = ({
+const ProjectCustPayChart = ({
     match,
     projectId
 }) => {
@@ -19,38 +19,37 @@ const ProjectExpenseChart = ({
 
         //---Expense
 
-        axios.get(`/api/expense/total/${projectId}`).then(res => {
+        axios.get(`/api/customerpayment/total/${projectId}`).then(res => {
             const x = res.data.data;
             //console.log(x);
 
-            let chartDataExpense = [];
+            let chartDataCustPay = [];
             x.map(element => {
 
 
-                chartDataExpense.push({
+                chartDataCustPay.push({
                     labels: [element.projects_docs.map(pd => (
                         pd.projectName
                     ))],
                     datasets: [{
-                        label: 'Project Wise Expense ($USD)',
-                        backgroundColor: '#17A2B8',
-                        borderColor: '#00FFFF',
+                        label: 'Project Wise Customer Payment ($USD)',
+                        backgroundColor: '#FFC107',
+                        borderColor: '#8e6b03',
                         borderWidth: 1,
-                        hoverBackgroundColor: '#008B8B',
-                        hoverBorderColor: '#00FFFF',
-                        data: [(Math.round(element.totalExpense * 100) / 100)]
+                        hoverBackgroundColor: '#CC9A05',
+                        hoverBorderColor: '#8e6b03',
+                        data: [(Math.round(element.totalAmount * 100) / 100)]
 
                     }]
                 })
 
-                setChartData({
-                    ...chartData,
-                    barChartDataExpense: chartDataExpense,
-
-                })
 
             })
+            setChartData({
+                ...chartData,
+                barChartDataExpense: chartDataCustPay,
 
+            })
         })
 
 
@@ -72,7 +71,7 @@ const ProjectExpenseChart = ({
                         return <Bar key={index} data={n} options={{
                             title: {
                                 display: 'Display',
-                                text: "Expense",
+                                text: "Customer Payment",
                                 fontSize: 25
                             },
                             legend: {
@@ -91,5 +90,5 @@ const ProjectExpenseChart = ({
 };
 
 
-export default ProjectExpenseChart
+export default ProjectCustPayChart
 

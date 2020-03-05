@@ -24,38 +24,36 @@ const PRojectWiseInvest = ({
         <Fragment>
             <div className="container-fluid">
 
-                <section className="container-fluid mt-2 animated fadeInRight">
 
-                    <table className="table table-hover ">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Amount($)</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Recipt</th>
+                <table className="table table-hover ">
+                    <thead className="thead-dark">
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Amount($)</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Recipt</th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {projectwiseInvestment.map(investment => (
+                            <tr key={investment._id}>
+                                <td>{`${investment.user.username}`}</td>
+                                <td>{`${investment.amount} ${investment.currency}`}</td>
+                                <td>${`${investment.convAmt}`}</td>
+                                <td>{`${investment.date}`}</td>
+                                <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt="rcp_img" className="profileImg"></img></td>
 
 
                             </tr>
-                        </thead>
 
-                        <tbody>
-                            {projectwiseInvestment.map(investment => (
-                                <tr key={investment._id}>
-                                    <td>{`${investment.user.username}`}</td>
-                                    <td>{`${investment.amount} ${investment.currency}`}</td>
-                                    <td>${`${investment.convAmt}`}</td>
-                                    <td>{`${investment.date}`}</td>
-                                    <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt="rcp_img" className="profileImg"></img></td>
+                        ))}
+                    </tbody>
+                </table>
 
-
-                                </tr>
-
-                            ))}
-                        </tbody>
-                    </table>
-
-                </section>
             </div>
         </Fragment>
     );

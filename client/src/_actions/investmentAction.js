@@ -43,7 +43,7 @@ export const getInvestments = () => async dispatch => {
 export const getAllInvestments = () => async dispatch => {
     try {
         const res = await axios.get("/api/investment/getAll");
-        console.log(res.data.data);
+        console.log(res.data);
         dispatch({
             type: types.GET_ALL_INVESTMENTS,
             payload: res.data.data
@@ -57,8 +57,24 @@ export const getAllInvestments = () => async dispatch => {
     }
 };
 
-
-//Get Total Investments
+//Get Sum of Over All Investment
+export const getOverAllSumInv = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/investment/getOverAllSum`);  // filter from ID 
+        console.log(res.data.data);
+        dispatch({
+            type: types.OVER_ALL_SUM_INV,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+        // dispatch({
+        //   type: types.INVESTMENT_ERROR,
+        //   payload: { msg: err.response.data, status: err.response.status }
+        // });
+    }
+};
+//Get Sum of Project Wise  Investments
 export const getTotalInvestments = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/investment/total/${id}`);  // filter from ID 
@@ -76,7 +92,7 @@ export const getTotalInvestments = (id) => async dispatch => {
     }
 };
 
-//Get All Investments
+//Get Project Wise Investments Details
 export const getProjectInvestments = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/investment/filter/${id}`);  // filter from ID 
@@ -96,7 +112,7 @@ export const getProjectInvestments = (id) => async dispatch => {
 export const getCurrencies = () => dispatch => {
 
     let initialData = [];
-    const url = `https://openexchangerates.org/api/latest.json?app_id=7a45036659ec4cedb3ee6a59c76b9ddb&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP`;
+    const url = `http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP&format=1`;
 
     fetch(url)
         .then(data => {

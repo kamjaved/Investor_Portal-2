@@ -7,6 +7,7 @@ const initialInvestment = {
     projectwiseInvestment: [],
     projectName: '',
     totalInvestment: [],
+    overAllInvestment: [],
     currencies: [],
     error: {},
     filtered: null,
@@ -43,6 +44,13 @@ export default function (state = initialInvestment, action) {
                 projectName: payload[0].project.projectName,
                 loading: false
             };
+
+        case types.OVER_ALL_SUM_INV:
+            return {
+                ...state,
+                overAllInvestment: payload,
+                loading: false
+            }
         case types.GET_TOTALWISE_INVESTMENTS:
             return {
                 ...state,

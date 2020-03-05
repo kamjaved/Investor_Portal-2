@@ -113,6 +113,9 @@ router
 router
     .route("/getAll")
     .get(investmentController.getAllInvestments)
+router
+    .route("/getOverAllSum")
+    .get(investmentController.getOverAllSumInvestments)
 
 router
     .route("/total/:id")

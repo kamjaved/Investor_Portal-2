@@ -6,6 +6,7 @@ const initialExpense = {
     allexpenses: [],
     projectwiseExpense: [],
     totalExpenses: [],
+    overAllExpenses: [],
     error: {},
     filtered: null,
     loading: true
@@ -33,7 +34,12 @@ export default function (state = initialExpense, action) {
                 allexpenses: payload,
                 loading: false
             };
+        case types.OVER_ALL_SUM_EXP:
+            return {
+                ...state,
+                overAllExpenses: payload
 
+            }
         case types.GET_PROJECTWISE_EXPENSES:
             return {
                 ...state,

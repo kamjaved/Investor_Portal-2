@@ -38,9 +38,26 @@ export const getExpenses = () => async dispatch => {
     }
 };
 
+//Get Sum of Over All EXpenses
+export const getOverAllSumExp = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/expense/getOverAllSum`);  // filter from ID 
+        console.log(res.data.data);
+        dispatch({
+            type: types.OVER_ALL_SUM_EXP,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+        // dispatch({
+        //   type: types.INVESTMENT_ERROR,
+        //   payload: { msg: err.response.data, status: err.response.status }
+        // });
+    }
+};
 
 
-//Get Total Expenses
+//Get Sum Of Project Wise Expenses
 export const getTotalExpenses = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/expense/total/${id}`);  // filter from ID 
@@ -59,7 +76,8 @@ export const getTotalExpenses = (id) => async dispatch => {
 };
 
 
-//Get All Expenses
+////Get Project Wise Expenses Details
+
 export const getProjectExpenses = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/expense/filter/${id}`);  // filter from ID 
@@ -110,18 +128,15 @@ export const addExpense = (formData, history) => async dispatch => {
         const errors = err.response.data.error;
         console.log(errors);
 
-        if (errors.code === 11000) {
-            dispatch(setAlert("Expense already exists!", "danger"));
+        if (err.response.status === 400) {
+            dispatch(setAlert(`${err.response.data.msg}`, "danger"));
         }
-        else if (errors.code === 500) {
-            dispatch(setAlert("Internal Server Error!", "danger"));
-        }
-        else if (err.response.message === "Only image files are accepted!") {
-            dispatch(setAlert("Image Size & Format Error!", "danger"));
+        else if (err.response.status === 500) {
+            dispatch(setAlert(`No file Selected or File Too Large`, "danger"));
         }
 
         dispatch({
-            type: types.EXPENSE_ERROR,
+            type: types.INVESTMENT_ERROR,
             payload: { msg: errors, status: err.response.status }
         });
     }

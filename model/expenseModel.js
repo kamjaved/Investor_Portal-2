@@ -38,7 +38,7 @@ const expenseSchema = new mongoose.Schema({
     image: {
         type: String,
     },
-    imageId: String,
+    //imageId: String,
 
     purpose: {
         type: String,

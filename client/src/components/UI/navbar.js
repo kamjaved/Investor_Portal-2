@@ -15,7 +15,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-12">
-                            <nav className="navbar navbar-expand-lg  mb-4 navigation">
+                            <nav className="navbar navbar-expand-lg  navigation">
 
                                 <Link className="navbar-brand" to="/">
                                     <img
@@ -128,7 +128,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
     const guestLinks = (
         <Fragment>
-            <nav className="navbar navbar-expand-lg  mb-4 navigation">
+            <nav className="navbar navbar-expand-lg navigation">
                 <div className="container-fluid">
                     <Link className="navbar-brand lead" to="/">
                         <img

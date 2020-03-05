@@ -1,29 +1,28 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-    getProjectExpenses,
-} from "../../../_actions/expenseAction";
+    getProjectCustPay,
+} from "../../../_actions/customerPayAction";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const ProjectWiseExpense = ({
-    getProjectExpenses,
-    projectwiseExpense,
+const ProjectWiseCustPay = ({
+    getProjectCustPay,
+    projectwiseCustPay,
     filtered,
     loading,
     history,
     projectId
 }) => {
     useEffect(() => {
-        getProjectExpenses(projectId);
+        getProjectCustPay(projectId);
         //eslint-disable-next-line
-    }, [getProjectExpenses]);
+    }, [getProjectCustPay]);
 
     return (
         <Fragment>
             <div className="container-fluid">
-
 
 
                 <table className="table table-hover">
@@ -33,19 +32,19 @@ const ProjectWiseExpense = ({
                             <th scope="col">Amount</th>
                             <th scope="col">Amount($)</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Recipt</th>
+                            <th scope="col">Invoice</th>
 
                         </tr>
                     </thead>
 
                     <tbody>
-                        {projectwiseExpense.map(expense => (
-                            <tr key={expense._id}>
-                                <td>{`${expense.user.username}`}</td>
-                                <td>{`${expense.amount} ${expense.currency}`}</td>
-                                <td>${`${expense.convAmt}`}</td>
-                                <td>{`${expense.date}`}</td>
-                                <td><img src={expense.image} alt="rcp_img" className="profileImg"></img></td>
+                        {projectwiseCustPay.map(custpay => (
+                            <tr key={custpay._id}>
+                                <td>{`${custpay.user.username}`}</td>
+                                <td>{`${custpay.amount} ${custpay.currency}`}</td>
+                                <td>${`${custpay.convAmt}`}</td>
+                                <td>{`${custpay.date}`}</td>
+                                <td>{custpay.invoiceNo}</td>
 
 
                             </tr>
@@ -54,22 +53,23 @@ const ProjectWiseExpense = ({
                     </tbody>
                 </table>
 
+
             </div>
         </Fragment>
     );
 };
 
-ProjectWiseExpense.propTypes = {
-    getProjectExpenses: PropTypes.func.isRequired,
-    projectwiseExpense: PropTypes.array.isRequired
+ProjectWiseCustPay.propTypes = {
+    getProjectCustPay: PropTypes.func.isRequired,
+    projectwiseCustPay: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-    projectwiseExpense: state.expense.projectwiseExpense,
+    projectwiseCustPay: state.customerpay.projectwiseCustPay,
     filtered: state.investment.filtered,
     loading: state.investment.loading
 });
 export default connect(
     mapStateToProps,
-    { getProjectExpenses, }
-)(ProjectWiseExpense);
+    { getProjectCustPay, }
+)(ProjectWiseCustPay);
