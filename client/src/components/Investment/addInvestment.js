@@ -58,11 +58,11 @@ const AddInvestment = ({
 
     const onChangeImage = e => {
         e.preventDefault();
-        setFormData({ image: e.target.files[0] });
+        setFormData({ ...formData, image: e.target.files[0] });
     };
 
 
-    const result = (amount / currencies[currency]).toFixed(4)
+    const result = (amount / currencies[currency]).toFixed(2)
     //console.log({ result })
 
 
@@ -111,16 +111,6 @@ const AddInvestment = ({
                                     <div className="bg-light border border-success">
                                         <h3 className="bg-success text-center text-white p-4"> New Investment</h3>
                                         <fieldset className="p-4">
-                                            <div>
-                                                <small>Upload Recipt <b>Max-File-Size-1MB <br />Supported File jpg/png</b></small>
-                                                <input
-                                                    placeholder="Upload Receipt"
-                                                    type="file"
-                                                    tdata-button="Upload Recipt"
-                                                    name="image"
-                                                    onChange={onChangeImage} className="border p-3 w-100 my-2" /> <br />
-
-                                            </div>
 
                                             <select
                                                 className="border p-3 w-100 my-2"
@@ -175,6 +165,16 @@ const AddInvestment = ({
                                                 value={date}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
 
+                                            <div>
+                                                <small>Upload Recipt <b>Max-File-Size-1MB <br />Supported File jpg/png</b></small>
+                                                <input
+                                                    placeholder="Upload Receipt"
+                                                    type="file"
+                                                    tdata-button="Upload Recipt"
+                                                    name="image"
+                                                    onChange={onChangeImage} className="border p-3 w-100 my-2" /> <br />
+
+                                            </div>
 
 
                                             <button type="submit" className="d-block py-3 px-5 bg-success text-white border-0 rounded font-weight-bold mt-3">Add</button>

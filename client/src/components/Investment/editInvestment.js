@@ -44,7 +44,7 @@ const EditInvestment = ({
 
     };
 
-    const result = (amount / currencies[currency]).toFixed(4)
+    const result = (amount / currencies[currency]).toFixed(2)
     //console.log({ result })
 
 

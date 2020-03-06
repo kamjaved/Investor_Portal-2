@@ -51,9 +51,9 @@ const Dashboard = ({
     // console.log(totalInvest)
     // console.log(totalCustPay)
     // console.log(totalExpense)
-    const balence = (totalInvest[0] + totalCustPay[0])
+    const balence = ((totalInvest[0] ? totalInvest[0] : 0) + (totalCustPay[0] ? totalCustPay[0] : 0))
     //console.log(balence)
-    const balanceRemaining = (Math.round((balence - totalExpense) * 100) / 100)
+    const balanceRemaining = (Math.round((balence - (totalExpense ? totalExpense : 0)) * 100) / 100)
     return (
         <Fragment>
 
@@ -61,9 +61,9 @@ const Dashboard = ({
                 <Spinner />
             ) : (
                     <div>
-                        <div className="ml-4 row ">
-                            <div className="col-sm-12 col-md-4 col-lg-4">
-                                <h1 className={`display-4`}>Dashboard </h1>
+                        <div className="ml-4 row mr-4 pb-4">
+                            <div className="col-sm-12 col-md-3 col-lg-4">
+                                <h2 className="heading">Dashboard </h2>
 
                                 <p className="lead">
                                     Welcome {me},{firstName} {""} {lastName}
@@ -75,37 +75,37 @@ const Dashboard = ({
 
                             <div className="col-sm-12 col-md-8 col-lg-8">
                                 <div className="row">
-                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                    <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
                                             <a href="#"><div className="circle-tile-heading green"><i className="fa fa-money fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content green">
                                                 <div className="circle-tile-description text-faded"> Total Investment</div>
-                                                <div className="circle-tile-number text-faded ">{totalInvest}</div>
+                                                <div className="circle-tile-number text-faded ">{!totalInvest[0] ? 0 : totalInvest[0]}</div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                    <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
                                             <a href="#"><div className="circle-tile-heading cyan"><i className="fa fa-cart-arrow-down fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content cyan">
                                                 <div className="circle-tile-description text-faded">Total Expense</div>
-                                                <div className="circle-tile-number text-faded ">{totalExpense}</div>
+                                                <div className="circle-tile-number text-faded ">{!totalExpense[0] ? 0 : totalExpense[0]}</div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                    <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
                                             <a href="#"><div className="circle-tile-heading orange"><i className="fa fa-credit-card-alt fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content orange">
                                                 <div className="circle-tile-description text-faded">Customer Payment</div>
-                                                <div className="circle-tile-number text-faded ">{totalCustPay}</div>
+                                                <div className="circle-tile-number text-faded ">{!totalCustPay[0] ? 0 : totalCustPay[0]}</div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="col-lg-2 col-md-3 col-sm-6">
+                                    <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
                                             <a href="#"><div className="circle-tile-heading red"><i className="fa fa-usd fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content red">

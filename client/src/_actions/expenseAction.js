@@ -125,6 +125,7 @@ export const addExpense = (formData, history) => async dispatch => {
 
         dispatch(setAlert("Expense Added!", "success"));
     } catch (err) {
+        console.log(err.response.data)
         const errors = err.response.data.error;
         console.log(errors);
 
@@ -132,13 +133,14 @@ export const addExpense = (formData, history) => async dispatch => {
             dispatch(setAlert(`${err.response.data.msg}`, "danger"));
         }
         else if (err.response.status === 500) {
-            dispatch(setAlert(`No file Selected or File Too Large`, "danger"));
-        }
+            dispatch(setAlert(`File Too Large or Invalid File Type`, "danger"));
+        } else {
 
-        dispatch({
-            type: types.INVESTMENT_ERROR,
-            payload: { msg: errors, status: err.response.status }
-        });
+            dispatch({
+                type: types.INVESTMENT_ERROR,
+                payload: { msg: errors, status: err.response.status }
+            });
+        }
     }
 };
 

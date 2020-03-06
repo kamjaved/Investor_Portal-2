@@ -41,25 +41,22 @@ const upload = multer({
         fileSize: 1024 * 1024 * 1
     }, fileFilter: (req, file, cb) => {
         let ext = path.extname(file.originalname);
-        if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-            req.fileValidationError = "Forbidden extension";
-            return cb(null, false, req.fileValidationError);
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
+            return cb(new Error("Only image files are accepted!"), false);
         }
+        // if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
+        //     req.fileValidationError = "Forbidden extension";
+        //     return cb(null, false, req.fileValidationError);
+        // }
         cb(null, true);
 
     }
 });
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//     api_key: process.env.CLOUDINARY_API_KEY,
-//     api_secret: process.env.CLOUDINARY_API_SECRET
-// });
-
 
 const resizeReciptPhoto = (req, res, next) => {
     if (!req.file) return next();
-    req.file.filename = `Recipt-${Date.now()}.jpeg`;
+    req.file.filename = `ExpRecipt-${Date.now()}.jpeg`;
 
     sharp(req.file.buffer)
         .resize(1000, 1000, {
@@ -68,7 +65,7 @@ const resizeReciptPhoto = (req, res, next) => {
         })
         .toFormat('jpeg')
         .jpeg({ quality: 80 })
-        .toFile(path.join(__dirname, `../client/public/uploads/${req.file.filename}`));
+        .toFile(path.join(__dirname, `../public/uploads/${req.file.filename}`));
     next();
 }
 
@@ -80,9 +77,9 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
     const { project, amount, currency, date, purpose, convAmt, image } = req.body;
     try {
         const newExpense = new Expense({
-            project, amount, currency, date, purpose, convAmt, image,
+            project, amount, currency, date, purpose, convAmt,
             user: req.user.id,
-            image: req.file.filename,
+            image: req.file ? req.file.filename : image,
 
         });
 

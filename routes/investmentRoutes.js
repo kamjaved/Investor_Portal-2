@@ -45,10 +45,13 @@ const upload = multer({
         fileSize: 1024 * 1024 * 1
     }, fileFilter: (req, file, cb) => {
         let ext = path.extname(file.originalname);
-        if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-            req.fileValidationError = "Forbidden extension";
-            return cb(null, false, req.fileValidationError);
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
+            return cb(new Error("Only image files are accepted!"), false);
         }
+        // if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
+        //     req.fileValidationError = "Forbidden extension";
+        //     return cb(null, false, req.fileValidationError);
+        // }
         cb(null, true);
 
     }
@@ -60,7 +63,7 @@ const upload = multer({
 
 const resizeReciptPhoto = (req, res, next) => {
     if (!req.file) return next();
-    req.file.filename = `Recipt-${Date.now()}.jpeg`;
+    req.file.filename = `InvRecipt-${Date.now()}.jpeg`;
 
     sharp(req.file.buffer)
         .resize(1000, 1000, {
@@ -69,7 +72,7 @@ const resizeReciptPhoto = (req, res, next) => {
         })
         .toFormat('jpeg')
         .jpeg({ quality: 80 })
-        .toFile(path.join(__dirname, `../client/public/uploads/${req.file.filename}`));
+        .toFile(path.join(__dirname, `../public/uploads/${req.file.filename}`));
     next();
 }
 
@@ -77,12 +80,12 @@ const resizeReciptPhoto = (req, res, next) => {
 
 router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
-    const { project, amount, currency, date, convAmt, } = req.body;
+    const { project, amount, currency, date, convAmt, image, } = req.body;
     try {
         const newInvestment = new Investment({
             project, amount, currency, date, convAmt,
             user: req.user.id,
-            image: req.file.filename,
+            image: req.file ? req.file.filename : image,
 
         });
 

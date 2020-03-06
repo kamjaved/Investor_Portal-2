@@ -53,7 +53,7 @@ const ViewAllExpenses = ({
                                                     <td>${`${expense.convAmt}`}</td>
                                                     <td>{`${expense.date}`}</td>
                                                     <td>{`${expense.purpose}`}</td>
-                                                    <td><img src={expense.image} alt="rcp_img" className="profileImg"></img></td>
+                                                    <td><img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></td>
                                                     <td>{`${expense.user.username}`}</td>
 
 
