@@ -9,6 +9,7 @@ const sharp = require('sharp');
 var path = require('path');
 const catchAsync = require("../utils/catchAsync");
 const router = express.Router({ mergeParams: true });
+const Expense = require('../model/expenseModel')
 
 
 //Protect all routes after this middleware- Authentication
@@ -102,6 +103,41 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
 
 }));
 
+
+
+// Update Expense
+
+router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+
+    const { project, amount, currency, date, convAmt, image, purpose, } = req.body;
+
+    const doc = await Expense.findByIdAndUpdate(req.params.id, {
+        project, amount, currency, date, convAmt, purpose,
+        new: true,
+        runValidators: true,
+        user: req.user.id,
+        image: req.file ? req.file.filename : image,
+    });
+
+    if (!doc) {
+        return next(new AppError("No document found with that ID", 404));
+    }
+    if (req.fileValidationError) {
+        console.log("Invalid File type Only Image file Accepted");
+        return res.status(400).send({
+            msg: "Invalid File type Only Image file Accepted",
+            success: false
+        });
+
+    }
+    res.status(200).json({
+        status: "success",
+        doc
+    });
+
+}))
+
+
 router
     .route("/")
     .get(expenseController.getUserExpenses)
@@ -109,6 +145,7 @@ router
 router
     .route("/getAll")
     .get(expenseController.getAllExpenses)
+
 router
     .route("/getOverAllSum")
     .get(expenseController.getOverAllSumExpenses)
@@ -118,13 +155,16 @@ router
     .get(expenseController.getTotalExpenses)
 
 router
+    .route("/Usertotal/:id")
+    .get(expenseController.getUsersTotalExpenses)
+router
     .route("/filter/:id")
     .get(expenseController.getFilteredExpenses)
 
 router
     .route("/:id")
     .get(expenseController.getExpense)
-    .patch(expenseController.updateExpense)
+    //.patch(expenseController.updateExpense)
     .delete(expenseController.deleteExpense);
 
 module.exports = router;

@@ -1,19 +1,24 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { addCustomerPay } from '../../_actions/customerPayAction'
 import { getProjects } from '../../_actions/projectAction'
 import { getCurrencies } from '../../_actions/investmentAction'
+import { getCustomers } from '../../_actions/customerAction'
+
 import '../UI/Dashboard.css'
 
 const AddCustomerPay = ({
     getCurrencies,
     history,
     getProjects,
+    getCustomers,
     addCustomerPay,
     projects,
-    currencies
+    currencies,
+    customers,
 
 }) => {
 
@@ -33,9 +38,10 @@ const AddCustomerPay = ({
 
     useEffect(() => {
         getProjects();
+        getCustomers();
 
         //eslint-disable-next-line
-    }, [getProjects]);
+    }, [getProjects, getCustomers]);
 
     useEffect(() => {
         getCurrencies();
@@ -67,9 +73,9 @@ const AddCustomerPay = ({
             {projects.projectName}
         </option>
     ));
-    let customerOptn = projects.map(customer => (
-        <option key={customer._id} value={customer.customerName}>
-            {customer.customerName}
+    let customerOptn = customers.map(customer => (
+        <option key={customer._id} value={customer._id}>
+            {customer.name}
         </option>
     ));
     return (
@@ -81,7 +87,8 @@ const AddCustomerPay = ({
                             <div className="row justify-content-center animated fadeInRight">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-warning">
-                                        <h3 className="bg-warning text-center p-4">New Customer Payment</h3>
+                                        <div>
+                                            <h3 className="bg-warning text-center p-4"><Link to="/dashboard" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Customer Payment</h3></div>
                                         <fieldset className="p-4">
 
                                             <select
@@ -135,7 +142,7 @@ const AddCustomerPay = ({
 
 
                                             <input name="convAmt"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="number"
                                                 value={result}
                                                 onChange={e => onChangeHandler(e)}
@@ -167,12 +174,15 @@ AddCustomerPay.propTypes = {
     getProjects: PropTypes.func.isRequired,
     addCustomerPay: PropTypes.func.isRequired,
     getCurrencies: PropTypes.func.isRequired,
+    getCustomers: PropTypes.func.isRequired,
 
 }
 const mapStateToProps = state => ({
     projects: state.project.projects,
-    currencies: state.investment.currencies
+    customers: state.customer.customers,
+    currencies: state.investment.currencies,
+
 
 
 });
-export default connect(mapStateToProps, { addCustomerPay, getProjects, getCurrencies })(AddCustomerPay);
+export default connect(mapStateToProps, { addCustomerPay, getProjects, getCustomers, getCurrencies })(AddCustomerPay);

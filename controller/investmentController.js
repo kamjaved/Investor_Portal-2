@@ -136,3 +136,43 @@ exports.getTotalInvestments = catchAsync(async (req, res, next) => {
     });
 });
 
+
+//Get User Based Total Investment
+exports.getUsersTotalInvestments = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
+        Investment.aggregate([
+
+            {
+
+                $match: {
+                    user: new ObjectId(req.params.id)
+                },
+
+            },
+
+            {
+                $group: {
+                    _id: '$user',
+                    no_of_investment: {
+                        $sum: 1
+                    },
+                    totalAmount: { $sum: "$convAmt" },
+                },
+            },
+        ]),
+
+        req.query
+    )
+
+        .sort()
+        .paginate()
+
+    const docs = await features.query;
+    res.status(200).json({
+
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+

@@ -9,42 +9,42 @@ const initialProject = {
     loading: true
 };
 
-export default function (project = initialProject, action) {
+export default function (state = initialProject, action) {
     const { type, payload } = action;
 
     switch (type) {
         case types.GET_PROJECT:
             return {
-                ...project,
+                ...state,
                 project: payload,
                 loading: false
             };
         case types.GET_PROJECTS:
             return {
-                ...project,
+                ...state,
                 projects: payload,
                 loading: false
             };
         case types.GET_ALL_PROJECTS:
             return {
-                ...project,
+                ...state,
                 allprojects: payload,
                 loading: false
             };
         case types.ADD_PROJECT:
             return {
-                ...project,
+                ...state,
                 project: payload,
                 loading: false
             };
         case types.SET_CURRENT_PROJECT:
             return {
-                ...project,
+                ...state,
                 project: action.payload
             };
         case types.CLEAR_PROJECT:
             return {
-                ...project,
+                ...state,
                 project: null,
                 projects: [],
                 loading: false
@@ -52,7 +52,7 @@ export default function (project = initialProject, action) {
 
         // case types.FILTER_STAFF:
         //   return {
-        //     ...project,
+        //    ...state,
         //     filtered: project.projects.filter(project => {
         //       const regex = new RegExp(`${action.payload}`, "gi");
         //       return (
@@ -66,24 +66,24 @@ export default function (project = initialProject, action) {
         //   };
         case types.CLEAR_FILTER:
             return {
-                ...project,
+                ...state,
                 filtered: null
             };
         case types.DELETE_PROJECT:
             return {
-                ...project,
-                projects: project.projects.filter(
+                ...state,
+                projects: state.projects.filter(
                     project => project._id !== action.payload
                 ),
                 loading: false
             };
         case types.PROJECT_ERROR:
             return {
-                ...project,
+                ...state,
                 error: payload,
                 loading: false
             };
         default:
-            return project;
+            return state;
     }
 }

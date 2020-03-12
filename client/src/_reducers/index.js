@@ -6,6 +6,7 @@ import expense from './expenseReducer'
 import project from './projectReducer'
 import investment from './investmentReducer'
 import customerpay from './customerPayReducer'
+import customer from './customerReducer'
 import estimate from './estimateReducer'
 
 
@@ -18,6 +19,7 @@ export default combineReducers({
     project,
     investment,
     customerpay,
+    customer,
     estimate,
 
 })

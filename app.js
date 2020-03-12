@@ -16,6 +16,7 @@ const compression = require("compression");
 const app = express();
 
 const userRouter = require('./routes/userRoutes')
+const customerRouter = require('./routes/customerRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
 const projectRoutes = require('./routes/projectRoutes')
 const investmentRoutes = require('./routes/investmentRoutes')
@@ -112,7 +113,7 @@ app.use('/api/project', projectRoutes)
 app.use('/api/investment', investmentRoutes)
 app.use('/api/customerpayment', customerRoutes)
 app.use('/api/estimate', estimateRoutes)
-
+app.use('/api/customer', customerRouter)
 
 
 

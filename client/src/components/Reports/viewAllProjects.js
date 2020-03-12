@@ -33,7 +33,7 @@ const ViewAllProjects = ({
                                 <h2 className="text-center pt-2"> View All Projects </h2>
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Project Name</th>
@@ -47,7 +47,7 @@ const ViewAllProjects = ({
                                             {allprojects.map(project => (
                                                 <tr key={project._id}>
                                                     <td><Link to={`/admin/investment/projectwiseinvestment/${project._id}`}>{project.projectName}</Link></td>
-                                                    <td>{project.customerName}</td>
+                                                    <td>{project.customerName.name}</td>
                                                     <td>{project.startDate}</td>
                                                     <td>{project.endDate}</td>
                                                 </tr>

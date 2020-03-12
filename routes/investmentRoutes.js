@@ -8,7 +8,7 @@ const sharp = require('sharp');
 const catchAsync = require("../utils/catchAsync");
 const router = express.Router({ mergeParams: true });
 var path = require('path');
-
+const Investment = require('../model/investmentModel')
 //Protect all routes after this middleware- Authentication
 router.use(authController.protect);
 
@@ -109,6 +109,38 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
 }));
 
 
+// Update Investment
+
+router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+
+    const { project, amount, currency, date, convAmt, image, } = req.body;
+
+    const doc = await Investment.findByIdAndUpdate(req.params.id, {
+        project, amount, currency, date, convAmt,
+        new: true,
+        runValidators: true,
+        user: req.user.id,
+        image: req.file ? req.file.filename : image,
+    });
+
+    if (!doc) {
+        return next(new AppError("No document found with that ID", 404));
+    }
+    if (req.fileValidationError) {
+        console.log("Invalid File type Only Image file Accepted");
+        return res.status(400).send({
+            msg: "Invalid File type Only Image file Accepted",
+            success: false
+        });
+
+    }
+    res.status(200).json({
+        status: "success",
+        doc
+    });
+
+}))
+
 router
     .route("/")
     .get(investmentController.getUserInvestments)
@@ -123,6 +155,10 @@ router
 router
     .route("/total/:id")
     .get(investmentController.getTotalInvestments)
+
+router
+    .route("/Usertotal/:id")
+    .get(investmentController.getUsersTotalInvestments)
 router
     .route("/filter/:id")
     .get(investmentController.getFilteredInvestments)
@@ -130,5 +166,5 @@ router
     .route("/:id")
     .get(investmentController.getInvestment)
     .delete(investmentController.deleteInvestment)
-    .patch(investmentController.updateInvestment);
+// .patch(investmentController.updateInvestment);
 module.exports = router;

@@ -1,13 +1,17 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addProject } from '../../_actions/projectAction'
+import { getCustomers } from '../../_actions/customerAction'
+
 
 import '../UI/Dashboard.css'
 
 const AddProject = ({
     history,
     addProject,
+    getCustomers,
+    customers,
 
 }) => {
 
@@ -24,6 +28,12 @@ const AddProject = ({
 
     const { projectName, customerName, startDate, endDate, } = formData;
 
+    useEffect(() => {
+        getCustomers();
+
+        //eslint-disable-next-line
+    }, [getCustomers,]);
+
     const onChangeHandler = e => {
         e.preventDefault();
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,9 +42,14 @@ const AddProject = ({
     const onSubmitHandler = e => {
         e.preventDefault();
         addProject(formData, history);
-
-
     };
+
+
+    let customerOption = customers.map(customer => (
+        <option key={customer._id} value={customer._id}>
+            {customer.name}
+        </option>
+    ));
 
     return (
         <Fragment>
@@ -55,11 +70,15 @@ const AddProject = ({
                                                 value={projectName}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
 
-                                            <input name="customerName"
-                                                placeholder="Customer Name"
-                                                type="text"
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="customerName"
                                                 value={customerName}
-                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
+                                                //defaultValue={{ label: "Select Project", value: 0 }}
+                                                onChange={e => onChangeHandler(e)} >
+                                                <option>Select Customer</option>
+                                                {customerOption}
+                                            </select>
 
                                             <input name="startDate"
                                                 placeholder="Start Date"
@@ -89,10 +108,11 @@ const AddProject = ({
 
 AddProject.propTypes = {
     addProject: PropTypes.func.isRequired,
+    getCustomers: PropTypes.func.isRequired,
 
 }
 const mapStateToProps = state => ({
-    student: state.student,
+    customers: state.customer.customers
 
 });
-export default connect(mapStateToProps, { addProject })(AddProject);
+export default connect(mapStateToProps, { addProject, getCustomers })(AddProject);

@@ -6,8 +6,11 @@ const initialInvestment = {
     allinvestments: [],
     projectwiseInvestment: [],
     projectName: '',
+    UserName: '',
     totalInvestment: [],
     overAllInvestment: [],
+    usersInvestments: [],
+    usersSumInv: [],
     currencies: [],
     error: {},
     filtered: null,
@@ -34,6 +37,19 @@ export default function (state = initialInvestment, action) {
             return {
                 ...state,
                 allinvestments: payload,
+                loading: false
+            };
+        case types.GET_USERS_INVESTMENTS:
+            return {
+                ...state,
+                usersInvestments: payload,
+                UserName: payload[0].user.firstName,
+                loading: false
+            };
+        case types.GET_USERS_SUM_INVESTMENTS:
+            return {
+                ...state,
+                usersSumInv: payload,
                 loading: false
             };
 

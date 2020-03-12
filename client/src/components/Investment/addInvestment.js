@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-//import { currencyOptn } from 'currency-flags'
+import { Link } from "react-router-dom";
+import DatePicker from 'react-datepicker'
 import { addInvestment, getCurrencies } from '../../_actions/investmentAction'
 import { getProjects } from '../../_actions/projectAction'
 import { getAllUsers } from "../../_actions/authAction"
@@ -109,7 +108,8 @@ const AddInvestment = ({
                             <div className="row justify-content-center animated fadeInRight">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-success">
-                                        <h3 className="bg-success text-center text-white p-4"> New Investment</h3>
+                                        <div>
+                                            <h3 className="bg-success text-center text-white p-4"><Link to="/dashboard" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Investment</h3></div>
                                         <fieldset className="p-4">
 
                                             <select
@@ -151,12 +151,15 @@ const AddInvestment = ({
                                                 className="border p-3 w-100 my-2" />
 
 
+
                                             <input name="convAmt"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="number"
                                                 value={result}
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" disabled />
+                                            <p className="ml-4"> <b>Converted Amt. In $USD</b></p>
+
 
                                             <input name="date"
                                                 placeholder="Date"
@@ -164,6 +167,8 @@ const AddInvestment = ({
                                                 type="date"
                                                 value={date}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+
+                                            <DatePicker></DatePicker>
 
                                             <div>
                                                 <small>Upload Recipt <b>Max-File-Size-1MB <br />Supported File jpg/png</b></small>

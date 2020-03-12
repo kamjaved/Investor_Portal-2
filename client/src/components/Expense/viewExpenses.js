@@ -40,7 +40,7 @@ const ExpenseMaster = ({
                                 <h2 className="text-center pt-2"> All Expenses </h2>
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Project</th>
@@ -65,7 +65,12 @@ const ExpenseMaster = ({
                                                     <td>{`${expense.purpose}`}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></td>
                                                     <td className="text-right">
-
+                                                        <Link
+                                                            to={`/admin/editExpense/${expense._id}`}
+                                                            onClick={() => setCurrentExpense(expense)}
+                                                        >
+                                                            <i className="fa fa-edit fa-lg mr-4"></i>
+                                                        </Link>
                                                         <Link
                                                             title="Delete"
                                                             to="#!"

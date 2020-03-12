@@ -37,7 +37,7 @@ export const loadUser = () => async dispatch => {
 export const getAllUsers = () => async dispatch => {
     try {
         const res = await axios.get("/api/user");
-        //console.log(res.data.data);
+        console.log(res.data);
         dispatch({
             type: GET_USERS,
             payload: res.data.data

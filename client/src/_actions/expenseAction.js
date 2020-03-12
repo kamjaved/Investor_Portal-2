@@ -38,6 +38,37 @@ export const getExpenses = () => async dispatch => {
     }
 };
 
+
+
+//Get Users Based Expenses
+export const userExpense = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/expense/getAll?user[0]._id=${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_USERS_EXPENSES,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+//Get Users Based Sum Expenses
+export const userTotalExpense = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/expense/Usertotal/${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_USERS_SUM_EXPENSES,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
 //Get Sum of Over All EXpenses
 export const getOverAllSumExp = (id) => async dispatch => {
     try {
@@ -164,6 +195,12 @@ export const editExpense = (formData, history, id) => async dispatch => {
             errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
         }
 
+        if (err.response.status === 400) {
+            dispatch(setAlert(`${err.response.data.msg}`, "danger"));
+        }
+        else if (err.response.status === 500) {
+            dispatch(setAlert(`File Too Large or Invalid File Type`, "danger"));
+        }
         dispatch({
             type: types.EXPENSE_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }

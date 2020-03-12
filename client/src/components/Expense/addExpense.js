@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { addExpense } from '../../_actions/expenseAction'
 import { getCurrencies } from '../../_actions/investmentAction'
 import { getProjects } from '../../_actions/projectAction'
@@ -106,7 +105,8 @@ const AddExpense = ({
                             <div className="row justify-content-center animated fadeInRight">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-info">
-                                        <h3 className="bg-info text-center text-white p-4">New Expense</h3>
+                                        <div>
+                                            <h3 className="bg-info text-center text-white p-4"><Link to="/dashboard" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Expense</h3></div>
                                         <fieldset className="p-4">
 
 
@@ -147,7 +147,7 @@ const AddExpense = ({
                                                 className="border p-3 w-100 my-2" required />
 
                                             <input name="convAmt"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="number"
                                                 value={result}
                                                 onChange={e => onChangeHandler(e)}

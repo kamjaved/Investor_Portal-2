@@ -156,7 +156,7 @@ const AddInvestment = ({
 
 
                                             <input name="conv_amount"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="text"
                                                 value={conv_amount}
                                                 onChange={e => onChangeHandler(e)}
@@ -439,7 +439,7 @@ const AddInvestment = ({
 
 
                                             <input name="result"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="number"
                                                 value={formData.result}
                                                 onChange={e => onChangeHandler(e)}

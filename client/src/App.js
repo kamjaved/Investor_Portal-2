@@ -38,6 +38,9 @@ import AddEstimate from './components/Estimate/addEstimate';
 import ViewEstimate from './components/Estimate/viewEstimate';
 import ProjectInvestmentLanding from './components/Reports/ProjectWiseReport/projectInvestmentLanding';
 import NotFound from './components/UI/notFound';
+import UserInvestment from './components/Reports/userBasedReport/usersInvestment';
+import UserExpense from './components/Reports/userBasedReport/usersExpenses';
+import CustomerCustPay from './components/Reports/userBasedReport/customerCustPay';
 
 
 if (localStorage.token) {
@@ -84,6 +87,9 @@ const App = () => {
             <PrivateRoute path="/admin/expenses/viewAllexpenses" component={ViewAllExpenses} />
             <PrivateRoute path="/admin/investment/viewAllinvestment" component={ViewAllInvestment} />
             <PrivateRoute path={`/admin/investment/projectwiseinvestment/:id`} component={ProjectInvestmentLanding} />
+            <PrivateRoute path={`/admin/investment/userInvestment/:id`} component={UserInvestment} />
+            <PrivateRoute path={`/admin/expense/userExpense/:id`} component={UserExpense} />
+            <PrivateRoute path={`/admin/customerPayment/customersPayment/:id`} component={CustomerCustPay} />
 
 
 

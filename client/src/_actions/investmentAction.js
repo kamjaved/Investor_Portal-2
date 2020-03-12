@@ -20,7 +20,7 @@ export const getCurrentInvestment = id => async dispatch => {
     }
 };
 
-//Get user Investments
+//Get auth user Investments
 export const getInvestments = () => async dispatch => {
     try {
         const res = await axios.get("/api/investment");
@@ -54,6 +54,36 @@ export const getAllInvestments = () => async dispatch => {
         //   type: types.INVESTMENT_ERROR,
         //   payload: { msg: err.response.data, status: err.response.status }
         // });
+    }
+};
+
+
+//Get Users Based Investments
+export const userInvestment = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/investment/getAll?user[0]._id=${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_USERS_INVESTMENTS,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+//Get Users Based Sum Investments
+export const userTotalInvestment = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/investment/Usertotal/${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_USERS_SUM_INVESTMENTS,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
     }
 };
 
@@ -112,7 +142,7 @@ export const getProjectInvestments = (id) => async dispatch => {
 export const getCurrencies = () => dispatch => {
 
     let initialData = [];
-    const url = `https://openexchangerates.org/api/latest.json?app_id=7a45036659ec4cedb3ee6a59c76b9ddb&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP`;
+    const url = `http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP&format=1`;
 
     fetch(url)
         .then(data => {
@@ -206,6 +236,14 @@ export const editInvestment = (formData, history, id) => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
         }
+
+        if (err.response.status === 400) {
+            dispatch(setAlert(`${err.response.data.msg}`, "danger"));
+        }
+        else if (err.response.status === 500) {
+            dispatch(setAlert(`File Too Large or Invalid File Type`, "danger"));
+        }
+
 
         dispatch({
             type: types.INVESTMENT_ERROR,

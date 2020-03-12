@@ -37,10 +37,10 @@ const InvestmentMaster = ({
                     <div className="container">
                         <div className="row justify-content-center animated fadeInRight">
                             <div className="col-lg-10 col-md-10 align-item-center">
-                                <h2 className="text-center pt-2"> All Investments </h2>
+                                <h2 className="text-center pt-2"> Your's Investments </h2>
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Project</th>

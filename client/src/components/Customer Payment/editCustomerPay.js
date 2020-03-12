@@ -1,7 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import { editCustomerPay, getCurrentCustomerPay } from '../../_actions/customerPayAction'
+import { getProjects } from '../../_actions/projectAction'
+import { getCustomers } from '../../_actions/customerAction'
 import { getCurrencies } from '../../_actions/investmentAction'
 import '../UI/Dashboard.css'
 
@@ -9,7 +13,11 @@ const EditCustomerPay = ({
     customerPay: { customerPay, loading },
     getCurrencies,
     history,
+    getProjects,
+    getCustomers,
     editCustomerPay,
+    projects,
+    customers,
     getCurrentCustomerPay,
     match,
     currencies
@@ -18,6 +26,8 @@ const EditCustomerPay = ({
 }) => {
 
     const [formData, setFormData] = useState({
+        project: "",
+        customer: "",
         amount: "",
         currency: "",
         convAmt: "",
@@ -26,20 +36,24 @@ const EditCustomerPay = ({
 
     });
 
-    const { amount, currency, date, invoiceNo, } = formData;
+    const { project, customer, amount, date, invoiceNo, currency } = formData;
 
     useEffect(() => {
         getCurrencies();
+        getProjects();
+        getCustomers();
         getCurrentCustomerPay(match.params.id);
         setFormData({
             amount: loading || !customerPay.amount ? "" : customerPay.amount,
             currency: loading || !customerPay.currency ? "" : customerPay.currency,
             convAmt: loading || !customerPay.convAmt ? "" : customerPay.convAmt,
-            //date: loading || !customerPay.date ? "" : customerPay.date,
+            date: loading || !customerPay.date ? "" : customerPay.date,
+            project: loading || !customerPay.project ? "" : customerPay.project._id,
+            customer: loading || !customerPay.customer ? "" : customerPay.customer._id,
             invoiceNo: loading || !customerPay.invoiceNo ? "" : customerPay.invoiceNo
         });
         //eslint-disable-next-line
-    }, [loading, getCurrentCustomerPay]);
+    }, [loading, getCurrentCustomerPay, getProjects, getCurrencies]);
 
     const onChangeHandler = e => {
         e.preventDefault();
@@ -58,6 +72,18 @@ const EditCustomerPay = ({
     };
 
 
+    let projectOptn = projects.map(projects => (
+        <option key={projects._id} value={projects._id}>
+            {projects.projectName}
+        </option>
+    ));
+    let customerOptn = customers.map(customer => (
+        <option key={customer._id} value={customer._id}>
+            {customer.name}
+        </option>
+    ));
+
+
     return (
         <Fragment>
 
@@ -69,9 +95,26 @@ const EditCustomerPay = ({
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-warning">
 
-                                        <h3 className="bg-warning text-center text-white p-4">Edit Customer Payment</h3>
+                                        <div><h3 className="bg-warning text-center p-4"><Link to="/admin/view-customerPay" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Edit Customer Payment</h3></div>
                                         <fieldset className="p-4">
 
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="customer"
+                                                value={customer}
+                                                onChange={e => onChangeHandler(e)} >
+                                                <option>Select Customer </option>
+                                                {customerOptn}
+                                            </select>
+
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="project"
+                                                value={project}
+                                                onChange={e => onChangeHandler(e)} >
+                                                <option>Select Project</option>
+                                                {projectOptn}
+                                            </select>
 
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}
@@ -101,7 +144,7 @@ const EditCustomerPay = ({
 
 
                                             <input name="convAmt"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="number"
                                                 value={result}
                                                 onChange={e => onChangeHandler(e)}
@@ -119,7 +162,7 @@ const EditCustomerPay = ({
                                                 type="text"
                                                 value={invoiceNo}
                                                 onChange={e => onChangeHandler(e)}
-                                                className="border p-3 w-100 my-2" required />
+                                                className="border p-3 w-100 my-2" />
 
                                             <button type="submit" className="d-block py-3 px-5 bg-warning text-white border-0 rounded font-weight-bold mt-3">Edit</button>
 
@@ -141,10 +184,15 @@ EditCustomerPay.propTypes = {
     getCurrentCustomerPay: PropTypes.func.isRequired,
     customerPay: PropTypes.object.isRequired,
     getCurrencies: PropTypes.func.isRequired,
+    getProjects: PropTypes.func.isRequired,
+    getCustomers: PropTypes.func.isRequired,
+
 }
 const mapStateToProps = state => ({
+    projects: state.project.projects,
+    customers: state.customer.customers,
     customerPay: state.customerpay,
     currencies: state.investment.currencies
 
 });
-export default connect(mapStateToProps, { editCustomerPay, getCurrentCustomerPay, getCurrencies })(EditCustomerPay);
+export default connect(mapStateToProps, { editCustomerPay, getCurrentCustomerPay, getCurrencies, getProjects, getCustomers })(EditCustomerPay);

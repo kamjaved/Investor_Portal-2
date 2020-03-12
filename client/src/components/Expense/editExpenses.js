@@ -1,70 +1,106 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { editExpense, getCurrentExpense } from '../../_actions/expenseAction'
 import { getCurrencies } from '../../_actions/investmentAction'
+import { getProjects } from '../../_actions/projectAction'
+
 import '../UI/Dashboard.css'
 
 const EditExpense = ({
     expense: { expense, loading },
     getCurrencies,
+    getProjects,
     history,
     editExpense,
     getCurrentExpense,
     match,
+    projects,
     currencies
 
 
 }) => {
 
     const [formData, setFormData] = useState({
+        project: "",
         amount: "",
         currency: "",
         date: "",
         purpose: "",
+        image: "",
         convAmt: "",
     });
 
-    const { amount, currency, date, purpose } = formData;
+
+
+    // useEffect(() => {
+    //     getCurrencies();
+    //     // console.log(currencies[currency]);
+    //     //eslint-disable-next-line
+    // }, [getCurrencies, currency]);
 
 
     useEffect(() => {
         getCurrencies();
-        // console.log(currencies[currency]);
-        //eslint-disable-next-line
-    }, [getCurrencies, currency]);
-
-
-    useEffect(() => {
+        getProjects();
         getCurrentExpense(match.params.id);
         setFormData({
             amount: loading || !expense.amount ? "" : expense.amount,
             currency: loading || !expense.currency ? "" : expense.currency,
             convAmt: loading || !expense.convAmt ? "" : expense.convAmt,
-            // date: loading || !expense.date ? "" : expense.date,
-            purpose: loading || !expense.purpose ? "" : expense.purpose
+            date: loading || !expense.date ? "" : expense.date,
+            purpose: loading || !expense.purpose ? "" : expense.purpose,
+            project: loading || !expense.project ? "" : expense.project._id,
+            image: loading || !expense.image ? "" : expense.image
+
         });
         //eslint-disable-next-line
-    }, [loading, getCurrentExpense]);
+    }, [loading, getCurrentExpense, getProjects]);
 
+    const { amount, currency, date, purpose, project, image } = formData;
 
 
     const onChangeHandler = e => {
         e.preventDefault();
         setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result });
-        //console.log(formData)
+        console.log(formData)
 
     };
 
+
+    const onChangeImage = e => {
+        e.preventDefault();
+        setFormData({ ...formData, image: e.target.files[0] });
+    };
+
     const result = (amount / currencies[currency]).toFixed(2)
-    console.log({ result })
+    //console.log({ result })
 
 
     const onSubmitHandler = e => {
         e.preventDefault();
+        // for uploading images send file as blob multipart/form-data
+        let formData = new FormData();
+
+        formData.append("image", image);
+        formData.append("project", project);
+        formData.append("amount", amount);
+        formData.append("currency", currency);
+        formData.append("date", date);
+        formData.append("convAmt", result);
+        formData.append("purpose", purpose);
+
+
         editExpense(formData, history, match.params.id);
     };
 
+
+    let projectOption = projects.map(pro => (
+        <option key={pro._id} value={pro._id} selected={project === pro.projectName}>
+            {pro.projectName}
+        </option>
+    ));
 
     return (
         <Fragment>
@@ -76,9 +112,19 @@ const EditExpense = ({
                             <div className="row justify-content-center animated fadeInRight">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-info">
-                                        <h3 className="bg-info text-center text-white p-4">Edit Expense</h3>
+                                        <div>
+                                            <h3 className="bg-info text-center text-white p-4"><Link to="/admin/view-expense" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Edit Expense</h3></div>
                                         <fieldset className="p-4">
 
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="project"
+                                                value={project}
+                                                //selected={project}
+                                                onChange={e => onChangeHandler(e)} >
+                                                <option>Select Project</option>
+                                                {projectOption}
+                                            </select>
 
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}
@@ -108,11 +154,12 @@ const EditExpense = ({
 
 
                                             <input name="convAmt"
-                                                placeholder="In Euro Pound"
+                                                placeholder="In  $USD "
                                                 type="number"
                                                 value={result}
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" />
+                                            <p className="ml-4"> <b>Converted Amt. In $USD</b></p>
 
                                             <input name="date"
                                                 placeholder="Date"
@@ -128,6 +175,16 @@ const EditExpense = ({
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" />
 
+                                            <div>
+                                                <small>Upload Recipt <b>Max-File-Size-1MB <br />Supported File jpg/png</b></small>
+                                                <input
+                                                    placeholder="Upload Receipt"
+                                                    type="file"
+                                                    tdata-button="Upload Recipt"
+                                                    name="image"
+                                                    onChange={onChangeImage} className="border p-3 w-100 my-2" /> <br />
+
+                                            </div>
 
                                             <button type="submit" className="d-block py-3 px-5 bg-info text-white border-0 rounded font-weight-bold mt-3">Edit</button>
 
@@ -149,10 +206,12 @@ EditExpense.propTypes = {
     getCurrentExpense: PropTypes.func.isRequired,
     expense: PropTypes.object.isRequired,
     getCurrencies: PropTypes.func.isRequired,
+    getProjects: PropTypes.func.isRequired,
 }
 const mapStateToProps = state => ({
     expense: state.expense,
-    currencies: state.investment.currencies
+    currencies: state.investment.currencies,
+    projects: state.project.projects
 
 });
-export default connect(mapStateToProps, { editExpense, getCurrentExpense, getCurrencies })(EditExpense);
+export default connect(mapStateToProps, { editExpense, getCurrentExpense, getCurrencies, getProjects })(EditExpense);

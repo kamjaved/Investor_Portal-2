@@ -5,8 +5,11 @@ const initialExpense = {
     expenses: [],
     allexpenses: [],
     projectwiseExpense: [],
+    UserName: '',
     totalExpenses: [],
     overAllExpenses: [],
+    usersExpenses: [],
+    usersSumExp: [],
     error: {},
     filtered: null,
     loading: true
@@ -40,6 +43,19 @@ export default function (state = initialExpense, action) {
                 overAllExpenses: payload
 
             }
+        case types.GET_USERS_EXPENSES:
+            return {
+                ...state,
+                usersExpenses: payload,
+                UserName: payload[0].user.firstName,
+                loading: false
+            };
+        case types.GET_USERS_SUM_EXPENSES:
+            return {
+                ...state,
+                usersSumExp: payload,
+                loading: false
+            };
         case types.GET_PROJECTWISE_EXPENSES:
             return {
                 ...state,

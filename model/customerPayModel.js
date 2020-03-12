@@ -9,7 +9,8 @@ const customerPaySchema = new mongoose.Schema({
         ref: "User"
     },
     customer: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
+        ref: "Customer",
         required: [true, "Must be a Customer"]
     },
     project: {
@@ -57,7 +58,11 @@ customerPaySchema.pre(/^find/, function (next) {
     }).populate({
         path: "user",
 
-    });
+    })
+        .populate({
+            path: "customer",
+
+        });
     next();
 });
 

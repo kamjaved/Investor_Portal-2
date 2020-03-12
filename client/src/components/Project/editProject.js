@@ -1,13 +1,19 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import { editProject, getCurrentProject } from '../../_actions/projectAction'
+import { getCustomers } from '../../_actions/customerAction'
+
 import '../UI/Dashboard.css'
 
 const EditProject = ({
     project: { project, loading },
     history,
     editProject,
+    customers,
+    getCustomers,
     getCurrentProject,
     match
 
@@ -24,6 +30,7 @@ const EditProject = ({
 
     useEffect(() => {
         getCurrentProject(match.params.id);
+        getCustomers();
         setFormData({
             projectName: loading || !project.projectName ? "" : project.projectName,
             customerName: loading || !project.customerName ? "" : project.customerName,
@@ -31,7 +38,7 @@ const EditProject = ({
             endDate: loading || !project.endDate ? "" : project.endDate
         });
         //eslint-disable-next-line
-    }, [loading, getCurrentProject]);
+    }, [loading, getCurrentProject, getCustomers]);
 
     const onChangeHandler = e => {
         e.preventDefault();
@@ -43,6 +50,13 @@ const EditProject = ({
         editProject(formData, history, match.params.id);
     };
 
+
+    let customerOption = customers.map(customer => (
+        <option key={customer._id} value={customer._id} selected={customerName === customer.name}>
+            {customer.name}
+        </option>
+    ));
+
     return (
         <Fragment>
 
@@ -53,8 +67,8 @@ const EditProject = ({
                             <div className="row justify-content-center animated fadeInRight">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-primary">
-
-                                        <h3 className="bg-primary text-center text-white p-4">Edit Project</h3>
+                                        <div>
+                                            <h3 className="bg-primary text-center text-white p-4"><Link to="/admin/viewproject" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Edit Project</h3></div>
                                         <fieldset className="p-4">
 
                                             <input name="projectName"
@@ -63,11 +77,15 @@ const EditProject = ({
                                                 value={projectName}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
 
-                                            <input name="customerName"
-                                                placeholder="Customer Name"
-                                                type="text"
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="customerName"
                                                 value={customerName}
-                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
+                                                //defaultValue={{ label: "Select Project", value: 0 }}
+                                                onChange={e => onChangeHandler(e)} >
+                                                <option>Select Customer</option>
+                                                {customerOption}
+                                            </select>
 
                                             <input name="startDate"
                                                 placeholder="Start Date"
@@ -99,8 +117,11 @@ EditProject.propTypes = {
     editProject: PropTypes.func.isRequired,
     getCurrentProject: PropTypes.func.isRequired,
     project: PropTypes.object.isRequired,
+    getCustomers: PropTypes.func.isRequired,
 }
 const mapStateToProps = state => ({
-    project: state.project
+    project: state.project,
+    customers: state.customer.customers
+
 });
-export default connect(mapStateToProps, { editProject, getCurrentProject })(EditProject);
+export default connect(mapStateToProps, { editProject, getCurrentProject, getCustomers })(EditProject);

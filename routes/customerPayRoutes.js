@@ -28,6 +28,10 @@ router
 router
     .route("/filter/:id")
     .get(customerPayController.getFilteredCustPay)
+
+router
+    .route("/custTotal/:id")
+    .get(customerPayController.getCustomerTotalPay)
 router
     .route("/:id")
     .get(customerPayController.getCustomerPay)

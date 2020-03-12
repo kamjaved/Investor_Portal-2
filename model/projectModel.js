@@ -10,7 +10,8 @@ const projectSchema = new mongoose.Schema({
 
     },
     customerName: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
+        ref: 'Customer',
         required: [true, "There must be a Customer Name"],
 
     },
@@ -30,6 +31,13 @@ const projectSchema = new mongoose.Schema({
         default: Date.now
     },
 
+});
+
+projectSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: "customerName"
+    })
+    next();
 });
 
 module.exports = Project = mongoose.model("Project", projectSchema);

@@ -31,7 +31,7 @@ const ProjectWiseInvestment = ({
                                 <h2 className="text-center pt-2"> View All Investments </h2>
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Project Name</th>

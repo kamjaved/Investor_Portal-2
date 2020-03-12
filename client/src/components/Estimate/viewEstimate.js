@@ -40,7 +40,7 @@ const ViewEstimate = ({
                                 <h2 className="text-center pt-2"> All Estimates </h2>
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Project</th>

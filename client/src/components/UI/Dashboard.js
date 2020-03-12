@@ -77,30 +77,30 @@ const Dashboard = ({
                                 <div className="row">
                                     <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
-                                            <a href="#"><div className="circle-tile-heading green"><i className="fa fa-money fa-fw fa-2x"></i></div></a>
+                                            <Link to="/admin/investment/viewAllinvestment"><div className="circle-tile-heading green"><i className="fa fa-money fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content green">
                                                 <div className="circle-tile-description text-faded"> Total Investment</div>
-                                                <div className="circle-tile-number text-faded ">{!totalInvest[0] ? 0 : totalInvest[0]}</div>
+                                                <div className="circle-tile-number text-faded ">{!totalInvest[0] ? 0 : parseFloat(totalInvest).toFixed(2)}</div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
-                                            <a href="#"><div className="circle-tile-heading cyan"><i className="fa fa-cart-arrow-down fa-fw fa-2x"></i></div></a>
+                                            <Link to="/admin/expenses/viewAllexpenses"><div className="circle-tile-heading cyan"><i className="fa fa-cart-arrow-down fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content cyan">
                                                 <div className="circle-tile-description text-faded">Total Expense</div>
-                                                <div className="circle-tile-number text-faded ">{!totalExpense[0] ? 0 : totalExpense[0]}</div>
+                                                <div className="circle-tile-number text-faded ">{!totalExpense[0] ? 0 : parseFloat(totalExpense).toFixed(2)}</div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="col-lg-3 col-md-5 col-sm-6">
                                         <div className="circle-tile ">
-                                            <a href="#"><div className="circle-tile-heading orange"><i className="fa fa-credit-card-alt fa-fw fa-2x"></i></div></a>
+                                            <Link to="/admin/customerPayment/viewAllcustomerPayment"><div className="circle-tile-heading orange"><i className="fa fa-credit-card-alt fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content orange">
                                                 <div className="circle-tile-description text-faded">Customer Payment</div>
-                                                <div className="circle-tile-number text-faded ">{!totalCustPay[0] ? 0 : totalCustPay[0]}</div>
+                                                <div className="circle-tile-number text-faded ">{!totalCustPay[0] ? 0 : parseFloat(totalCustPay).toFixed(2)}</div>
                                             </div>
                                         </div>
                                     </div>

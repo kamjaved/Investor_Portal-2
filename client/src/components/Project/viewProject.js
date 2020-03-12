@@ -40,7 +40,7 @@ const ProjectMaster = ({
                                 <h2 className="text-center pt-2"> All Projects </h2>
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Project Name</th>
@@ -57,7 +57,7 @@ const ProjectMaster = ({
                                             {projects.map(project => (
                                                 <tr key={project._id}>
                                                     <td>{project.projectName}</td>
-                                                    <td>{project.customerName}</td>
+                                                    <td>{project.customerName.name}</td>
                                                     <td>{project.startDate}</td>
                                                     <td>{project.endDate}</td>
                                                     <td className="text-right">

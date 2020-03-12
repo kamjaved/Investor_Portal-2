@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
     getAllCustomerPays,
 } from "../../_actions/customerPayAction.js";
-
+import { getCustomers } from '../../_actions/customerAction'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -11,13 +11,23 @@ const ViewAllCustomerPay = ({
     getAllCustomerPays,
     allcustomerPay,
     filtered,
+    getCustomers,
+    customers,
     loading,
     history
 }) => {
     useEffect(() => {
         getAllCustomerPays();
+        getCustomers();
         //eslint-disable-next-line
-    }, [getAllCustomerPays]);
+    }, [getAllCustomerPays, getCustomers]);
+
+
+
+    let customerOption = customers.map(cust => (
+        <Link className="dropdown-item" to={`/admin/customerPayment/customersPayment/${cust._id}`} key={cust._id} > {cust.name}</Link>
+
+    ))
 
     return (
         <Fragment>
@@ -29,9 +39,20 @@ const ViewAllCustomerPay = ({
                         <div className="row justify-content-center animated fadeInRight">
                             <div className="col-lg-10 col-md-10 align-item-center">
                                 <h2 className="text-center pt-2"> View All Customer Payment </h2>
+
+                                <div className="dropdown show">
+
+                                    <Link className="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Customer
+                            </Link>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        {customerOption}
+                                    </div>
+                                </div>
+
                                 <br />
                                 <div className="row">
-                                    <table className="table table-hover mt-2">
+                                    <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Customer</th>
@@ -48,7 +69,7 @@ const ViewAllCustomerPay = ({
                                         <tbody>
                                             {allcustomerPay.map(customerPay => (
                                                 <tr key={customerPay._id}>
-                                                    <td>{customerPay.customer}</td>
+                                                    <td>{customerPay.customer.name}</td>
                                                     <td>{customerPay.project.projectName}</td>
                                                     <td>{customerPay.invoiceNo}</td>
                                                     <td>{`${customerPay.amount} ${customerPay.currency}`}</td>
@@ -72,15 +93,19 @@ const ViewAllCustomerPay = ({
 
 ViewAllCustomerPay.propTypes = {
     getAllCustomerPays: PropTypes.func.isRequired,
-    allcustomerPay: PropTypes.array.isRequired
+    allcustomerPay: PropTypes.array.isRequired,
+    getCustomers: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = state => ({
     allcustomerPay: state.customerpay.allcustomerPay,
     filtered: state.customerpay.filtered,
-    loading: state.customerpay.loading
+    loading: state.customerpay.loading,
+    customers: state.customer.customers,
+
 });
 export default connect(
     mapStateToProps,
-    { getAllCustomerPays }
+    { getAllCustomerPays, getCustomers }
 )(ViewAllCustomerPay);

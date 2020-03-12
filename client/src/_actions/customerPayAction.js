@@ -20,7 +20,7 @@ export const getCurrentCustomerPay = id => async dispatch => {
     }
 };
 
-//Get User CustomerPays
+//Get Auth User CustomerPays
 export const getCustomerPays = () => async dispatch => {
     try {
         const res = await axios.get("/api/customerpayment");
@@ -55,6 +55,37 @@ export const getAllCustomerPays = () => async dispatch => {
         // });
     }
 };
+
+
+//Get Customer Based payment
+export const CustomerBasedPay = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/getAll?customer[0]._id=${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.CUSTOMER_BASED_PAY,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+//Get Customer Based Total Sum of Payment
+export const CustomerTotalPayment = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/custTotal/${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.CUST_SUM_PAYMENT,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
 
 // Add customerPay
 export const addCustomerPay = (formData, history) => async dispatch => {
