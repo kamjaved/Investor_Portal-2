@@ -28,6 +28,9 @@ import ViewExpenses from './components/Expense/viewExpenses';
 import EditExpense from './components/Expense/editExpenses';
 import ViewCustomerPay from './components/Customer Payment/viewCustomerPay';
 import EditCustomerPay from './components/Customer Payment/editCustomerPay';
+import AddCustomer from './components/Customers/addCustomer';
+import EditCustomer from './components/Customers/editCustomer';
+import ViewCustomer from './components/Customers/viewCustomer';
 //---REPORTS---------------
 import ReportsLanding from './components/Reports/reportsLanding';
 import ViewAllProjects from './components/Reports/viewAllProjects';
@@ -41,6 +44,13 @@ import NotFound from './components/UI/notFound';
 import UserInvestment from './components/Reports/userBasedReport/usersInvestment';
 import UserExpense from './components/Reports/userBasedReport/usersExpenses';
 import CustomerCustPay from './components/Reports/userBasedReport/customerCustPay';
+import MonthInvestment from './components/Reports/monthbasedReport/monthInvestment';
+import MonthExpense from './components/Reports/monthbasedReport/monthExpense';
+import MonthCustPay from './components/Reports/monthbasedReport/monthCustPay';
+import UserMonthInv from './components/Reports/monthbasedReport/usermonthInv';
+import UsermonthExp from './components/Reports/monthbasedReport/usermonthExp';
+import UsermonthCustPay from './components/Reports/monthbasedReport/usermonthCustPay';
+
 
 
 if (localStorage.token) {
@@ -80,6 +90,11 @@ const App = () => {
             <PrivateRoute path="/admin/addestimate" component={AddEstimate} />
             <PrivateRoute path="/admin/view-estimate" component={ViewEstimate} />
 
+
+            <PrivateRoute path="/admin/addcustomer" component={AddCustomer} />
+            <PrivateRoute path="/admin/viewcustomer" component={ViewCustomer} />
+            <PrivateRoute path={`/admin/editCustomer/:id`} component={EditCustomer} />
+
             <PrivateRoute path="/admin/myreport" component={ReportsLanding} />
             <PrivateRoute path="/admin/project/viewAllproject" component={ViewAllProjects} />
             <PrivateRoute path="/admin/customerPayment/viewAllcustomerPayment" component={ViewAllCustomerPay} />
@@ -90,6 +105,13 @@ const App = () => {
             <PrivateRoute path={`/admin/investment/userInvestment/:id`} component={UserInvestment} />
             <PrivateRoute path={`/admin/expense/userExpense/:id`} component={UserExpense} />
             <PrivateRoute path={`/admin/customerPayment/customersPayment/:id`} component={CustomerCustPay} />
+
+            <PrivateRoute path={`/admin/investment/monthInvestment/:year`} component={MonthInvestment} />
+            <PrivateRoute path={`/admin/expenses/monthInvestment/:year`} component={MonthExpense} />
+            <PrivateRoute path={`/admin/customerPayment/monthInvestment/:year`} component={MonthCustPay} />
+            <PrivateRoute path={`/admin/investment/usermonthInvestment/:year/:id`} component={UserMonthInv} />
+            <PrivateRoute path={`/admin/expenses/usermonthExpense/:year/:id`} component={UsermonthExp} />
+            <PrivateRoute path={`/admin/customerPayment/usermonthInvestment/:year/:id`} component={UsermonthCustPay} />
 
 
 

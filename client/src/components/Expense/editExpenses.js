@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { editExpense, getCurrentExpense } from '../../_actions/expenseAction'
 import { getCurrencies } from '../../_actions/investmentAction'
 import { getProjects } from '../../_actions/projectAction'
-
+import moment from 'moment';
 import '../UI/Dashboard.css'
 
 const EditExpense = ({
@@ -26,7 +26,7 @@ const EditExpense = ({
         project: "",
         amount: "",
         currency: "",
-        date: "",
+        date: new Date(),
         purpose: "",
         image: "",
         convAmt: "",
@@ -49,7 +49,7 @@ const EditExpense = ({
             amount: loading || !expense.amount ? "" : expense.amount,
             currency: loading || !expense.currency ? "" : expense.currency,
             convAmt: loading || !expense.convAmt ? "" : expense.convAmt,
-            date: loading || !expense.date ? "" : expense.date,
+            date: loading || !expense.date ? "" : moment(expense.date).format('YYYY-MM-DD'),
             purpose: loading || !expense.purpose ? "" : expense.purpose,
             project: loading || !expense.project ? "" : expense.project._id,
             image: loading || !expense.image ? "" : expense.image
@@ -63,11 +63,20 @@ const EditExpense = ({
 
     const onChangeHandler = e => {
         e.preventDefault();
-        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result });
-        console.log(formData)
+        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result, projectName: name });
+        // console.log(formData)
 
     };
 
+
+    let newDetail = []
+    newDetail = projects.filter(x => x._id === project)
+    //console.log(newDetail);
+
+    let name = newDetail.map(nd => (
+        nd.projectName
+
+    ))
 
     const onChangeImage = e => {
         e.preventDefault();
@@ -85,6 +94,7 @@ const EditExpense = ({
 
         formData.append("image", image);
         formData.append("project", project);
+        formData.append("projectName", name);
         formData.append("amount", amount);
         formData.append("currency", currency);
         formData.append("date", date);
@@ -97,7 +107,7 @@ const EditExpense = ({
 
 
     let projectOption = projects.map(pro => (
-        <option key={pro._id} value={pro._id} selected={project === pro.projectName}>
+        <option key={pro._id} value={pro._id}>
             {pro.projectName}
         </option>
     ));
@@ -125,6 +135,13 @@ const EditExpense = ({
                                                 <option>Select Project</option>
                                                 {projectOption}
                                             </select>
+
+                                            <input
+                                                name="projectName"
+                                                type="hidden"
+                                                value={name[0]}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
 
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}

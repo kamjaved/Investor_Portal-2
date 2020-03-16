@@ -5,6 +5,7 @@ import { editInvestment, getCurrentInvestment, getCurrencies } from '../../_acti
 import { getProjects } from '../../_actions/projectAction'
 import '../UI/Dashboard.css'
 import { Link } from "react-router-dom";
+import moment from 'moment';
 
 const EditInvestment = ({
     investment: { investment, loading },
@@ -23,13 +24,14 @@ const EditInvestment = ({
     const [formData, setFormData] = useState({
         project: "",
         amount: "",
+        projectName: "",
         currency: "",
-        date: "",
+        date: new Date(),
         image: "",
         convAmt: "",
     });
 
-
+    //format('2013-03-10T02:00:00Z', 'YYYY-MM-DD'); 
     useEffect(() => {
         getCurrencies();
         getProjects();
@@ -38,7 +40,7 @@ const EditInvestment = ({
             amount: loading || !investment.amount ? "" : investment.amount,
             currency: loading || !investment.currency ? "" : investment.currency,
             convAmt: loading || !investment.convAmt ? "" : investment.convAmt,
-            date: loading || !investment.date ? "" : investment.date,
+            date: loading || !investment.date ? "" : moment(investment.date).format('YYYY-MM-DD'),
             project: loading || !investment.project ? "" : investment.project._id,
             image: loading || !investment.image ? "" : investment.image
         });
@@ -49,12 +51,20 @@ const EditInvestment = ({
 
     const onChangeHandler = e => {
         e.preventDefault();
-        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result });
-        console.log(formData)
+        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result, projectName: name });
+        //console.log(formData)
 
     };
 
 
+    let newDetail = []
+    newDetail = projects.filter(x => x._id === project)
+    //console.log(newDetail);
+
+    let name = newDetail.map(nd => (
+        nd.projectName
+
+    ))
 
     const onChangeImage = e => {
         e.preventDefault();
@@ -66,6 +76,7 @@ const EditInvestment = ({
     //console.log({ result })
 
 
+
     const onSubmitHandler = e => {
         e.preventDefault();
 
@@ -74,6 +85,7 @@ const EditInvestment = ({
 
         formData.append("image", image);
         formData.append("project", project);
+        formData.append("projectName", name);
         formData.append("amount", amount);
         formData.append("currency", currency);
         formData.append("date", date);
@@ -81,9 +93,15 @@ const EditInvestment = ({
         editInvestment(formData, history, match.params.id);
     };
 
+    // let isoDate = "2013-03-10T02:00:00Z";
+    // var d = new Date(isoDate);
+    // d.toLocaleDateString('en-GB'); // dd/mm/yyyy
+    // d.toLocaleDateString(''); // mm/dd/yyyy
+
+
 
     let projectOption = projects.map(pro => (
-        <option key={pro._id} value={pro._id} selected={project === pro.projectName}>
+        <option key={pro._id} value={pro._id} >
             {pro.projectName}
         </option>
     ));
@@ -112,6 +130,13 @@ const EditInvestment = ({
                                                 <option>Select Project</option>
                                                 {projectOption}
                                             </select>
+
+                                            <input
+                                                name="projectName"
+                                                type="hidden"
+                                                value={name[0]}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
 
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}

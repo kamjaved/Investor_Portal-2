@@ -69,6 +69,39 @@ export const userTotalExpense = (id) => async dispatch => {
     }
 };
 
+
+//Get Mothly Expenses
+export const monthlyExpense = (year) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/expense/monthTotal/${year}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_MONTHLY_EXPENSES,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
+
+
+//Get Mothly Usrs Expenses
+export const UsermonthlyExpense = (year, id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/expense/usermonthTotal/${year}/${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_USER_MONTHLY_EXPENSES,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
 //Get Sum of Over All EXpenses
 export const getOverAllSumExp = (id) => async dispatch => {
     try {

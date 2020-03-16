@@ -4,12 +4,23 @@ const initialExpense = {
     expense: null,
     expenses: [],
     allexpenses: [],
+
+    //---Total Sum---
     projectwiseExpense: [],
     UserName: '',
     totalExpenses: [],
     overAllExpenses: [],
     usersExpenses: [],
     usersSumExp: [],
+
+    //--month---
+    monthlyExpenses: [],
+    usermonthlyExpenses: [],
+    year: [],
+    month: [],
+    expenDoc: [],
+    username2: [],
+
     error: {},
     filtered: null,
     loading: true
@@ -50,6 +61,24 @@ export default function (state = initialExpense, action) {
                 UserName: payload[0].user.firstName,
                 loading: false
             };
+
+        case types.GET_MONTHLY_EXPENSES:
+            return {
+                ...state,
+                monthlyExpenses: payload,
+                year: payload.map(y => (y._id.year)),
+                month: payload.map(m => (m._id.month)),
+                expenDoc: payload.map(doc => (doc.expense_docs)),
+                loading: false
+            };
+        case types.GET_USER_MONTHLY_EXPENSES:
+            return {
+                ...state,
+                usermonthlyExpenses: payload,
+                username2: payload.map(doc => (doc.expense_docs[0].username)),
+                loading: false
+            };
+
         case types.GET_USERS_SUM_EXPENSES:
             return {
                 ...state,

@@ -5,6 +5,7 @@ import {
     deleteCustomerPay,
     setCurrentCustomerPay
 } from "../../_actions/customerPayAction.js";
+import moment from 'moment'
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -63,7 +64,7 @@ const CustomerPayMaster = ({
                                                     <td>{customerPay.invoiceNo}</td>
                                                     <td>{`${customerPay.amount} ${customerPay.currency}`}</td>
                                                     <td>${`${customerPay.convAmt}`}</td>
-                                                    <td>{`${customerPay.date}`}</td>
+                                                    <td>{moment(customerPay.date).format("DD-MM-YYYY")}</td>
 
                                                     <td className="text-right">
                                                         <Link

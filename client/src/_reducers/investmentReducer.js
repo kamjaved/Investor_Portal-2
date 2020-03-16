@@ -4,6 +4,8 @@ const initialInvestment = {
     investment: null,
     investments: [],
     allinvestments: [],
+
+    // ---Total Sum
     projectwiseInvestment: [],
     projectName: '',
     UserName: '',
@@ -11,6 +13,13 @@ const initialInvestment = {
     overAllInvestment: [],
     usersInvestments: [],
     usersSumInv: [],
+
+    //--month---
+    monthlyInvestments: [],
+    usermonthlyInvestments: [],
+    year: [],
+    month: [],
+    investDoc: [],
     currencies: [],
     error: {},
     filtered: null,
@@ -44,6 +53,22 @@ export default function (state = initialInvestment, action) {
                 ...state,
                 usersInvestments: payload,
                 UserName: payload[0].user.firstName,
+                loading: false
+            };
+
+        case types.GET_MONTHLY_INVESTMENTS:
+            return {
+                ...state,
+                monthlyInvestments: payload,
+                year: payload.map(y => (y._id.year)),
+                month: payload.map(m => (m._id.month)),
+                investDoc: payload.map(doc => (doc.invest_docs)),
+                loading: false
+            };
+        case types.GET_USER_MONTHLY_INVESTMENTS:
+            return {
+                ...state,
+                usermonthlyInvestments: payload,
                 loading: false
             };
         case types.GET_USERS_SUM_INVESTMENTS:

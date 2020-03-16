@@ -75,11 +75,13 @@ const resizeReciptPhoto = (req, res, next) => {
 router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
 
-    const { project, amount, currency, date, purpose, convAmt, image } = req.body;
+    const { project, amount, currency, date, purpose, convAmt, image, projectName, } = req.body;
     try {
         const newExpense = new Expense({
             project, amount, currency, date, purpose, convAmt,
+            projectName,
             user: req.user.id,
+            username: req.user.username,
             image: req.file ? req.file.filename : image,
 
         });
@@ -109,13 +111,14 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
 
 router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
-    const { project, amount, currency, date, convAmt, image, purpose, } = req.body;
+    const { project, amount, currency, date, convAmt, image, purpose, projectName, } = req.body;
 
     const doc = await Expense.findByIdAndUpdate(req.params.id, {
-        project, amount, currency, date, convAmt, purpose,
+        project, amount, currency, date, convAmt, purpose, projectName,
         new: true,
         runValidators: true,
         user: req.user.id,
+        username: req.user.username,
         image: req.file ? req.file.filename : image,
     });
 
@@ -157,6 +160,12 @@ router
 router
     .route("/Usertotal/:id")
     .get(expenseController.getUsersTotalExpenses)
+router
+    .route("/monthTotal/:year")
+    .get(expenseController.getMonthExpenses)
+router
+    .route("/usermonthTotal/:year/:id")
+    .get(expenseController.getUserMonthExpenses)
 router
     .route("/filter/:id")
     .get(expenseController.getFilteredExpenses)

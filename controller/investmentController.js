@@ -176,3 +176,183 @@ exports.getUsersTotalInvestments = catchAsync(async (req, res, next) => {
     });
 });
 
+
+
+// Get Sum of Over-All Ivestment
+exports.getOverAllSumInvestments = catchAsync(async (req, res, next) => {
+    const features = await new APIFeatures(
+
+        Investment.aggregate([
+
+            {
+                $group: {
+                    _id: null,
+                    totalInvest: { $sum: "$convAmt" },
+                }
+            },
+        ]),
+        req.query
+    )
+        .paginate()
+
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+//Get Month Wise Investment
+exports.getMonthInvestments = catchAsync(async (req, res, next) => {
+    const year = req.params.year * 1;
+    const features = await new APIFeatures(
+
+        Investment.aggregate([
+
+            {
+                $project: {
+                    year: { $year: "$date" },
+                    month: { $month: "$date" },
+                    _id: 1,
+                    convAmt: 1
+                },
+            }, {
+                $group: {
+                    _id: { year: "$year", month: "$month" },
+                    totalInvestMonthy: { $sum: "$convAmt" },
+                    amount: {
+                        $push: '$convAmt',
+                        //$push: "$user"
+                    },
+                }
+            }, {
+                $sort: { _id: 1 }
+            },
+
+            {
+                $lookup: {
+                    from: 'investments',
+                    foreignField: "convAmt",
+                    localField: "amount",
+                    "as": 'invest_docs'
+                },
+
+            },
+
+            {
+                $match: {
+                    "_id.year": year,
+                    // "_id.month": 2
+                }
+            },
+
+
+        ]),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+//Get Month Wise User Investment
+exports.getUserMonthInvestments = catchAsync(async (req, res, next) => {
+    const year = req.params.year * 1;
+    const features = await new APIFeatures(
+
+        Investment.aggregate([
+
+            {
+                $project: {
+                    year: { $year: "$date" },
+                    month: { $month: "$date" },
+                    _id: 1,
+                    convAmt: 1,
+                    user: 1
+                },
+            },
+            {
+                $match: {
+                    user: new ObjectId(req.params.id)
+                },
+
+            },
+
+            {
+                $group: {
+                    _id: { year: "$year", month: "$month", },
+                    totalInvestMonthy: { $sum: "$convAmt" },
+                    amount: {
+                        $push: '$convAmt',
+                        //$push: "$user"
+                    },
+                }
+            }, {
+                $sort: { _id: 1 }
+            }, {
+                $lookup: {
+                    from: 'investments',
+                    foreignField: "convAmt",
+                    localField: "amount",
+                    "as": 'invest_docs'
+                },
+
+            },
+            {
+                $match: {
+                    "_id.year": year,
+                    // "_id.month": 2
+                }
+            },
+
+
+        ]),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+// {
+//     $lookup: {
+//         from: 'investments',
+//         //let: { convAmt: "$" },
+//         // foreignField: "user",
+//         pipeline: [
+//              { $match: { $expr: "$convAmt" } },
+//             {
+//                 $group: { _id: { year: "$year", month: "$month", conv: "$convAmt" } }
+//             },
+
+//         ],
+//         "as": 'users_docs'
+//     },
+
+// },
+
+
+
+// {
+//     $lookup: {
+//         from: 'investments',
+//         foreignField: "convAmt",
+//         localField: "amount",
+//         "as": 'users_docs'
+//     },
+
+// },

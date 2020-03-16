@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useCallback } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import DatePicker from 'react-datepicker'
 import { addInvestment, getCurrencies } from '../../_actions/investmentAction'
 import { getProjects } from '../../_actions/projectAction'
 import { getAllUsers } from "../../_actions/authAction"
@@ -22,30 +21,33 @@ const AddInvestment = ({
 
 
     const [formData, setFormData] = useState({
+
         project: "",
+        projectName: "",
         amount: "",
         currency: "",
-        date: "",
+        date: new Date(),
         image: "",
         convAmt: "",
 
     });
 
-    const { project, amount, currency, date, image, } = formData;
+    const { project, projectName, amount, currency, date, image, } = formData;
 
     useEffect(() => {
         getProjects();
         getAllUsers();
+
 
         //eslint-disable-next-line
     }, [getProjects, getAllUsers,]);
 
     useEffect(() => {
         getCurrencies();
+
         //console.log(currencies[currency]);
         //eslint-disable-next-line
     }, [getCurrencies, currency]);
-
 
     const onChangeHandler = e => {
         e.preventDefault();
@@ -54,9 +56,21 @@ const AddInvestment = ({
 
     };
 
+    let newDetail = []
+    newDetail = projects.filter(x => x._id === project)
+    //console.log(newDetail);
+
+    let name = newDetail.map(nd => (
+        nd.projectName
+
+    ))
+    // console.log(name[0]);
+
+
 
     const onChangeImage = e => {
         e.preventDefault();
+
         setFormData({ ...formData, image: e.target.files[0] });
     };
 
@@ -64,7 +78,11 @@ const AddInvestment = ({
     const result = (amount / currencies[currency]).toFixed(2)
     //console.log({ result })
 
-
+    let projectOptn = projects.map(pj => (
+        <option key={pj._id} value={pj._id} name={pj.projectName}>
+            {pj.projectName}
+        </option>
+    ));
 
     const onSubmitHandler = e => {
         e.preventDefault();
@@ -74,6 +92,7 @@ const AddInvestment = ({
 
         formData.append("image", image);
         formData.append("project", project);
+        formData.append("projectName", name);
         formData.append("amount", amount);
         formData.append("currency", currency);
         formData.append("date", date);
@@ -85,18 +104,6 @@ const AddInvestment = ({
         //console.log(formData)
 
     };
-
-    let projectOptn = projects.map(projects => (
-        <option key={projects._id} value={projects._id}>
-            {projects.projectName}
-        </option>
-    ));
-
-    // let usersOptn = users.map(users => (
-    //     <option key={users._id} value={users._id} >
-    //         {users.firstName + " " + users.lastName}
-    //     </option>
-    // ));
 
 
     return (
@@ -122,6 +129,14 @@ const AddInvestment = ({
                                                 {projectOptn}
                                             </select>
 
+
+
+                                            <input
+                                                name="projectName"
+                                                type="hidden"
+                                                value={name[0]}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
 
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}
@@ -152,6 +167,7 @@ const AddInvestment = ({
 
 
 
+
                                             <input name="convAmt"
                                                 placeholder="In  $USD "
                                                 type="number"
@@ -161,14 +177,13 @@ const AddInvestment = ({
                                             <p className="ml-4"> <b>Converted Amt. In $USD</b></p>
 
 
+
+
                                             <input name="date"
                                                 placeholder="Date"
-                                                selected={Date.now()}
                                                 type="date"
                                                 value={date}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
-
-                                            <DatePicker></DatePicker>
 
                                             <div>
                                                 <small>Upload Recipt <b>Max-File-Size-1MB <br />Supported File jpg/png</b></small>
@@ -225,3 +240,11 @@ export default connect(mapStateToProps, { addInvestment, getProjects, getAllUser
 //http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&format=1
 //http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP&format=1
 // import axios from 'axios'
+
+
+// <input name="date"
+// placeholder="Date"
+// selected={Date.now()}
+// type="date"
+// value={date}
+// onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />

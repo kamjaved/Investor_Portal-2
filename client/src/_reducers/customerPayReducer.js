@@ -4,12 +4,23 @@ const initialCustomerPay = {
     customerPay: null,
     customerPays: [],
     allcustomerPay: [],
+
+    //--Total Sum
     projectwiseCustPay: [],
     customerbasedPayments: [],
     custSumPayment: [],
     CustName: '',
     totalCustPay: [],
     overAllCustPay: [],
+
+    //---month
+    monthlyCustPays: [],
+    usermonthlyCustPays: [],
+    username: '',
+    year: [],
+    month: [],
+    custPayDoc: [],
+
     error: {},
     filtered: null,
     loading: true
@@ -64,6 +75,22 @@ export default function (state = initialCustomerPay, action) {
                 overAllCustPay: payload,
                 loading: false
             }
+        case types.GET_MONTHLY_CUSTPAY:
+            return {
+                ...state,
+                monthlyCustPays: payload,
+                year: payload.map(y => (y._id.year)),
+                month: payload.map(m => (m._id.month)),
+                custPayDoc: payload.map(doc => (doc.custpay_docs)),
+                loading: false
+            };
+        case types.GET_USER_MONTHLY_CUSTPAY:
+            return {
+                ...state,
+                usermonthlyCustPays: payload,
+                username: payload.map(doc => (doc.custpay_docs[0].username)),
+                loading: false
+            };
         case types.GET_TOTALWISE_CUSTPAY:
             return {
                 ...state,

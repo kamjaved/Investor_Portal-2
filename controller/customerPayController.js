@@ -57,11 +57,12 @@ exports.getOverAllSumCustomerPay = catchAsync(async (req, res, next) => {
 // Post Add CustomerPay
 
 exports.createCustomerPay = catchAsync(async (req, res, next) => {
-    const { project, customer, invoiceNo, amount, currency, convAmt, date, } = req.body;
+    const { project, customer, invoiceNo, amount, currency, convAmt, date, username, projectName } = req.body;
     try {
         const newCustomerPay = new CustomerPay({
-            project, customer, invoiceNo, amount, currency, convAmt, date,
+            project, customer, invoiceNo, amount, currency, convAmt, date, username, projectName,
             user: req.user.id
+
         });
 
         const doc = await newCustomerPay.save();
@@ -183,3 +184,121 @@ exports.getCustomerTotalPay = catchAsync(async (req, res, next) => {
         data: docs
     });
 });
+
+
+//Get Month Wise Customerpay
+exports.getMonthCustomerPays = catchAsync(async (req, res, next) => {
+    const year = req.params.year * 1;
+    const features = await new APIFeatures(
+
+        CustomerPay.aggregate([
+
+            {
+                $project: {
+                    year: { $year: "$date" },
+                    month: { $month: "$date" },
+                    _id: 1,
+                    convAmt: 1
+                },
+            }, {
+                $group: {
+                    _id: { year: "$year", month: "$month" },
+                    totalCustPayMonthy: { $sum: "$convAmt" },
+                    amount: {
+                        $push: '$convAmt',
+                        //$push: "$user"
+                    },
+                }
+            }, { $sort: { _id: 1 } }, {
+                $lookup: {
+                    from: 'customerpays',
+                    foreignField: "convAmt",
+                    localField: "amount",
+                    "as": 'custpay_docs'
+                },
+
+            },
+            {
+                $match: {
+                    "_id.year": year,
+                    // "_id.month": 2
+                }
+            },
+
+
+        ]),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+//Get Month Wise User Customerpay
+exports.getMonthUserCustPay = catchAsync(async (req, res, next) => {
+    const year = req.params.year * 1;
+    const features = await new APIFeatures(
+
+        CustomerPay.aggregate([
+
+            {
+                $project: {
+                    year: { $year: "$date" },
+                    month: { $month: "$date" },
+                    _id: 1,
+                    convAmt: 1,
+                    customer: 1,
+                },
+            },
+            {
+                $match: {
+                    customer: new ObjectId(req.params.id)
+                },
+
+            }, {
+                $group: {
+                    _id: { year: "$year", month: "$month" },
+                    totalCustPayMonthy: { $sum: "$convAmt" },
+                    amount: {
+                        $push: '$convAmt',
+                        //$push: "$user"
+                    },
+                }
+            }, {
+                $sort: { _id: 1 }
+            }, {
+                $lookup: {
+                    from: 'customerpays',
+                    foreignField: "convAmt",
+                    localField: "amount",
+                    "as": 'custpay_docs'
+                },
+
+            },
+            {
+                $match: {
+                    "_id.year": year,
+                    // "_id.month": 2
+                }
+            },
+
+
+        ]),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+

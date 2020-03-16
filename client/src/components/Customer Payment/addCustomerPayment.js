@@ -26,6 +26,8 @@ const AddCustomerPay = ({
     const [formData, setFormData] = useState({
         project: "",
         customer: "",
+        username: "",
+        projectName: "",
         amount: "",
         currency: "",
         convAmt: "",
@@ -52,10 +54,32 @@ const AddCustomerPay = ({
 
     const onChangeHandler = e => {
         e.preventDefault();
-        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result });
+        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result, username: usrname[0], projectName: projname[0] });
         //console.log(formData)
 
     };
+
+
+    let projDetail = []
+    projDetail = projects.filter(x => x._id === project)
+    //console.log(projDetail);
+
+    let projname = projDetail.map(nd => (
+        nd.projectName
+
+    ))
+    // console.log(name[0]);
+
+
+    let userDetail = []
+    userDetail = customers.filter(x => x._id === customer)
+    //console.log(userDetail);
+
+    let usrname = userDetail.map(nd => (
+        nd.name
+
+    ))
+    // console.log(name[0]);
 
     const onSubmitHandler = e => {
         e.preventDefault();
@@ -78,6 +102,7 @@ const AddCustomerPay = ({
             {customer.name}
         </option>
     ));
+
     return (
         <Fragment>
             <div className="container-fluid">
@@ -100,6 +125,13 @@ const AddCustomerPay = ({
                                                 {customerOptn}
                                             </select>
 
+                                            <input
+                                                name="username"
+                                                type="hidden"
+                                                value={usrname[0]}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
+
                                             <select
                                                 className="border p-3 w-100 my-2"
                                                 name="project"
@@ -108,6 +140,13 @@ const AddCustomerPay = ({
                                                 <option>Select Project</option>
                                                 {projectOptn}
                                             </select>
+
+                                            <input
+                                                name="projectName"
+                                                type="hidden"
+                                                value={projname[0]}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
 
                                             <input name="invoiceNo"
                                                 placeholder="Invoice No."
@@ -135,7 +174,7 @@ const AddCustomerPay = ({
 
                                             <input name="amount"
                                                 placeholder="Amount"
-                                                type="text"
+                                                type="number"
                                                 value={amount}
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" required />

@@ -5,7 +5,7 @@ import {
     deleteExpense,
     setCurrentExpense
 } from "../../_actions/expenseAction";
-
+import moment from 'moment'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -61,7 +61,7 @@ const ExpenseMaster = ({
                                                     <td>{expense.project.projectName}</td>
                                                     <td>{`${expense.amount} ${expense.currency}`}</td>
                                                     <td>${`${expense.convAmt}`}</td>
-                                                    <td>{`${expense.date}`}</td>
+                                                    <td>{moment(expense.date).format("DD-MM-YYYY")}</td>
                                                     <td>{`${expense.purpose}`}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></td>
                                                     <td className="text-right">

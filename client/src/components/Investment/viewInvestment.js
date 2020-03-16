@@ -5,7 +5,7 @@ import {
     deleteInvestment,
     setCurrentInvestment
 } from "../../_actions/investmentAction";
-
+import moment from 'moment'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -60,7 +60,7 @@ const InvestmentMaster = ({
                                                     <td>{investment.project.projectName}</td>
                                                     <td>{`${investment.amount} ${investment.currency}`}</td>
                                                     <td>${`${investment.convAmt}`}</td>
-                                                    <td>{`${investment.date}`}</td>
+                                                    <td>{moment(investment.date).format("DD-MM-YYYY")}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></td>
                                                     <td className="text-right">
                                                         <Link

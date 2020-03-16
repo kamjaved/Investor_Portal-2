@@ -87,6 +87,37 @@ export const CustomerTotalPayment = (id) => async dispatch => {
 };
 
 
+//Get Mothly CustomPay
+export const monthlyCustPay = (year) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/monthTotal/${year}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_MONTHLY_CUSTPAY,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
+//Get Mothly User CustomPay
+export const UsermonthlyCustPay = (year, id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/customerpayment/usermonthTotal/${year}/${id}`);
+        dispatch({
+            type: types.GET_USER_MONTHLY_CUSTPAY,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
+
+
 // Add customerPay
 export const addCustomerPay = (formData, history) => async dispatch => {
     try {

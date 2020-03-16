@@ -122,95 +122,110 @@ const Dashboard = ({
                         <div>
                             <div className="container">
                                 <div className="row mb-1  animated fadeIn">
-                                    <div className="col-xl-3 col-sm-6 py-2">
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/addproject" style={{ textDecoration: "none" }}>
-                                            <div className="card bg-primary text-white h-100">
+                                            <div className="card bg-primary text-white h-100 w-100">
                                                 <div className="card-body bg-primary">
                                                     <div className="rotate">
                                                         <i className="fa fa-file-code-o fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase">Add Project</h2>
+                                                    <h4 className="text-uppercase">Add Project</h4>
                                                     <small>Add New Project</small>
 
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
-                                    <div className="col-xl-3 col-sm-6 py-2">
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/addinvestment" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-success h-100">
+                                            <div className="card text-white bg-success h-100 w-100">
                                                 <div className="card-body bg-success">
                                                     <div className="rotate">
                                                         <i className="fa fa-money fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase">Investment</h2>
+                                                    <h4 className="text-uppercase">Add Investment</h4>
                                                     <small>investment on Project</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
-                                    <div className="col-xl-3 col-sm-6 py-2">
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/addexpenses" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-info h-100">
+                                            <div className="card text-white bg-info h-100 w-100">
                                                 <div className="card-body bg-info">
                                                     <div className="rotate">
                                                         <i className="fa fa-shopping-cart fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase">Add Expenses</h2>
+                                                    <h4 className="text-uppercase">Add Expenses</h4>
                                                     <small>Expenses on Project</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
-                                    <div className="col-xl-3 col-sm-6 py-2">
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/addcustomerPayment" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-warning h-100">
+                                            <div className="card text-white bg-warning h-100 w-100">
                                                 <div className="card-body bg-warning">
                                                     <div className="rotate">
                                                         <i className="fa fa-credit-card fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase">Add Customer Payment</h2>
+                                                    <h4 className="text-uppercase">Add Customer Payment</h4>
                                                     <small>Customer Payment Details</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div> <br />
 
-                                    <div className="col-xl-3 col-sm-6 py-2">
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/addestimate" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-grey h-100">
+                                            <div className="card text-white bg-grey h-100 w-100">
                                                 <div className="card-body bg-light">
                                                     <div className="rotate">
-                                                        <i className="fa fa-credit-card fa-4x"></i>
+                                                        <i className="fa fa-line-chart fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase">Add Estimated Amount</h2>
+                                                    <h5 className="text-uppercase">Add Estimated Amount</h5>
                                                     <small text-dark>Estimate on New Project</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div> <br />
-                                    <div className="col-xl-3 col-sm-6 py-2">
+
+
+                                    <div className="col-xl-2 col-sm-6 py-2">
+                                        <Link to="/admin/addCustomer" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white bg-purple h-100 w-100">
+                                                <div className="card-body purple">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-user fa-4x"></i>
+                                                    </div>
+                                                    <h5 className="text-uppercase">Add Customer</h5>
+                                                    <small text-dark>Add New Customer</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div> <br />
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/myreport" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-dark h-100">
+                                            <div className="card text-white bg-dark h-100 w-100">
                                                 <div className="card-body bg-dark">
                                                     <div className="rotate">
                                                         <i className="fa fa-bar-chart fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase text-white">Reports</h2>
+                                                    <h4 className="text-uppercase text-white">Reports</h4>
                                                     <small>View All Reports</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
 
-                                    <div className="col-xl-3 col-sm-6 py-2">
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link onClick={logout} to="/login" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-danger h-100">
+                                            <div className="card text-white bg-danger h-100 w-100">
                                                 <div className="card-body bg-danger">
                                                     <div className="rotate">
                                                         <i className="fa fa-unlock fa-4x"></i>
                                                     </div>
-                                                    <h2 className="text-uppercase">Logout</h2>
+                                                    <h4 className="text-uppercase">Logout</h4>
                                                     <small>Logout from your Account</small>
                                                 </div>
                                             </div>

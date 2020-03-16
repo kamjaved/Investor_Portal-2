@@ -8,6 +8,8 @@ const expenseSchema = new mongoose.Schema({
         ref: "User"
     },
 
+    username: { type: String },
+    projectName: { type: String },
     project: {
         type: mongoose.Schema.ObjectId,
         ref: "Project",
@@ -31,7 +33,7 @@ const expenseSchema = new mongoose.Schema({
     },
 
     date: {
-        type: String,
+        type: Date,
         required: [true, "Expense must have a Date."]
     },
 

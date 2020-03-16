@@ -170,3 +170,120 @@ exports.getUsersTotalExpenses = catchAsync(async (req, res, next) => {
         data: docs
     });
 });
+
+
+//Get Month Wise Expense
+exports.getMonthExpenses = catchAsync(async (req, res, next) => {
+    const year = req.params.year * 1;
+    const features = await new APIFeatures(
+
+        Expense.aggregate([
+
+            {
+                $project: {
+                    year: { $year: "$date" },
+                    month: { $month: "$date" },
+                    _id: 1,
+                    convAmt: 1
+                },
+            }, {
+                $group: {
+                    _id: { year: "$year", month: "$month" },
+                    totalExpenseMonthy: { $sum: "$convAmt" },
+                    amount: {
+                        $push: '$convAmt',
+                        //$push: "$user"
+                    },
+                }
+            }, {
+                $sort: { _id: 1 }
+            }, {
+                $lookup: {
+                    from: 'expenses',
+                    foreignField: "convAmt",
+                    localField: "amount",
+                    "as": 'expense_docs'
+                },
+
+            }, {
+                $match: {
+                    "_id.year": year,
+                    // "_id.month": 2
+                }
+            },
+
+
+        ]),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});
+
+
+//Get Month Wise User Expense
+exports.getUserMonthExpenses = catchAsync(async (req, res, next) => {
+    const year = req.params.year * 1;
+    const features = await new APIFeatures(
+
+        Expense.aggregate([
+
+            {
+                $project: {
+                    year: { $year: "$date" },
+                    month: { $month: "$date" },
+                    _id: 1,
+                    convAmt: 1,
+                    user: 1
+                },
+            },
+            {
+                $match: { user: new ObjectId(req.params.id) }
+
+            },
+            {
+                $group: {
+                    _id: { year: "$year", month: "$month" },
+                    totalExpUserMonthy: { $sum: "$convAmt" },
+                    amount: {
+                        $push: '$convAmt',
+                        //$push: "$user"
+                    },
+                }
+            }, {
+                $sort: { _id: 1 }
+            }, {
+                $lookup: {
+                    from: 'expenses',
+                    foreignField: "convAmt",
+                    localField: "amount",
+                    "as": 'expense_docs'
+                },
+
+            },
+            {
+                $match: {
+                    "_id.year": year,
+                    // "_id.month": 2
+                }
+            },
+
+
+        ]),
+        req.query
+    )
+        .sort()
+        .paginate();
+    const docs = await features.query;
+    res.status(200).json({
+        status: "success",
+        result: docs.length,
+        data: docs
+    });
+});

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const investmentSchema = new mongoose.Schema({
 
     user: {
@@ -8,12 +7,16 @@ const investmentSchema = new mongoose.Schema({
         ref: "User"
     },
 
+    username: { type: String },
+    projectName: { type: String },
     project: {
         type: mongoose.Schema.ObjectId,
         ref: "Project",
         required: [true, "There must be a project Name"],
 
     },
+
+    //project: [Project],
     // investedBy: {
     //     type: mongoose.Schema.ObjectId,
     //     ref: "User"
@@ -31,7 +34,7 @@ const investmentSchema = new mongoose.Schema({
     },
 
     date: {
-        type: String,
+        type: Date,
         required: [true, "Investment must have a Date."]
     },
 

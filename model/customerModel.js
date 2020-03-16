@@ -25,6 +25,14 @@ const CustomerSchema = new mongoose.Schema({
         type: Number,
         //required: [true, "Customer must have a end Date."]
     },
+    image: {
+        type: String
+    },
+
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User"
+    },
 
     createdAt: {
         type: Date,
@@ -33,5 +41,12 @@ const CustomerSchema = new mongoose.Schema({
 
 })
 
+CustomerSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: "user",
+        select: "firstName lastName username "
+    })
+    next();
+});
 
 module.exports = new mongoose.model('Customer', CustomerSchema)

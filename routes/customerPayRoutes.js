@@ -25,6 +25,14 @@ router
 router
     .route("/total/:id")
     .get(customerPayController.getTotalCustPay)
+
+router
+    .route("/monthTotal/:year")
+    .get(customerPayController.getMonthCustomerPays)
+router
+    .route("/usermonthTotal/:year/:id")
+    .get(customerPayController.getMonthUserCustPay)
+
 router
     .route("/filter/:id")
     .get(customerPayController.getFilteredCustPay)

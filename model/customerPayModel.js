@@ -8,6 +8,10 @@ const customerPaySchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "User"
     },
+
+    username: { type: String },
+    projectName: { type: String },
+
     customer: {
         type: mongoose.Schema.ObjectId,
         ref: "Customer",
@@ -40,7 +44,7 @@ const customerPaySchema = new mongoose.Schema({
     },
 
     date: {
-        type: String,
+        type: Date,
         required: [true, "CustomerPay must have a Date."]
     },
 

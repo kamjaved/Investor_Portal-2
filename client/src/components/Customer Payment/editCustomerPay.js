@@ -8,6 +8,7 @@ import { getProjects } from '../../_actions/projectAction'
 import { getCustomers } from '../../_actions/customerAction'
 import { getCurrencies } from '../../_actions/investmentAction'
 import '../UI/Dashboard.css'
+import moment from 'moment';
 
 const EditCustomerPay = ({
     customerPay: { customerPay, loading },
@@ -27,11 +28,13 @@ const EditCustomerPay = ({
 
     const [formData, setFormData] = useState({
         project: "",
+        projectName: "",
+        username: "",
         customer: "",
         amount: "",
         currency: "",
         convAmt: "",
-        date: "",
+        date: new Date(),
         invoiceNo: ""
 
     });
@@ -47,7 +50,7 @@ const EditCustomerPay = ({
             amount: loading || !customerPay.amount ? "" : customerPay.amount,
             currency: loading || !customerPay.currency ? "" : customerPay.currency,
             convAmt: loading || !customerPay.convAmt ? "" : customerPay.convAmt,
-            date: loading || !customerPay.date ? "" : customerPay.date,
+            // date: loading || !customerPay.date ? "" : moment(customerPay.date).format('YYYY-MM-DD'),
             project: loading || !customerPay.project ? "" : customerPay.project._id,
             customer: loading || !customerPay.customer ? "" : customerPay.customer._id,
             invoiceNo: loading || !customerPay.invoiceNo ? "" : customerPay.invoiceNo
@@ -57,7 +60,7 @@ const EditCustomerPay = ({
 
     const onChangeHandler = e => {
         e.preventDefault();
-        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result });
+        setFormData({ ...formData, [e.target.name]: e.target.value, convAmt: result, username: usrname[0], projectName: projname[0] });
         //console.log(formData)
 
     };
@@ -65,6 +68,24 @@ const EditCustomerPay = ({
     const result = (amount / currencies[currency]).toFixed(2)
     //console.log({ result })
 
+    let projDetail = []
+    projDetail = projects.filter(x => x._id === project)
+    //console.log(projDetail);
+    let projname = projDetail.map(nd => (
+        nd.projectName
+
+    ))
+    // console.log(name[0]);
+
+
+    let userDetail = []
+    userDetail = customers.filter(x => x._id === customer)
+    //console.log(userDetail);
+
+    let usrname = userDetail.map(nd => (
+        nd.name
+
+    ))
 
     const onSubmitHandler = e => {
         e.preventDefault();
@@ -107,6 +128,13 @@ const EditCustomerPay = ({
                                                 {customerOptn}
                                             </select>
 
+                                            <input
+                                                name="username"
+                                                type="hidden"
+                                                value={usrname}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
+
                                             <select
                                                 className="border p-3 w-100 my-2"
                                                 name="project"
@@ -115,6 +143,13 @@ const EditCustomerPay = ({
                                                 <option>Select Project</option>
                                                 {projectOptn}
                                             </select>
+
+                                            <input
+                                                name="projectName"
+                                                type="hidden"
+                                                value={projname}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
 
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}
@@ -152,7 +187,6 @@ const EditCustomerPay = ({
 
                                             <input name="date"
                                                 placeholder="Date"
-                                                selected={Date.now()}
                                                 type="date"
                                                 value={date}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />

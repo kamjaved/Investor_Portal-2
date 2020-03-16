@@ -87,6 +87,37 @@ export const userTotalInvestment = (id) => async dispatch => {
     }
 };
 
+//Get Mothly Investments
+export const monthlyInvestment = (year) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/investment/monthTotal/${year}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_MONTHLY_INVESTMENTS,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
+
+//Get Mothly User Investments
+export const UsermonthlyInvestment = (year, id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/investment/usermonthTotal/${year}/${id}`);
+        console.log(res.data);
+        dispatch({
+            type: types.GET_USER_MONTHLY_INVESTMENTS,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+
+    }
+};
+
 //Get Sum of Over All Investment
 export const getOverAllSumInv = (id) => async dispatch => {
     try {
@@ -202,6 +233,7 @@ export const addInvestment = (formData, history) => async dispatch => {
     } catch (err) {
         const errors = err.response.data.error;
         console.log(errors);
+
 
         if (err.response.status === 400) {
             dispatch(setAlert(`${err.response.data.msg}`, "danger"));

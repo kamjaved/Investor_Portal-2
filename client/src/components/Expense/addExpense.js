@@ -23,7 +23,7 @@ const AddExpense = ({
         project: "",
         amount: "",
         currency: "",
-        date: '',
+        date: new Date(),
         image: "",
         purpose: "",
         convAmt: "",
@@ -54,6 +54,15 @@ const AddExpense = ({
 
     };
 
+    let newDetail = []
+    newDetail = projects.filter(x => x._id === project)
+    //console.log(newDetail);
+
+    let name = newDetail.map(nd => (
+        nd.projectName
+
+    ))
+
     const onChangeImage = e => {
         e.preventDefault();
         setFormData({ ...formData, image: e.target.files[0] });
@@ -65,6 +74,12 @@ const AddExpense = ({
 
     // console.log({ result })
 
+    let projectOptn = projects.map(projects => (
+        <option key={projects._id} value={projects._id}>
+            {projects.projectName}
+        </option>
+    ));
+
     const onSubmitHandler = e => {
         e.preventDefault();
 
@@ -72,24 +87,18 @@ const AddExpense = ({
 
         formData.append("image", image);
         formData.append("project", project);
+        formData.append("projectName", name);
         formData.append("amount", amount);
         formData.append("currency", currency);
         formData.append("date", date);
         formData.append("purpose", purpose);
         formData.append("convAmt", result);
 
-
-
         addExpense(formData, history);
         console.log(formData)
 
     };
 
-    let projectOptn = projects.map(projects => (
-        <option key={projects._id} value={projects._id}>
-            {projects.projectName}
-        </option>
-    ));
 
     // let usersOptn = users.map(users => (
     //     <option key={users._id} value={users._id}>
@@ -119,7 +128,12 @@ const AddExpense = ({
                                                 {projectOptn}
                                             </select>
 
-
+                                            <input
+                                                name="projectName"
+                                                type="hidden"
+                                                value={name[0]}
+                                            //onChange={e => onProjectHandler2(e)}
+                                            />
                                             <select className="border p-3 w-100 my-2"
                                                 onChange={e => onChangeHandler(e)}
                                                 name="currency"

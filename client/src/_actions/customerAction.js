@@ -78,6 +78,13 @@ export const addCustomer = (formData, history) => async dispatch => {
             dispatch(setAlert("Customer already exists!", "danger"));
         }
 
+        if (err.response.status === 400) {
+            dispatch(setAlert(`${err.response.data.msg}`, "danger"));
+        }
+        else if (err.response.status === 500) {
+            dispatch(setAlert(`File Too Large or Invalid File Type`, "danger"));
+        }
+
         dispatch({
             type: types.CUSTOMER_ERROR,
             payload: { msg: errors, status: err.response.status }
@@ -88,7 +95,7 @@ export const addCustomer = (formData, history) => async dispatch => {
 // Edit customer
 export const editCustomer = (formData, history, id) => async dispatch => {
     try {
-        const res = await axios.patch(`/api/customer/${id}`, formData);
+        const res = await axios.patch(`/api/editCustomer/${id}`, formData);
 
         dispatch({
             type: types.GET_CUSTOMER,

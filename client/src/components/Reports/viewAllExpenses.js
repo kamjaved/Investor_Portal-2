@@ -1,19 +1,25 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllExpenses } from "../../_actions/expenseAction";
 import { getAllUsers } from '../../_actions/authAction'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from 'moment'
 
 const ViewAllExpenses = ({
     getAllExpenses,
     allexpenses,
     getAllUsers,
     users,
-    filtered,
-    loading,
-    history
+
 }) => {
+
+
+    const [formData, setFormData] = useState({
+        year: 0,
+        id: "",
+    });
+
     useEffect(() => {
         getAllExpenses();
         getAllUsers();
@@ -26,6 +32,39 @@ const ViewAllExpenses = ({
 
     ))
 
+
+
+    let userOption2 = users.map(user => (
+        <option className="dropdown-item" value={user._id} key={user._id} > {user.username}</option>
+
+    ))
+
+    let yearOption2 = (
+        <Fragment>
+            <option className="dropdown-item" value={2018}>2018</option>
+            <option className="dropdown-item" value={2019}>2019</option> <option className="dropdown-item" value={2020}>2020</option> <option className="dropdown-item" value={2021}>2021</option> <option className="dropdown-item" value={2022}>2022</option> <option className="dropdown-item" value={2023}>2023</option> <option className="dropdown-item" value={2024}>2024</option> <option className="dropdown-item" value={2025}>2025</option>
+        </Fragment>
+    )
+    const onChangeHandler = e => {
+        e.preventDefault();
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        console.log(formData)
+
+    };
+
+    const { year, id } = formData
+    let yearOption = (
+        <Fragment>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2018}`}>2018</Link>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2019}`}>2019</Link>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2020}`}>2020</Link>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2021}`}>2021</Link>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2022}`}>2022</Link>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2023}`}>2023</Link>
+            <Link className="dropdown-item" to={`/admin/expenses/monthInvestment/${2024}`}>2024</Link>
+        </Fragment>
+    )
+
     return (
         <Fragment>
             <div className="container-fluid">
@@ -37,15 +76,52 @@ const ViewAllExpenses = ({
                             <div className="col-lg-12 col-md-10 align-item-center">
                                 <h2 className="text-center pt-2">View All Expenses </h2>
 
-                                <div className="dropdown show">
+                                <div className="row">
+                                    <div className="dropdown show mr-2">
 
-                                    <Link className="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Select User
-                            </Link>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        {userOption}
+                                        <Link className="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Select User
+                                 </Link>
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            {userOption}
+                                        </div>
                                     </div>
+                                    <div className="dropdown show ml-2">
+
+                                        <Link className="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Select Year
+                </Link>
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            {yearOption}
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row border border-dark ml-4">
+                                        <select
+                                            className="btn btn-secondary btn-sm dropdown-toggle mr-2"
+                                            name="year"
+                                            value={year}
+                                            onChange={e => onChangeHandler(e)} required >
+                                            <option>Select Year</option>
+                                            {yearOption2}
+                                        </select>
+
+                                        <select
+                                            className="btn btn-secondary btn-sm dropdown-toggle ml-2"
+                                            name="id"
+                                            value={id}
+                                            onChange={e => onChangeHandler(e)} required>
+                                            <option>Select User</option>
+                                            {userOption2}
+                                        </select>
+                                        <Link className="btn btn-dark" type="submit"
+                                            to={`/admin/expenses/usermonthExpense/${year}/${id}`}
+                                        >Submit</Link>
+                                    </div>
+
                                 </div>
+
 
                                 <br />
                                 <div className="row">
@@ -68,7 +144,7 @@ const ViewAllExpenses = ({
                                                     <td>{expense.project.projectName}</td>
                                                     <td>{`${expense.amount} ${expense.currency}`}</td>
                                                     <td>${`${expense.convAmt}`}</td>
-                                                    <td>{`${expense.date}`}</td>
+                                                    <td>{moment(expense.date).format("DD-MM-YYYY")}</td>
                                                     <td>{`${expense.purpose}`}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></td>
                                                     <td>{`${expense.user.username}`}</td>
