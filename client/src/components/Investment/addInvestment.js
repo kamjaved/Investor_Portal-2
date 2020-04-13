@@ -2,19 +2,14 @@ import React, { Fragment, useEffect, useState, useCallback } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { addInvestment, getCurrencies } from '../../_actions/investmentAction'
-import { getProjects } from '../../_actions/projectAction'
+import { addInvestment } from '../../_actions/investmentAction'
 import { getAllUsers } from "../../_actions/authAction"
 import '../UI/Dashboard.css'
 
 const AddInvestment = ({
     history,
     getAllUsers,
-    getProjects,
-    getCurrencies,
     addInvestment,
-    projects,
-    currencies,
     users,
 }) => {
 
@@ -22,32 +17,21 @@ const AddInvestment = ({
 
     const [formData, setFormData] = useState({
 
-        project: "",
-        projectName: "",
+        investor: "",
         amount: "",
-        currency: "",
         date: new Date(),
         image: "",
-        convAmt: "",
 
     });
 
-    const { project, projectName, amount, currency, date, image, } = formData;
+    const { investor, amount, date, image, } = formData;
+
 
     useEffect(() => {
-        getProjects();
         getAllUsers();
-
-
         //eslint-disable-next-line
-    }, [getProjects, getAllUsers,]);
+    }, [getAllUsers]);
 
-    useEffect(() => {
-        getCurrencies();
-
-        //console.log(currencies[currency]);
-        //eslint-disable-next-line
-    }, [getCurrencies, currency]);
 
     const onChangeHandler = e => {
         e.preventDefault();
@@ -56,15 +40,6 @@ const AddInvestment = ({
 
     };
 
-    let newDetail = []
-    newDetail = projects.filter(x => x._id === project)
-    //console.log(newDetail);
-
-    let name = newDetail.map(nd => (
-        nd.projectName
-
-    ))
-    // console.log(name[0]);
 
 
 
@@ -75,31 +50,16 @@ const AddInvestment = ({
     };
 
 
-    const result = (amount / currencies[currency]).toFixed(2)
-    //console.log({ result })
-
-    let projectOptn = projects.map(pj => (
-        <option key={pj._id} value={pj._id} name={pj.projectName}>
-            {pj.projectName}
-        </option>
-    ));
 
     const onSubmitHandler = e => {
         e.preventDefault();
-
         // for uploading images send file as blob multipart/form-data
         let formData = new FormData();
 
         formData.append("image", image);
-        formData.append("project", project);
-        formData.append("projectName", name);
         formData.append("amount", amount);
-        formData.append("currency", currency);
         formData.append("date", date);
-        formData.append("convAmt", result);
-
-
-
+        formData.append("investor", investor);
         addInvestment(formData, history);
         //console.log(formData)
 
@@ -112,51 +72,20 @@ const AddInvestment = ({
                 <form encType="multipart/form-data" onSubmit={e => onSubmitHandler(e)} >
                     <section className="login py-2 border-top-1">
                         <div className="container">
-                            <div className="row justify-content-center animated fadeInRight">
+                            <div className="row justify-content-center animated fadeIn">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-success">
                                         <div>
-                                            <h3 className="bg-success text-center text-white p-4"><Link to="/dashboard" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Investment</h3></div>
+                                            <h3 className="bg-success text-center text-white p-4"><Link to="/dashboard" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Donation</h3></div>
                                         <fieldset className="p-4">
 
-                                            <select
-                                                className="border p-3 w-100 my-2"
-                                                name="project"
-                                                value={project}
-                                                //defaultValue={{ label: "Select Project", value: 0 }}
-                                                onChange={e => onChangeHandler(e)} >
-                                                <option>Select Project</option>
-                                                {projectOptn}
-                                            </select>
-
-
-
-                                            <input
-                                                name="projectName"
-                                                type="hidden"
-                                                value={name[0]}
-                                            //onChange={e => onProjectHandler2(e)}
-                                            />
-
-                                            <select className="border p-3 w-100 my-2"
+                                            <input name="investor"
+                                                placeholder="Doner"
+                                                type="text"
+                                                value={investor}
                                                 onChange={e => onChangeHandler(e)}
-                                                name="currency"
-                                                value={currency}
-                                            >
+                                                className="border p-3 w-100 my-2" />
 
-                                                <option value="" className="form-control">--Select Currency--</option>
-                                                <option value="INR">INR-Indian Rupees</option>
-                                                <option value="USD">USD-US DOLLAR</option>
-                                                <option value="SAR">SAR-Saudi Riyal</option>
-                                                <option value="OMR">OMR-Omani Riyal</option>
-                                                <option value="KWD">KWD-Kuwaiti Dinar</option>
-                                                <option value="BHD">BHD-Bahraini Dinar</option>
-                                                <option value="AED">AED-Emirati Dinar</option>
-                                                <option value="QAR">QAR-QATARI Riyal</option>
-                                                <option value="GBP">GBP-Great Britain Pound</option>
-
-                                            </select> <br />
-                                            <p className="ml-4"> <b>1 USD= </b>{currencies[currency]} {currency}</p>
 
                                             <input name="amount"
                                                 placeholder="Amount"
@@ -164,20 +93,6 @@ const AddInvestment = ({
                                                 value={amount}
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" />
-
-
-
-
-                                            <input name="convAmt"
-                                                placeholder="In  $USD "
-                                                type="number"
-                                                value={result}
-                                                onChange={e => onChangeHandler(e)}
-                                                className="border p-3 w-100 my-2" disabled />
-                                            <p className="ml-4"> <b>Converted Amt. In $USD</b></p>
-
-
-
 
                                             <input name="date"
                                                 placeholder="Date"
@@ -213,19 +128,15 @@ const AddInvestment = ({
 }
 
 AddInvestment.propTypes = {
-    getProjects: PropTypes.func.isRequired,
     getAllUsers: PropTypes.func.isRequired,
     addInvestment: PropTypes.func.isRequired,
-    getCurrencies: PropTypes.func.isRequired,
 
 }
 const mapStateToProps = state => ({
-    projects: state.project.projects,
     users: state.auth.users,
-    currencies: state.investment.currencies
 
 });
-export default connect(mapStateToProps, { addInvestment, getProjects, getAllUsers, getCurrencies })(AddInvestment);
+export default connect(mapStateToProps, { addInvestment, getAllUsers, })(AddInvestment);
 
 
 

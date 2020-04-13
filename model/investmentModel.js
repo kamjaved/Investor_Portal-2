@@ -8,29 +8,15 @@ const investmentSchema = new mongoose.Schema({
     },
 
     username: { type: String },
-    projectName: { type: String },
-    project: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Project",
-        required: [true, "There must be a project Name"],
 
+    investor: {
+        type: String
     },
 
-    //project: [Project],
-    // investedBy: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: "User"
-
-    // },
 
     amount: {
         type: Number,
         required: [true, "Must be Investing Amount"]
-    },
-
-    currency: {
-        type: String,
-        required: [true, "Must be Currency Type"]
     },
 
     date: {
@@ -47,17 +33,12 @@ const investmentSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    convAmt: {
-        type: Number
-    }
+
 
 });
 
 investmentSchema.pre(/^find/, function (next) {
     this.populate({
-        path: "project",
-        select: " projectName customerName startDate  endDate "
-    }).populate({
         path: "user",
 
     });

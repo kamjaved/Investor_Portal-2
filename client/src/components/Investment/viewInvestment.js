@@ -35,18 +35,17 @@ const InvestmentMaster = ({
                 <section className="container-fluid mt-4  justify-content-center ">
 
                     <div className="container">
-                        <div className="row justify-content-center animated fadeInRight">
+                        <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
-                                <h2 className="text-center pt-2"> Your's Investments </h2>
+                                <h2 className="text-center pt-2"> Your Added Donations </h2>
                                 <br />
                                 <div className="row">
                                     <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Project</th>
                                                 <th scope="col">Amount</th>
-                                                <th scope="col">Amount($)</th>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Investor</th>
                                                 <th scope="col">Recipt</th>
                                                 <th scope="col" className="text-right">
                                                     Action
@@ -57,10 +56,9 @@ const InvestmentMaster = ({
                                         <tbody>
                                             {investments.map(investment => (
                                                 <tr key={investment._id}>
-                                                    <td>{investment.project.projectName}</td>
-                                                    <td>{`${investment.amount} ${investment.currency}`}</td>
-                                                    <td>${`${investment.convAmt}`}</td>
+                                                    <td>{`${investment.amount}`}</td>
                                                     <td>{moment(investment.date).format("DD-MM-YYYY")}</td>
+                                                    <td>{!investment.investor ? "NA" : investment.investor}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></td>
                                                     <td className="text-right">
                                                         <Link

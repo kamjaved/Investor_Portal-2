@@ -24,20 +24,7 @@ const ReportLanding = ({
                         <div>
                             <div className="container">
                                 <div className="row mb-1  animated fadeIn">
-                                    <div className="col-xl-3 col-sm-6 py-2">
-                                        <Link to="/admin/project/viewAllproject" style={{ textDecoration: "none" }}>
-                                            <div className="card bg-primary text-white h-100">
-                                                <div className="card-body bg-primary">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-file-code-o fa-4x"></i>
-                                                    </div>
-                                                    <h3 className="text-uppercase">Total Projects</h3>
-                                                    <small>View Total No of Projects</small>
 
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
                                     <div className="col-xl-3 col-sm-6 py-2">
                                         <Link to="/admin/investment/viewAllinvestment" style={{ textDecoration: "none" }}>
                                             <div className="card text-white bg-success h-100">
@@ -45,8 +32,8 @@ const ReportLanding = ({
                                                     <div className="rotate">
                                                         <i className="fa fa-money fa-4x"></i>
                                                     </div>
-                                                    <h3 className="text-uppercase">Total Investment</h3>
-                                                    <small>View Total investment on All Projects</small>
+                                                    <h3 className="text-uppercase">Total Donation</h3>
+                                                    <small>View Total Donation</small>
                                                 </div>
                                             </div>
                                         </Link>
@@ -64,20 +51,7 @@ const ReportLanding = ({
                                             </div>
                                         </Link>
                                     </div>
-                                    <div className="col-xl-3 col-sm-6 py-2">
-                                        <Link to="/admin/customerPayment/viewAllcustomerPayment" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-warning h-100">
-                                                <div className="card-body bg-warning">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-credit-card fa-4x"></i>
-                                                    </div>
-                                                    <h3 className="text-uppercase">Total Customer Pyament</h3>
-                                                    <small> View All Customer Payment Details</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                    <br />
+
 
 
                                 </div>

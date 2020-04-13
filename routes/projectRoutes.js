@@ -8,20 +8,20 @@ const router = express.Router({ mergeParams: true });
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only- Authorization
-router.use(authController.restrictTo("admin"));
 
 router
     .route("/")
-    .get(projectController.getAllProjects)
-    .post(projectController.createProject);
+    .get(authController.restrictTo('admin'), projectController.getAllProjects)
+    .post(authController.restrictTo('user', 'admin'), projectController.createProject);
 
 router
     .route("/getAll")
-    .get(projectController.getAllProjects)
+    .get(authController.restrictTo('user', 'admin'), projectController.getAllProjects)
+
 router
     .route("/:id")
-    .get(projectController.getProject)
-    .patch(projectController.updateProject)
-    .delete(projectController.deleteProject);
+    .get(authController.restrictTo('user', 'admin'), projectController.getProject)
+    .patch(authController.restrictTo('user', 'admin'), projectController.updateProject)
+    .delete(authController.restrictTo('user', 'admin'), projectController.deleteProject);
 
 module.exports = router;

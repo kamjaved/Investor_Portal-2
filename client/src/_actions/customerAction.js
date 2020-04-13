@@ -95,7 +95,7 @@ export const addCustomer = (formData, history) => async dispatch => {
 // Edit customer
 export const editCustomer = (formData, history, id) => async dispatch => {
     try {
-        const res = await axios.patch(`/api/editCustomer/${id}`, formData);
+        const res = await axios.patch(`/api/customer/${id}`, formData);
 
         dispatch({
             type: types.GET_CUSTOMER,

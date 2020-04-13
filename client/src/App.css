@@ -89,7 +89,7 @@
   height: 204mm;
   width: 270mm;
   text-align: center;
-  background-image: url("./components/images/back2.png");
+  /* background-image: url("./components/images/back2.png"); */
   border: 10px solid #c9a504;
   z-index: 1;
 }
@@ -113,7 +113,7 @@
   position: absolute;
   height: 204.2mm;
   width: 272mm;
-  background-image: url("./components/images/border3.png");
+  /* background-image: url("./components/images/border3.png"); */
   display: flex;
   justify-content: center;
   z-index: 3;

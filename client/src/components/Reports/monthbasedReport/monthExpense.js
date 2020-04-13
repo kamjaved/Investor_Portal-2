@@ -22,8 +22,10 @@ const MonthlyExpense = ({
         //eslint-disable-next-line
     }, [monthlyExpense]);
 
-
-
+    //  DOWNLOAD PDF CERTIFICTAE
+    const createAndDownloadPdf = () => {
+        window.print();
+    };
     return (
         <Fragment>
             <div className="container-fluid">
@@ -31,11 +33,12 @@ const MonthlyExpense = ({
                 <section className="container-fluid mt-4  justify-content-center ">
 
                     <div className="container">
-                        <div className="row justify-content-center animated fadeInRight">
+                        <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
                                 <div className="row">
-                                    <div className="col-sm-2"> <Link to="/admin/expenses/viewAllexpenses" className="btn btn-primary"><i className="fa fa-arrow-left mr-2"></i>Back</Link></div>
-                                    <div className="col-sm-8"> <h2 className="pt-2">{match.params.year}'s all expenses </h2></div>
+                                    <div className="col-sm-3"> <Link to="/admin/expenses/viewAllexpenses" className="btn btn-primary"><i className="fa fa-arrow-left mr-2"></i>Back</Link></div>
+                                    <div className="col-sm-5"> <h2 className="pt-2">{match.params.year}'s all expenses </h2></div>
+                                    <div className="col-sm-3"> <button className="btn btn-danger" onClick={createAndDownloadPdf}><i className="fa fa-file-pdf-o fa-lg mr-2"></i>Export</button></div>
                                 </div>
 
                                 <br />

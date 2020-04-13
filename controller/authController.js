@@ -131,7 +131,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     //3. send it touser's email
     const resetURL = `${req.protocol}://${req.get(
         "host"
-    )}/api/users/resetPassword/${resetToken}}`;
+    )}/api/user/resetPassword/${resetToken}}`;
 
     const message = `Forgot your password? Submit a patch request with your new password and passwordConfirm to ${resetURL}.\nIf you didn't forgot your password, please ignore this email.`;
 
@@ -170,7 +170,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
         passwordResetExpires: { $gt: Date.now() }
     });
 
-    // 2) If token has not expired, and there isuser, set the new password
+    // 2) If token has not expired, and there is user, set the new password
     if (!user) {
         return next(new AppError("Token is invalid or has expired", 400));
     }

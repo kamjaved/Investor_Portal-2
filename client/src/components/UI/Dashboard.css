@@ -657,13 +657,13 @@ ul.pagination .active a {
 }
 
 .bg-1 {
-  background: url("../images/home/hero4.jpg");
+  /* background: url("../images/home/hero4.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .bg-3 {
-  background: url(../images/call-to-action/cta-background.jpg);
+  /* background: url(../images/call-to-action/cta-background.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -2582,17 +2582,20 @@ article.single-post p {
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 100%;
   color: #ffffff;
-  height: 80px;
+  height: 90px;
   margin: 0 auto -40px;
   position: relative;
   transition: all 0.3s ease-in-out 0s;
-  width: 80px;
+  width: 90px;
+  z-index: 1;
 }
 .circle-tile-heading .fa {
   line-height: 80px;
 }
 .circle-tile-content {
   padding-top: 50px;
+  border-radius: 10px;
+  background-color: rgb(240, 240, 240);
 }
 .circle-tile-number {
   font-size: 15px;
@@ -2603,6 +2606,7 @@ article.single-post p {
 .circle-tile-description {
   font-size: 10px;
   font-weight: 700;
+  color: rgb(114, 114, 114);
 }
 .circle-tile-footer {
   background-color: rgba(0, 0, 0, 0.1);
@@ -2695,4 +2699,18 @@ article.single-post p {
 }
 .text-faded {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* PROFILE IMAGE------DASHBOARD */
+.circle-tile img {
+  height: 85px;
+  width: 85px;
+  z-index: 0;
+}
+.main-section {
+  background-color: rgb(231, 229, 229);
+  /* border-radius: 15px;
+  max-width: 30% !important;
+  margin-right: 3.333%;
+  margin-bottom: 30px; */
 }

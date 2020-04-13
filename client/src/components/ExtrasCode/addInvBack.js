@@ -98,7 +98,7 @@ const AddInvestment = ({
                 <form encType="multipart/form-data" onSubmit={e => onSubmitHandler(e)} >
                     <section className="login py-2 border-top-1">
                         <div className="container">
-                            <div className="row justify-content-center animated fadeInRight">
+                            <div className="row justify-content-center animated fadeIn">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-primary">
                                         <h3 className="bg-primary text-center text-white p-4">New Investment</h3>
@@ -378,7 +378,7 @@ const AddInvestment = ({
                 <form encType="multipart/form-data" onSubmit={e => onSubmitHandler(e)} >
                     <section className="login py-2 border-top-1">
                         <div className="container">
-                            <div className="row justify-content-center animated fadeInRight">
+                            <div className="row justify-content-center animated fadeIn">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-primary">
                                         <h3 className="bg-primary text-center text-white p-4"> {amount} New Investment</h3>

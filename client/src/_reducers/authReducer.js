@@ -6,7 +6,8 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    GET_USERS
+    GET_USERS,
+    EMAIL_SENT,
 } from "../_actions/types";
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
     username: null,
     loading: true,
     user: {},
-    users: []
+    users: [],
+    emailsent: ''
 };
 
 export default function (state = initialState, action) {
@@ -45,6 +47,13 @@ export default function (state = initialState, action) {
                 users: payload,
                 loading: false
             };
+        case EMAIL_SENT:
+            return {
+                ...state,
+                emailsent: payload,
+                loading: false
+            };
+
         case LOGIN_SUCCESS:
             localStorage.setItem("token", payload.token);
             return {

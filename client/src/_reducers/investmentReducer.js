@@ -23,7 +23,9 @@ const initialInvestment = {
     currencies: [],
     error: {},
     filtered: null,
-    loading: true
+    loading: true,
+
+    //--pagination
 };
 
 export default function (state = initialInvestment, action) {
@@ -42,10 +44,17 @@ export default function (state = initialInvestment, action) {
                 investments: payload,
                 loading: false
             };
+
         case types.GET_ALL_INVESTMENTS:
             return {
                 ...state,
                 allinvestments: payload,
+                loading: false
+            };
+        case types.FETCH_INVESTMENT:
+            return {
+                ...state,
+                allinvestments: state.allinvestments.concat(payload),
                 loading: false
             };
         case types.GET_USERS_INVESTMENTS:

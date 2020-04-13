@@ -8,42 +8,43 @@ const router = express.Router({ mergeParams: true });
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only- Authorization
-router.use(authController.restrictTo("admin"));
 
-router
-    .route("/")
-    .get(customerPayController.getUserCustomerPays)
-    .post(customerPayController.createCustomerPay);
 
 
 router
     .route("/getAll")
-    .get(customerPayController.getAllCustomerPays)
+    .get(authController.restrictTo('admin'), customerPayController.getAllCustomerPays)
 router
     .route("/getOverAllSum")
-    .get(customerPayController.getOverAllSumCustomerPay)
+    .get(authController.restrictTo('admin', 'user'), customerPayController.getOverAllSumCustomerPay)
 router
     .route("/total/:id")
-    .get(customerPayController.getTotalCustPay)
+    .get(authController.restrictTo('admin'), customerPayController.getTotalCustPay)
 
 router
     .route("/monthTotal/:year")
-    .get(customerPayController.getMonthCustomerPays)
+    .get(authController.restrictTo('admin'), customerPayController.getMonthCustomerPays)
 router
     .route("/usermonthTotal/:year/:id")
-    .get(customerPayController.getMonthUserCustPay)
+    .get(authController.restrictTo('admin'), customerPayController.getMonthUserCustPay)
 
 router
     .route("/filter/:id")
-    .get(customerPayController.getFilteredCustPay)
+    .get(authController.restrictTo('admin'), customerPayController.getFilteredCustPay)
 
 router
     .route("/custTotal/:id")
-    .get(customerPayController.getCustomerTotalPay)
+    .get(authController.restrictTo('admin'), customerPayController.getCustomerTotalPay)
+
 router
     .route("/:id")
-    .get(customerPayController.getCustomerPay)
-    .patch(customerPayController.updateCustomerPay)
-    .delete(customerPayController.deleteCustomerPay);
+    .get(authController.restrictTo('admin', 'user'), customerPayController.getCustomerPay)
+    .patch(authController.restrictTo('admin', 'user'), customerPayController.updateCustomerPay)
+    .delete(authController.restrictTo('admin', 'user'), customerPayController.deleteCustomerPay);
+
+router
+    .route("/")
+    .get(authController.restrictTo('admin', 'user'), customerPayController.getUserCustomerPays)
+    .post(authController.restrictTo('admin', 'user'), customerPayController.createCustomerPay);
 
 module.exports = router;

@@ -115,7 +115,7 @@ const ProjectWiseInvestment = ({
                 <section className="container-fluid mt-4  justify-content-center ">
 
                     <div className="container">
-                        <div className="row justify-content-center animated fadeInRight">
+                        <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
                                 <h2 className="text-center pt-2"> Project Wise Investments & Expenses </h2>
                                 <br />
@@ -273,7 +273,7 @@ const ProjectWiseInvestment = ({
                 <section className="container-fluid mt-4  justify-content-center ">
 
                     <div className="container">
-                        <div className="row justify-content-center animated fadeInRight">
+                        <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
                                 <h2 className="text-center pt-2"> Project Wise Investments & Expenses </h2>
                                 <br />

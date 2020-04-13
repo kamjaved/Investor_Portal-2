@@ -48,7 +48,7 @@ exports.getOverAllSumInvestments = catchAsync(async (req, res, next) => {
             {
                 $group: {
                     _id: null,
-                    totalInvest: { $sum: "$convAmt" },
+                    totalInvest: { $sum: "$amount" },
                 }
             },
         ]),
@@ -102,7 +102,7 @@ exports.getTotalInvestments = catchAsync(async (req, res, next) => {
                     no_of_investment: {
                         $sum: 1
                     },
-                    totalAmount: { $sum: "$convAmt" },
+                    totalAmount: { $sum: "$amount" },
                     project: {
                         $push: '$project'
                     },
@@ -156,7 +156,7 @@ exports.getUsersTotalInvestments = catchAsync(async (req, res, next) => {
                     no_of_investment: {
                         $sum: 1
                     },
-                    totalAmount: { $sum: "$convAmt" },
+                    totalAmount: { $sum: "$amount" },
                 },
             },
         ]),
@@ -187,7 +187,7 @@ exports.getOverAllSumInvestments = catchAsync(async (req, res, next) => {
             {
                 $group: {
                     _id: null,
-                    totalInvest: { $sum: "$convAmt" },
+                    totalInvest: { $sum: "$amount" },
                 }
             },
         ]),
@@ -221,9 +221,9 @@ exports.getMonthInvestments = catchAsync(async (req, res, next) => {
             }, {
                 $group: {
                     _id: { year: "$year", month: "$month" },
-                    totalInvestMonthy: { $sum: "$convAmt" },
+                    totalInvestMonthy: { $sum: "$amount" },
                     amount: {
-                        $push: '$convAmt',
+                        $push: '$amount',
                         //$push: "$user"
                     },
                 }
@@ -234,7 +234,7 @@ exports.getMonthInvestments = catchAsync(async (req, res, next) => {
             {
                 $lookup: {
                     from: 'investments',
-                    foreignField: "convAmt",
+                    foreignField: "amount",
                     localField: "amount",
                     "as": 'invest_docs'
                 },
@@ -289,9 +289,9 @@ exports.getUserMonthInvestments = catchAsync(async (req, res, next) => {
             {
                 $group: {
                     _id: { year: "$year", month: "$month", },
-                    totalInvestMonthy: { $sum: "$convAmt" },
+                    totalInvestMonthy: { $sum: "$amount" },
                     amount: {
-                        $push: '$convAmt',
+                        $push: '$amount',
                         //$push: "$user"
                     },
                 }
@@ -300,7 +300,7 @@ exports.getUserMonthInvestments = catchAsync(async (req, res, next) => {
             }, {
                 $lookup: {
                     from: 'investments',
-                    foreignField: "convAmt",
+                    foreignField: "amount",
                     localField: "amount",
                     "as": 'invest_docs'
                 },

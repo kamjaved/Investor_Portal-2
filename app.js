@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 var path = require('path');
 
 const mongoSanitize = require("express-mongo-sanitize");
-const xss = require("xss-clean");
+const xss = require("xss-clean")
 const hpp = require("hpp");
 const compression = require("compression");
 const app = express();
@@ -23,7 +23,7 @@ const investmentRoutes = require('./routes/investmentRoutes')
 const customerRoutes = require('./routes/customerPayRoutes')
 const estimateRoutes = require('./routes/estimateRoutes')
 const DB =
-    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/investor_portal?retryWrites=true&w=majority";
+    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority";
 
 mongoose
     .connect(DB, {
@@ -117,6 +117,10 @@ app.use('/api/customer', customerRouter)
 
 
 
+//--DOWNLOAD PDF----
+// app.get("/fetch-inv", (req, res) => {
+//     res.sendFile(`${__dirname}/result.pdf`);
+// });
 
 
 //Serve static assets in production
@@ -128,10 +132,6 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
     });
 }
-
-
-
-
 
 
 app.all("*", (req, res, next) => {

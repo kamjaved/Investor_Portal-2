@@ -36,7 +36,7 @@ exports.getOverAllSumExpenses = catchAsync(async (req, res, next) => {
             {
                 $group: {
                     _id: null,
-                    totalExpense: { $sum: "$convAmt" },
+                    totalExpense: { $sum: "$amount" },
                 }
             },
         ]),
@@ -88,7 +88,7 @@ exports.getTotalExpenses = catchAsync(async (req, res, next) => {
                     no_of_expenses: {
                         $sum: 1
                     },
-                    totalExpense: { $sum: "$convAmt" },
+                    totalExpense: { $sum: "$amount" },
                     project: {
                         $push: '$project'
                     },
@@ -151,7 +151,7 @@ exports.getUsersTotalExpenses = catchAsync(async (req, res, next) => {
                     no_of_investment: {
                         $sum: 1
                     },
-                    totalAmount: { $sum: "$convAmt" },
+                    totalAmount: { $sum: "$amount" },
                 },
             },
         ]),
@@ -184,14 +184,14 @@ exports.getMonthExpenses = catchAsync(async (req, res, next) => {
                     year: { $year: "$date" },
                     month: { $month: "$date" },
                     _id: 1,
-                    convAmt: 1
+                    amount: 1
                 },
             }, {
                 $group: {
                     _id: { year: "$year", month: "$month" },
-                    totalExpenseMonthy: { $sum: "$convAmt" },
+                    totalExpenseMonthy: { $sum: "$amount" },
                     amount: {
-                        $push: '$convAmt',
+                        $push: '$amount',
                         //$push: "$user"
                     },
                 }
@@ -200,7 +200,7 @@ exports.getMonthExpenses = catchAsync(async (req, res, next) => {
             }, {
                 $lookup: {
                     from: 'expenses',
-                    foreignField: "convAmt",
+                    foreignField: "amount",
                     localField: "amount",
                     "as": 'expense_docs'
                 },
@@ -239,7 +239,7 @@ exports.getUserMonthExpenses = catchAsync(async (req, res, next) => {
                     year: { $year: "$date" },
                     month: { $month: "$date" },
                     _id: 1,
-                    convAmt: 1,
+                    amount: 1,
                     user: 1
                 },
             },
@@ -250,9 +250,9 @@ exports.getUserMonthExpenses = catchAsync(async (req, res, next) => {
             {
                 $group: {
                     _id: { year: "$year", month: "$month" },
-                    totalExpUserMonthy: { $sum: "$convAmt" },
+                    totalExpUserMonthy: { $sum: "$amount" },
                     amount: {
-                        $push: '$convAmt',
+                        $push: '$amount',
                         //$push: "$user"
                     },
                 }
@@ -261,7 +261,7 @@ exports.getUserMonthExpenses = catchAsync(async (req, res, next) => {
             }, {
                 $lookup: {
                     from: 'expenses',
-                    foreignField: "convAmt",
+                    foreignField: "amount",
                     localField: "amount",
                     "as": 'expense_docs'
                 },

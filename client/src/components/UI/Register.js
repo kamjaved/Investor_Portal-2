@@ -1,7 +1,5 @@
 import React, { Fragment, useState } from 'react'
 import './Dashboard.css'
-
-
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -18,6 +16,8 @@ const Register = ({
         username: "",
         address: "",
         password: "",
+        phone: "",
+        image: "",
         passwordConfirm: "",
 
     });
@@ -29,6 +29,8 @@ const Register = ({
         address,
         username,
         password,
+        phone,
+        image,
         passwordConfirm,
     } = formData;
 
@@ -37,8 +39,25 @@ const Register = ({
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const onChangeImage = e => {
+        e.preventDefault();
+        setFormData({ ...formData, image: e.target.files[0] });
+    };
+
     const onSubmitHandler = e => {
         e.preventDefault();
+        let formData = new FormData();
+
+        formData.append("image", image);
+        formData.append("firstName", firstName);
+        formData.append("email", email);
+        formData.append("lastName", lastName);
+        formData.append("address", address);
+        formData.append("phone", phone);
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("passwordConfirm", passwordConfirm);
+
         register(formData, history);
     };
 
@@ -55,7 +74,7 @@ const Register = ({
                 {/*-- Modal Body Starts  -*/}
 
                 <div className="container bg-light animated fadeIn border border-primary pb-2">
-                    <form onSubmit={onSubmitHandler} className="">
+                    <form encType="multipart/form-data" onSubmit={onSubmitHandler}>
                         <h2 className="bg-dark text-center text-white p-4">New User</h2>
                         <fieldset className="p-4">
                             <div className="form-row">
@@ -137,7 +156,22 @@ const Register = ({
                                         required />
                                 </div>
                             </div>
+                            <div className="form-row">
+                                <div className="form-group col-sm-6">
+                                    <input type="number"
+                                        placeholder="Phone"
+                                        className="border p-3 w-100 my-2"
+                                        name="phone"
+                                        value={phone}
+                                        onChange={e => onChangeHandler(e)}
+                                        required />
+                                </div>
+
+                            </div>
+
                         </fieldset>
+
+
 
 
                         <div className="text-center">

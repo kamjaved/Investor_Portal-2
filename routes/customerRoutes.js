@@ -14,8 +14,6 @@ const Customer = require('../model/customerModel')
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only- Authorization
-router.use(authController.restrictTo("admin"));
-
 const storage = multer.memoryStorage();
 
 const upload = multer({
@@ -49,7 +47,7 @@ const resizeReciptPhoto = (req, res, next) => {
 
 // Post Customer
 
-router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+router.route("/").post(authController.restrictTo('user', 'admin'), upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
     const { name, address, email, phone, image, } = req.body;
     try {
@@ -82,7 +80,7 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
 
 // Update Customer
 
-router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+router.route("/:id").patch(authController.restrictTo('admin'), upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
     const { name, address, email, phone, image, } = req.body;
 
@@ -115,17 +113,17 @@ router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync
 
 router
     .route("/")
-    .get(customerController.getAllCustomers)
+    .get(authController.restrictTo('admin'), customerController.getAllCustomers)
 
 
 router
     .route("/getAll")
-    .get(customerController.getAllCustomers)
+    .get(authController.restrictTo('admin'), customerController.getAllCustomers)
 
 router
     .route("/:id")
-    .get(customerController.getCustomer)
+    .get(authController.restrictTo('admin'), customerController.getCustomer)
     //.patch(customerController.updateCustomer)
-    .delete(customerController.deleteCustomer);
+    .delete(authController.restrictTo('admin'), customerController.deleteCustomer);
 
 module.exports = router;

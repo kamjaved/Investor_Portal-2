@@ -35,7 +35,7 @@ const ExpenseMaster = ({
                 <section className="container-fluid mt-4  justify-content-center ">
 
                     <div className="container">
-                        <div className="row justify-content-center animated fadeInRight">
+                        <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-12 col-md-10 align-item-center">
                                 <h2 className="text-center pt-2"> All Expenses </h2>
                                 <br />
@@ -43,10 +43,9 @@ const ExpenseMaster = ({
                                     <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Project</th>
                                                 <th scope="col">Amount</th>
-                                                <th scope="col">Amount($)</th>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Expense by</th>
                                                 <th scope="col">Purpose</th>
                                                 <th scope="col">Recipt</th>
                                                 <th scope="col" className="text-right">
@@ -58,10 +57,11 @@ const ExpenseMaster = ({
                                         <tbody>
                                             {expenses.map(expense => (
                                                 <tr key={expense._id}>
-                                                    <td>{expense.project.projectName}</td>
-                                                    <td>{`${expense.amount} ${expense.currency}`}</td>
-                                                    <td>${`${expense.convAmt}`}</td>
+
+                                                    <td>{`${expense.amount} `}</td>
+
                                                     <td>{moment(expense.date).format("DD-MM-YYYY")}</td>
+                                                    <td>{!expense.expensor ? "NA" : expense.expensor}</td>
                                                     <td>{`${expense.purpose}`}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></td>
                                                     <td className="text-right">

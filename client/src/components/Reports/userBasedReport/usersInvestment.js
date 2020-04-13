@@ -33,12 +33,12 @@ const ViewUsersInvestment = ({
                 <section className="container-fluid mt-4  justify-content-center ">
 
                     <div className="container">
-                        <div className="row justify-content-center animated fadeInRight">
+                        <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
                                 <div class="row">
                                     <div className="col-sm-2"> <Link to="/admin/investment/viewAllinvestment" className="btn btn-primary"><i className="fa fa-arrow-left mr-2"></i>Back</Link></div>
                                     <div className="col-sm-6"> <h2 className="pt-2">{UserName}'s all investments </h2></div>
-                                    <div className="col-sm-4"> <Link className="btn btn-success btn-block">Total Sum: <i className="fa fa-usd"> </i> {parseFloat(UserSumTotal).toFixed(2)} </Link></div>
+                                    <div className="col-sm-4"> <Link className="btn btn-success btn-block">Total Sum: <i className="fa fa-inr"> </i> {parseFloat(UserSumTotal).toFixed(2)} </Link></div>
                                 </div>
 
 

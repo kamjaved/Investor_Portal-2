@@ -12,27 +12,41 @@ const router = express.Router({ mergeParams: true });
 const Expense = require('../model/expenseModel')
 
 
+//Restrict all router after this middleware to admin only- Authorization
+
+
+
+//Restrict all router after this middleware to admin only- Authorization
+
+router
+    .route("/getAll")
+    .get(expenseController.getAllExpenses)
+
+router
+    .route("/total/:id")
+    .get(authController.restrictTo('admin', 'user'), expenseController.getTotalExpenses)
+
+router
+    .route("/Usertotal/:id")
+    .get(authController.restrictTo('admin', 'user'), expenseController.getUsersTotalExpenses)
+router
+    .route("/monthTotal/:year")
+    .get(authController.restrictTo('admin', 'user'), expenseController.getMonthExpenses)
+router
+    .route("/usermonthTotal/:year/:id")
+    .get(authController.restrictTo('admin', 'user'), expenseController.getUserMonthExpenses)
+
+router
+    .route("/filter/:id")
+    .get(authController.restrictTo('admin', 'user'), expenseController.getFilteredExpenses)
+
+router
+    .route("/getOverAllSum")
+    .get(expenseController.getOverAllSumExpenses)
+
 //Protect all routes after this middleware- Authentication
 router.use(authController.protect);
 
-//Restrict all router after this middleware to admin only- Authorization
-router.use(authController.restrictTo("admin"));
-
-
-
-//IMAGE UPLOAD CONFIGURATION
-// const storage = multer.diskStorage({
-//     filename: function (req, file, callback) {
-//         callback(null, Date.now() + file.originalname);
-//     }
-// });
-// const imageFilter = function (req, file, cb) {
-//     // accept image files only
-//     if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
-//         return cb(new Error("Only image files are accepted!"), false);
-//     }
-//     cb(null, true);
-// };
 
 // Image saved on memmory for image porcessing
 const storage = multer.memoryStorage();
@@ -72,14 +86,14 @@ const resizeReciptPhoto = (req, res, next) => {
 
 // Post Expense
 
-router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+router.route("/").post(authController.restrictTo('admin'), upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
 
-    const { project, amount, currency, date, purpose, convAmt, image, projectName, } = req.body;
+    const { amount, date, purpose, image, expensor, } = req.body;
     try {
         const newExpense = new Expense({
-            project, amount, currency, date, purpose, convAmt,
-            projectName,
+            amount, date, purpose,
+            expensor,
             user: req.user.id,
             username: req.user.username,
             image: req.file ? req.file.filename : image,
@@ -109,12 +123,12 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
 
 // Update Expense
 
-router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+router.route("/:id").patch(authController.restrictTo('admin'), upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
-    const { project, amount, currency, date, convAmt, image, purpose, projectName, } = req.body;
+    const { amount, date, image, purpose, expensor, } = req.body;
 
     const doc = await Expense.findByIdAndUpdate(req.params.id, {
-        project, amount, currency, date, convAmt, purpose, projectName,
+        amount, date, purpose, expensor,
         new: true,
         runValidators: true,
         user: req.user.id,
@@ -141,39 +155,16 @@ router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync
 }))
 
 
+
 router
     .route("/")
-    .get(expenseController.getUserExpenses)
+    .get(authController.restrictTo('admin'), expenseController.getUserExpenses)
 
-router
-    .route("/getAll")
-    .get(expenseController.getAllExpenses)
 
-router
-    .route("/getOverAllSum")
-    .get(expenseController.getOverAllSumExpenses)
-
-router
-    .route("/total/:id")
-    .get(expenseController.getTotalExpenses)
-
-router
-    .route("/Usertotal/:id")
-    .get(expenseController.getUsersTotalExpenses)
-router
-    .route("/monthTotal/:year")
-    .get(expenseController.getMonthExpenses)
-router
-    .route("/usermonthTotal/:year/:id")
-    .get(expenseController.getUserMonthExpenses)
-router
-    .route("/filter/:id")
-    .get(expenseController.getFilteredExpenses)
 
 router
     .route("/:id")
-    .get(expenseController.getExpense)
-    //.patch(expenseController.updateExpense)
-    .delete(expenseController.deleteExpense);
+    .get(authController.restrictTo('admin'), expenseController.getExpense)
+    .delete(authController.restrictTo('admin'), expenseController.deleteExpense);
 
 module.exports = router;

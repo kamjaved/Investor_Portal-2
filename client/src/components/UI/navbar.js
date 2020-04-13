@@ -17,7 +17,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
                         <div className="col-md-12">
                             <nav className="navbar navbar-expand-lg  navigation">
 
-                                <Link className="navbar-brand" to="/">
+                                <Link className="navbar-brand" to="/dashboard">
                                     <img
                                         src={logo}
                                         alt="globus labs logo"
@@ -49,18 +49,6 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
                                         </li>
 
-                                        <li className="nav-item dropdown dropdown-slide">
-
-                                            <Link className="nav-link dropdown-toggle" to="" data-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false">
-                                                Project <span><i className="fa fa-angle-down"></i></span>  </Link>
-
-                                            <div className="dropdown-menu dropdown-menu-right">
-                                                <Link className="dropdown-item" to="/admin/addproject">Add Project</Link>
-                                                <Link className="dropdown-item" to="/admin/viewproject">View Project</Link>
-                                            </div>
-                                        </li>
 
 
                                         <li className="nav-item dropdown dropdown-slide">
@@ -71,8 +59,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
                                                 Transaction <span><i className="fa fa-angle-down"></i></span>  </Link>
 
                                             <div className="dropdown-menu dropdown-menu-right">
-                                                <Link className="dropdown-item" to="/admin/addinvestment">Add Investment</Link>
-                                                <Link className="dropdown-item" to="/admin/viewinvestment">View Investment</Link>
+                                                <Link className="dropdown-item" to="/admin/addinvestment">Add Donation</Link>
+                                                <Link className="dropdown-item" to="/admin/viewinvestment">View Donation</Link>
                                                 <Link className="dropdown-item" to="/admin/addexpenses">Add Expenses</Link>
                                                 <Link className="dropdown-item" to="/admin/view-expense">View Expenses</Link>
 
@@ -82,18 +70,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
                                         </li>
 
-                                        <li className="nav-item dropdown dropdown-slide">
 
-                                            <Link className="nav-link dropdown-toggle" to="" data-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false">
-                                                Customer Payment <span><i className="fa fa-angle-down"></i></span>  </Link>
-
-                                            <div className="dropdown-menu dropdown-menu-right">
-                                                <Link className="dropdown-item" to="/admin/addcustomerPayment">Add Customer Payment</Link>
-                                                <Link className="dropdown-item" to="/admin/view-customerPay">View Customer Payment</Link>
-                                            </div>
-                                        </li>
 
 
                                         <li className="nav-item">
@@ -128,51 +105,88 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
     const guestLinks = (
         <Fragment>
-            <nav className="navbar navbar-expand-lg navigation">
+            <section>
                 <div className="container-fluid">
-                    <Link className="navbar-brand lead" to="/">
-                        <img
-                            src={logo}
-                            alt="globus labs logo"
-                            width="220px"
-                        />
-                    </Link>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <nav className="navbar navbar-expand-lg  navigation">
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ml-auto main-nav ">
-                            <li className="nav-item active">
-                                <Link className="nav-link" to="/register">
-                                    Register
-          </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/about">
-                                    About
-          </Link>
-                            </li>
-                        </ul>
+                                <Link className="navbar-brand" to="/">
+                                    <img
+                                        src={logo}
+                                        alt="globus labs logo"
+                                        width="220px"
 
-                        <ul className="navbar-nav ml-4">
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/login">
-                                    <i className="fa fa-sign-in" aria-hidden="true"></i> Login
-          </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+                                    />
+                                </Link>
+                                <button
+                                    className="navbar-toggler"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#navbarSupportedContent"
+                                    aria-controls="navbarSupportedContent"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation"
+                                >
+                                    <i className="fa fa-bars lg" aria-hidden="true"></i>
+                                </button>
+
+                                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+                                    <ul className="navbar-nav ml-auto main-nav ">
+
+                                        <li className="nav-item active">
+                                            <Link className="nav-link" to="/dashboardguest">
+                                                Home
+                                            </Link>
+
+                                        </li>
+
+
+
+                                        <li className="nav-item dropdown dropdown-slide">
+
+                                            <Link className="nav-link dropdown-toggle" to="" data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Transaction <span><i className="fa fa-angle-down"></i></span>  </Link>
+
+                                            <div className="dropdown-menu dropdown-menu-right">
+                                                <Link className="dropdown-item" to="/admin/investment/viewAllinvestment">View Donation</Link>
+                                                <Link className="dropdown-item" to="/admin/expenses/viewAllexpenses">View Expenses</Link>
+                                            </div>
+
+
+
+                                        </li>
+
+
+
+
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/admin/myreport">
+                                                Reports
+                                     </Link>
+                                        </li>
+
+
+
+                                    </ul>
+
+
+
+                                    <ul className="navbar-nav ml-4">
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/login">
+                                                <i className="fa fa-lock" aria-hidden="true"></i> Login
+      </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </nav>
+                        </div></div></div></section>
             <main className="page-content">
                 <div className="mt-4 mr-8"> {props.children}</div>
             </main>

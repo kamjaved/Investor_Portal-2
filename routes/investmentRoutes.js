@@ -4,42 +4,48 @@ const authController = require("./../controller/authController");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const multer = require("multer");
+
+//const pdf = require('html-pdf');
+//const invmonthPdf = require('../documentPDF/investMonth.js');
+
 const sharp = require('sharp');
 const catchAsync = require("../utils/catchAsync");
 const router = express.Router({ mergeParams: true });
 var path = require('path');
 const Investment = require('../model/investmentModel')
-//Protect all routes after this middleware- Authentication
-router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only- Authorization
-router.use(authController.restrictTo("admin"));
 
+router
+    .route("/getAll")
+    .get(investmentController.getAllInvestments)
+router
+    .route("/total/:id")
+    .get(authController.restrictTo('admin', 'user'), investmentController.getTotalInvestments)
 
+router
+    .route("/Usertotal/:id")
+    .get(authController.restrictTo('admin', 'user'), investmentController.getUsersTotalInvestments)
+router
+    .route("/monthTotal/:year")
+    .get(authController.restrictTo('admin', 'user'), investmentController.getMonthInvestments)
+router
+    .route("/usermonthTotal/:year/:id")
+    .get(authController.restrictTo('admin', 'user'), investmentController.getUserMonthInvestments)
+router
+    .route("/filter/:id")
+    .get(authController.restrictTo('admin', 'user'), investmentController.getFilteredInvestments)
 
-//IMAGE UPLOAD CONFIGURATION
+router
+    .route("/getOverAllSum")
+    .get(investmentController.getOverAllSumInvestments)
 
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, path.join(__dirname, '../client/public/uploads/'));
-//     },
-//     filename: function (req, file, callback) {
-//         callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-//     }
-// });
+//Protect all routes after this middleware- Authentication
+router.use(authController.protect);
 
 // Image saved on memmory for image porcessing
 const storage = multer.memoryStorage();
 
-
-
-// const imageFilter = function (req, file, cb) {
-//     // accept image files only
-//     if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
-//         return cb(new Error("Only image files are accepted!"), false);
-//     }
-//     cb(null, true);
-// };
 const upload = multer({
     storage: storage, limits: {
         fileSize: 1024 * 1024 * 1
@@ -48,17 +54,10 @@ const upload = multer({
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
             return cb(new Error("Only image files are accepted!"), false);
         }
-        // if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-        //     req.fileValidationError = "Forbidden extension";
-        //     return cb(null, false, req.fileValidationError);
-        // }
         cb(null, true);
 
     }
 });
-
-//!file.originalname.match(/\.(jpg|jpeg|png)$/i)
-
 
 
 const resizeReciptPhoto = (req, res, next) => {
@@ -76,14 +75,16 @@ const resizeReciptPhoto = (req, res, next) => {
     next();
 }
 
+
+
 // Post Investment
 
-router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+router.route("/").post(authController.restrictTo('admin'), upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
-    const { project, amount, currency, date, convAmt, image, projectName, } = req.body;
+    const { amount, investor, date, image, } = req.body;
     try {
         const newInvestment = new Investment({
-            project, amount, currency, date, convAmt, projectName,
+            amount, date, investor,
             user: req.user.id,
             username: req.user.username,
             image: req.file ? req.file.filename : image,
@@ -109,15 +110,14 @@ router.route("/").post(upload.single("image"), resizeReciptPhoto, catchAsync(asy
 
 }));
 
-
 // Update Investment
 
-router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
+router.route("/:id").patch(authController.restrictTo('admin'), upload.single("image"), resizeReciptPhoto, catchAsync(async (req, res, next) => {
 
-    const { project, amount, currency, date, convAmt, image, projectName, } = req.body;
+    const { amount, investor, currency, date, image, } = req.body;
 
     const doc = await Investment.findByIdAndUpdate(req.params.id, {
-        project, amount, currency, date, convAmt, projectName,
+        amount, currency, date, investor,
         new: true,
         runValidators: true,
         user: req.user.id,
@@ -143,36 +143,20 @@ router.route("/:id").patch(upload.single("image"), resizeReciptPhoto, catchAsync
 
 }))
 
+
+
+
+//Restrict all router after this middleware to admin only- Authorization
 router
     .route("/")
-    .get(investmentController.getUserInvestments)
+    .get(authController.restrictTo('admin'), investmentController.getUserInvestments)
 
-router
-    .route("/getAll")
-    .get(investmentController.getAllInvestments)
-router
-    .route("/getOverAllSum")
-    .get(investmentController.getOverAllSumInvestments)
-
-router
-    .route("/total/:id")
-    .get(investmentController.getTotalInvestments)
-
-router
-    .route("/Usertotal/:id")
-    .get(investmentController.getUsersTotalInvestments)
-router
-    .route("/monthTotal/:year")
-    .get(investmentController.getMonthInvestments)
-router
-    .route("/usermonthTotal/:year/:id")
-    .get(investmentController.getUserMonthInvestments)
-router
-    .route("/filter/:id")
-    .get(investmentController.getFilteredInvestments)
 router
     .route("/:id")
-    .get(investmentController.getInvestment)
-    .delete(investmentController.deleteInvestment)
-// .patch(investmentController.updateInvestment);
+    .get(authController.restrictTo('admin'), investmentController.getInvestment)
+    .delete(authController.restrictTo('admin'), investmentController.deleteInvestment)
+
+
+
+
 module.exports = router;

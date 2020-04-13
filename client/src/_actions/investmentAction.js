@@ -40,12 +40,30 @@ export const getInvestments = () => async dispatch => {
 
 
 //Get All Investments
-export const getAllInvestments = () => async dispatch => {
+export const getAllInvestments = (limit, page) => async dispatch => {
     try {
-        const res = await axios.get("/api/investment/getAll");
+        const res = await axios.get(`/api/investment/getAll?limit=${limit}&page=${page}`);
         console.log(res.data);
         dispatch({
             type: types.GET_ALL_INVESTMENTS,
+            payload: res.data.data
+        });
+    } catch (err) {
+        console.log(err);
+        // dispatch({
+        //   type: types.INVESTMENT_ERROR,
+        //   payload: { msg: err.response.data, status: err.response.status }
+        // });
+    }
+};
+
+//Get All Investments
+export const fetchInvestment = (limit, page) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/investment/getAll?limit=${limit}&page=${page}`);
+        console.log(res.data);
+        dispatch({
+            type: types.FETCH_INVESTMENT,
             payload: res.data.data
         });
     } catch (err) {
@@ -170,27 +188,27 @@ export const getProjectInvestments = (id) => async dispatch => {
         // });
     }
 };
-export const getCurrencies = () => dispatch => {
+// export const getCurrencies = () => dispatch => {
 
-    let initialData = [];
-    const url = `http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP&format=1`;
+//     let initialData = [];
+//     const url = `http://data.fixer.io/api/latest?access_key=e1fa4d7e2b5bad4ea01a717111e7824d&symbols=INR,USD,SAR,OMR,KWD,AED,BHD,QAR,GBP&format=1`;
 
-    fetch(url)
-        .then(data => {
-            return data.json();
-        })
-        .then(findData => {
-            initialData = findData.rates;
-            //console.log(initialData)
-            dispatch({
-                type: types.GET_CURRENCIES,
-                payload: initialData
-            });
-        })
+//     fetch(url)
+//         .then(data => {
+//             return data.json();
+//         })
+//         .then(findData => {
+//             initialData = findData.rates;
+//             //console.log(initialData)
+//             dispatch({
+//                 type: types.GET_CURRENCIES,
+//                 payload: initialData
+//             });
+//         })
 
-        .catch(err => console.log(err));
+//         .catch(err => console.log(err));
 
-}
+// }
 
 // get currencies
 // export const getCurrencies = () => dispatch => {
