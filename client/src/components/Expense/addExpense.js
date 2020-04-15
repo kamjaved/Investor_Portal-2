@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { addExpense } from '../../_actions/expenseAction'
-import { getCurrencies } from '../../_actions/investmentAction'
-import { getProjects } from '../../_actions/projectAction'
 import { getAllUsers } from "../../_actions/authAction"
 import '../UI/Dashboard.css'
 

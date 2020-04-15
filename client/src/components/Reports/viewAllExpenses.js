@@ -29,6 +29,35 @@ const ViewAllExpenses = ({
 
 
 
+    const [state, setState] = useState({
+        sortDate: [],
+        isToggle: false,
+    })
+    const { sortDate, isToggle } = state;
+
+
+    const datesort1 = (e) => {
+        let newDateSort = allexpenses
+        if (isToggle == false) {
+            newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+        } else {
+            newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+        }
+        setState({
+
+            sortDate: newDateSort
+        })
+    }
+
+
+
+    const datesort = (e) => {
+        setState({
+            isToggle: !isToggle,
+        })
+        datesort1()
+    }
+
     return (
         <Fragment>
             <div className="container-fluid">
@@ -46,7 +75,7 @@ const ViewAllExpenses = ({
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">Amount</th>
-                                                <th scope="col">Date</th>
+                                                <th scope="col" onClick={datesort}>Date</th>
                                                 <th scope="col">Expensed by</th>
                                                 <th scope="col">Purpose</th>
                                                 <th scope="col">Recipt</th>

@@ -70,6 +70,24 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
                                         </li>
 
+                                        <li className="nav-item dropdown dropdown-slide">
+
+                                            <Link className="nav-link dropdown-toggle" to="" data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Ration <span><i className="fa fa-angle-down"></i></span>  </Link>
+
+                                            <div className="dropdown-menu dropdown-menu-right">
+                                                <Link className="dropdown-item" to="/admin/add-ration">Add Ration</Link>
+                                                <Link className="dropdown-item" to="/admin/view-ration">View Ration</Link>
+
+
+                                            </div>
+
+
+
+                                        </li>
+
 
 
 

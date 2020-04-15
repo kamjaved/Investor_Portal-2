@@ -9,7 +9,6 @@ import setAuthToken from "./utils/setAuthToken";
 import './App.css';
 import Alert from "./components/UI/Alert";
 import Navbar from './components/UI/navbar';
-import Register from './components/UI/Register';
 import Login from './components/UI/Login';
 
 
@@ -36,6 +35,11 @@ import EditProfile from './components/UI/editProfile';
 import ForgotPassword from './components/UI/forgotPassword';
 import ResetPassword from './components/UI/ResetPassword';
 import DashboardGuest from './components/UI/Dashboardguest';
+import AddRation from './components/Ration/addRation';
+import ViewRation from './components/Ration/viewRation';
+import EditRation from './components/Ration/editRation';
+import ViewAllRation from './components/Reports/viewAllRation';
+
 
 
 
@@ -69,6 +73,10 @@ const App = () => {
             <PrivateRoute path={`/admin/investment/usermonthInvestment/:year/:id`} component={UserMonthInv} />
             <PrivateRoute path={`/admin/expenses/usermonthExpense/:year/:id`} component={UsermonthExp} />
 
+            <PrivateRoute path={`/admin/add-ration`} component={AddRation} />
+            <PrivateRoute path={`/admin/view-ration`} component={ViewRation} />
+            <PrivateRoute path={`/admin/editRation/:id`} component={EditRation} />
+
 
             <Route exact path="/dashboardguest" component={DashboardGuest} />
             <Route path="/admin/myreport" component={ReportsLanding} />
@@ -78,7 +86,8 @@ const App = () => {
             <Route path="/admin/viewinvestment" component={ViewInvestment} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/" component={DashboardGuest} />
-            <Route exact path="/register" component={Register} />
+            <Route path="/admin/ration/allRation" component={ViewAllRation} />
+
 
             <Route path="/forgetPassword" component={ForgotPassword} />
             <Route path="/resetPassword" component={ResetPassword} />

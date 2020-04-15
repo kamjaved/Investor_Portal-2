@@ -1,59 +1,67 @@
 import * as types from "./../_actions/types";
 
-const initialProject = {
-    project: null,
-    projects: [],
-    allprojects: [],
+const initialRation = {
+    ration: null,
+    rations: [],
+    allRations: [],
+    totalRation: [],
     error: {},
     filtered: null,
     loading: true
 };
 
-export default function (state = initialProject, action) {
+export default function (state = initialRation, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case types.GET_PROJECT:
+        case types.GET_RATION:
             return {
                 ...state,
-                project: payload,
+                ration: payload,
                 loading: false
             };
-        case types.GET_PROJECTS:
+        case types.GET_RATIONS:
             return {
                 ...state,
-                projects: payload,
+                rations: payload,
                 loading: false
             };
-        case types.GET_ALL_PROJECTS:
+
+        case types.GET_ALL_RATIONS:
             return {
                 ...state,
-                allprojects: payload,
+                allRations: payload,
                 loading: false
             };
-        case types.ADD_PROJECT:
+        case types.GET_TOTAL_RATION:
             return {
                 ...state,
-                project: payload,
+                totalRation: payload,
                 loading: false
             };
-        case types.SET_CURRENT_PROJECT:
+        case types.ADD_RATION:
             return {
                 ...state,
-                project: action.payload
+                ration: payload,
+                loading: false
             };
-        case types.CLEAR_PROJECT:
+        case types.SET_CURRENT_RATION:
             return {
                 ...state,
-                project: null,
-                projects: [],
+                ration: action.payload
+            };
+        case types.CLEAR_RATION:
+            return {
+                ...state,
+                ration: null,
+                rations: [],
                 loading: false
             };
 
         // case types.FILTER_STAFF:
         //   return {
-        //    ...state,
-        //     filtered: project.projects.filter(project => {
+        //   ...state,
+        //     filtered: ration.rations.filter(ration => {
         //       const regex = new RegExp(`${action.payload}`, "gi");
         //       return (
         //         staff.firstName.match(regex) ||
@@ -69,15 +77,15 @@ export default function (state = initialProject, action) {
                 ...state,
                 filtered: null
             };
-        case types.DELETE_PROJECT:
+        case types.DELETE_RATION:
             return {
                 ...state,
-                projects: state.projects.filter(
-                    project => project._id !== action.payload
+                rations: state.rations.filter(
+                    ration => ration._id !== action.payload
                 ),
                 loading: false
             };
-        case types.PROJECT_ERROR:
+        case types.RATION_ERROR:
             return {
                 ...state,
                 error: payload,

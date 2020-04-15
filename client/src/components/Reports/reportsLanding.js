@@ -52,6 +52,19 @@ const ReportLanding = ({
                                         </Link>
                                     </div>
 
+                                    <div className="col-xl-3 col-sm-6 py-2">
+                                        <Link to="/admin/ration/allRation" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white bg-warning h-100">
+                                                <div className="card-body bg-warning">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-medkit fa-4x"></i>
+                                                    </div>
+                                                    <h3 className="text-uppercase">Total Disptach Ration Kit</h3>
+                                                    <small>View Dispatch ration Kit</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
 
 
                                 </div>

@@ -12,7 +12,8 @@ import './Dashboard.css'
 import { loadUser } from '../../_actions/authAction'
 import { getOverAllSumInv } from '../../_actions/investmentAction'
 import { getOverAllSumExp } from '../../_actions/expenseAction'
-import { getOverAllSumCustPay } from '../../_actions/customerPayAction'
+import { getTotalRations } from '../../_actions/rationAction'
+
 
 
 import { logout } from '../../_actions/authAction';
@@ -21,34 +22,34 @@ const Dashboard = ({
     loading,
     overAllInvestment,
     overAllExpenses,
-    overAllCustPay,
+    totalRation,
     auth: { firstName, lastName, user: { username, image, email, role } },
-    loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay
+    loadUser, logout, getOverAllSumInv, getOverAllSumExp, getTotalRations
 }) => {
 
     useEffect(() => {
         loadUser()
         getOverAllSumInv()
-        getOverAllSumCustPay()
         getOverAllSumExp()
+        getTotalRations()
 
-    }, [loadUser, getOverAllSumInv, getOverAllSumCustPay, getOverAllSumExp]);
+    }, [loadUser, getOverAllSumInv, getOverAllSumExp, getTotalRations]);
 
     const me = <Link to="/myprofile">{!username ? "" : username}</Link>;
 
     const totalInvest = overAllInvestment.map(p => (
         p.totalInvest
     ))
-
+    const totalRationKit = totalRation.map(p => (
+        p.totalRation
+    ))
     const totalExpense = overAllExpenses.map(p => (
         p.totalExpense
     ))
 
-    // console.log(totalInvest)
-    // console.log(totalCustPay)
-    // console.log(totalExpense)
+
     const balence = ((totalInvest[0] ? totalInvest[0] : 0))
-    //console.log(balence)
+
     const balanceRemaining = (Math.round((balence - (totalExpense ? totalExpense : 0)) * 100) / 100)
     return (
         <Fragment>
@@ -78,18 +79,27 @@ const Dashboard = ({
                                                 <Link to="/admin/expenses/viewAllexpenses"><div className="circle-tile-heading cyan"><i className="fa fa-cart-arrow-down fa-fw fa-2x"></i></div></Link>
                                                 <div className="circle-tile-content cyan">
                                                     <div className="circle-tile-description text-faded">Total Expense</div>
-                                                    <div className="circle-tile-number text-faded ">{!totalExpense[0] ? 0 : parseFloat(totalExpense).toFixed(2)}</div>
+                                                    <div className="circle-tile-number text-faded "> {!totalExpense[0] ? 0 : parseFloat(totalExpense).toFixed(2)}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-
+                                        <div className="col-lg-3 col-md-5 col-sm-6">
+                                            <div className="circle-tile ">
+                                                <Link to="/admin/ration/allRation"><div className="circle-tile-heading orange"><i className="fa fa-medkit fa-fw fa-2x"></i></div></Link>
+                                                <div className="circle-tile-content orange">
+                                                    <div className="circle-tile-description text-faded">RationKit Dipsatch</div>
+                                                    <div className="circle-tile-number text-faded ">{!totalRationKit[0] ? 0 : totalRationKit[0]}</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div className="col-lg-3 col-md-5 col-sm-6">
                                             <div className="circle-tile ">
                                                 <a href="#"><div className="circle-tile-heading red"><i className="fa fa-inr fa-fw fa-2x"></i></div></a>
                                                 <div className="circle-tile-content red">
-                                                    <div className="circle-tile-description text-faded">Balence</div>
+                                                    <div className="circle-tile-description text-faded">Balance</div>
                                                     <div className="circle-tile-number text-faded ">{balanceRemaining}</div>
                                                 </div>
                                             </div>
@@ -130,6 +140,19 @@ const Dashboard = ({
                                         </Link>
                                     </div>
 
+                                    <div className="col-xl-2 col-sm-6 py-2">
+                                        <Link to="/admin/ration/allRation" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white bg-warning h-100 w-100">
+                                                <div className="card-body bg-warning">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-medkit fa-4x"></i>
+                                                    </div>
+                                                    <h4 className="text-uppercase">View Ration Kit</h4>
+                                                    <small>View Dispatch Ration Kits</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div> <br />
 
                                     <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/myreport" style={{ textDecoration: "none" }}>
@@ -166,18 +189,20 @@ Dashboard.propTypes = {
     getOverAllSumInv: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     getOverAllSumExp: PropTypes.func.isRequired,
-    getOverAllSumCustPay: PropTypes.func.isRequired,
+    getTotalRations: PropTypes.func.isRequired,
+
+
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
     loading: state.auth.loading,
-    overAllCustPay: state.customerpay.overAllCustPay,
     overAllInvestment: state.investment.overAllInvestment,
     overAllExpenses: state.expense.overAllExpenses,
+    totalRation: state.ration.totalRation,
 
 });
-export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay })(withRouter(Dashboard));
+export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getTotalRations })(withRouter(Dashboard));
 
 
 // <div className="row">

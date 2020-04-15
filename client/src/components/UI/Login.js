@@ -57,7 +57,6 @@ const Login = ({ login, isAuthenticated }) => {
 
                                         <button type="submit" className="d-block py-3 px-5 bg-primary text-white border-0 rounded font-weight-bold mt-3">Log in</button>
                                         <Link className="mt-3 d-block  text-primary" to="/forgetPassword">Forget Password?</Link>
-                                        <Link className="mt-3 d-inline-block text-primary" to="/register">Register Now</Link>
                                     </fieldset>
 
                                 </div>

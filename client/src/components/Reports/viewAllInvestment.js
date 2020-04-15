@@ -45,6 +45,34 @@ const ViewAllInvestment = ({
 
 
 
+    const [state, setState] = useState({
+        sortDate: [],
+        isToggle: false,
+    })
+    const { sortDate, isToggle } = state;
+
+
+    const datesort1 = (e) => {
+        let newDateSort = allinvestments
+        if (isToggle == false) {
+            newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+        } else {
+            newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+        }
+        setState({
+
+            sortDate: newDateSort
+        })
+    }
+
+
+
+    const datesort = (e) => {
+        setState({
+            isToggle: !isToggle,
+        })
+        datesort1()
+    }
 
 
 
@@ -70,12 +98,12 @@ const ViewAllInvestment = ({
                             loader={<p>Loading..</p>}
                         >
                             {allinvestments !== null && !loading ? (
-                                <table className="table table-hover table-responsive-md mt-2" id="table-inv">
+                                <table className="table table-hover mt-2" id="table-inv">
                                     <thead className="thead-dark">
                                         <tr>
 
                                             <th scope="col">Amount</th>
-                                            <th scope="col">Date</th>
+                                            <th scope="col" onClick={datesort}>Date</th>
                                             <th scope="col">Donated By</th>
                                             <th scope="col">Recipt</th>
                                             <th scope="col">Added by</th>

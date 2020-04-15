@@ -16,12 +16,10 @@ const compression = require("compression");
 const app = express();
 
 const userRouter = require('./routes/userRoutes')
-const customerRouter = require('./routes/customerRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
-const projectRoutes = require('./routes/projectRoutes')
 const investmentRoutes = require('./routes/investmentRoutes')
-const customerRoutes = require('./routes/customerPayRoutes')
-const estimateRoutes = require('./routes/estimateRoutes')
+const rationRoutes = require('./routes/rationRoutes')
+
 const DB =
     "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority";
 
@@ -109,11 +107,8 @@ app.use(compression());
 
 app.use("/api/user", userRouter);
 app.use("/api/expense", expenseRoutes);
-app.use('/api/project', projectRoutes)
 app.use('/api/investment', investmentRoutes)
-app.use('/api/customerpayment', customerRoutes)
-app.use('/api/estimate', estimateRoutes)
-app.use('/api/customer', customerRouter)
+app.use('/api/ration', rationRoutes)
 
 
 
