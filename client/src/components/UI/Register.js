@@ -164,7 +164,7 @@ const Register = ({
                                         name="phone"
                                         value={phone}
                                         onChange={e => onChangeHandler(e)}
-                                        required />
+                                    />
                                 </div>
 
                             </div>

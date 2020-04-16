@@ -9,7 +9,6 @@ import '../UI/Dashboard.css'
 const AddExpense = ({
     history,
     getAllUsers,
-
     addExpense,
 
     users,
@@ -143,7 +142,7 @@ AddExpense.propTypes = {
 
 }
 const mapStateToProps = state => ({
-    projects: state.project.projects,
+
     users: state.auth.users,
 
 });

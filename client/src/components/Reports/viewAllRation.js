@@ -60,7 +60,7 @@ const RationMaster = ({
                             <div className="col-lg-10 col-md-10 align-item-center">
                                 <h2 className="text-center pt-2"> Total Ration Kit Dispatch</h2>
 
-                                <p><strong>1 Ration Kit =</strong> <em>( 5kg flour, 5kg Rice, 1kg sugar, 1kg Gram, 1kg daal, 2.5kg onion, 2.5kg potatos, 1 scrub, 1kg Refined oil, 250gm tea, 1pkt turmeric powder, 1pkt mirch powder) </em> </p>
+                                <p><strong>1 Ration Kit =</strong> <em>( 5 kg rice, 5 kg flour, 1 kg sugar, 1 kg masoor daal, 1 kg onions,1kg potatoes, 1 kg chana, 1 turmeric powder, 1 red chilli powder, 1 scrub, 250 gm tea, 1 kg refined oil, 1 paparr packet,1 packet Salt) </em> </p>
                                 <br />
                                 <div className="row">
 

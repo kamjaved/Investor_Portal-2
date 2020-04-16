@@ -74,7 +74,7 @@ const ViewAllExpenses = ({
                                     <table className="table table-hover table-responsive-md mt-2" id="table-exp">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Amount</th>
+                                                <th scope="col">Amount(INR)</th>
                                                 <th scope="col" onClick={datesort}>Date</th>
                                                 <th scope="col">Expensed by</th>
                                                 <th scope="col">Purpose</th>

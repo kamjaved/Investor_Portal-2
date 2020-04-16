@@ -43,7 +43,7 @@ const ExpenseMaster = ({
                                     <table className="table table-hover table-responsive-md mt-2">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Amount</th>
+                                                <th scope="col">Amount(INR)</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Expense by</th>
                                                 <th scope="col">Purpose</th>
@@ -58,7 +58,7 @@ const ExpenseMaster = ({
                                             {expenses.map(expense => (
                                                 <tr key={expense._id}>
 
-                                                    <td>{`${expense.amount} `}</td>
+                                                    <td>₹{`${expense.amount} `}</td>
 
                                                     <td>{moment(expense.date).format("DD-MM-YYYY")}</td>
                                                     <td>{!expense.expensor ? "NA" : expense.expensor}</td>

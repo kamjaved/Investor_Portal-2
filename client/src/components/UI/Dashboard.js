@@ -84,7 +84,7 @@ const Dashboard = ({
                                         <div className="circle-tile ">
                                             <Link to="/admin/investment/viewAllinvestment"><div className="circle-tile-heading green"><i className="fa fa-money fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content green">
-                                                <div className="circle-tile-description text-faded"> Total Donation</div>
+                                                <div className="circle-tile-description text-faded"> Total Donation (INR)</div>
                                                 <div className="circle-tile-number text-faded ">{!totalInvest[0] ? 0 : parseFloat(totalInvest).toFixed(2)}</div>
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@ const Dashboard = ({
                                         <div className="circle-tile ">
                                             <Link to="/admin/expenses/viewAllexpenses"><div className="circle-tile-heading cyan"><i className="fa fa-cart-arrow-down fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content cyan">
-                                                <div className="circle-tile-description text-faded">Total Expense</div>
+                                                <div className="circle-tile-description text-faded">Total Expense (INR)</div>
                                                 <div className="circle-tile-number text-faded ">{!totalExpense[0] ? 0 : parseFloat(totalExpense).toFixed(2)}</div>
                                             </div>
                                         </div>
@@ -104,7 +104,7 @@ const Dashboard = ({
                                         <div className="circle-tile ">
                                             <Link to="/admin/ration/allRation"><div className="circle-tile-heading orange"><i className="fa fa fa-medkit fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content orange">
-                                                <div className="circle-tile-description text-faded">RationKit Dipsatch</div>
+                                                <div className="circle-tile-description text-faded">RationKit Dipsatched</div>
                                                 <div className="circle-tile-number text-faded ">{!totalRationKit[0] ? 0 : totalRationKit[0]}</div>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@ const Dashboard = ({
                                         <div className="circle-tile ">
                                             <a href="#"><div className="circle-tile-heading red"><i className="fa fa-inr fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content red">
-                                                <div className="circle-tile-description text-faded">Balance</div>
+                                                <div className="circle-tile-description text-faded">Balance (INR)</div>
                                                 <div className="circle-tile-number text-faded ">{balanceRemaining}</div>
                                             </div>
                                         </div>

@@ -68,6 +68,7 @@ const EditExpense = ({
 
         formData.append("image", image);
         formData.append("amount", amount);
+        formData.append("purpose", purpose);
         formData.append("date", date);
         formData.append("expensor", expensor);
 

@@ -102,7 +102,7 @@ const ViewAllInvestment = ({
                                     <thead className="thead-dark">
                                         <tr>
 
-                                            <th scope="col">Amount</th>
+                                            <th scope="col">Amount(INR)</th>
                                             <th scope="col" onClick={datesort}>Date</th>
                                             <th scope="col">Donated By</th>
                                             <th scope="col">Recipt</th>
@@ -115,7 +115,8 @@ const ViewAllInvestment = ({
                                         {allinvestments.map(investment => (
                                             <tr key={investment._id}>
 
-                                                <td>₹{`${investment.amount}`}</td>
+                                                <td>₹{`${investment.amount}`}<br />
+                                                    <small className="text-danger">{`${Math.round((investment.amount / 785) * 10) / 10}Kit`}</small></td>
                                                 <td>{moment(investment.date).format("DD-MM-YYYY")}</td>
                                                 <td>{!investment.investor ? "Hidden" : investment.investor}</td>
                                                 <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></td>
@@ -168,3 +169,6 @@ export default connect(
     mapStateToProps,
     { getAllInvestments, getAllUsers, fetchInvestment }
 )(ViewAllInvestment);
+
+
+//{`${Math.round((investment.amount / 785) * 10) / 10}Kit`}

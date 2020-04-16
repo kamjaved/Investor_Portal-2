@@ -74,7 +74,7 @@ const InvestmentMaster = ({
                                     <table className="table table-hover table-sm mt-2">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Amount</th>
+                                                <th scope="col">Amount(INR)</th>
                                                 <th scope="col" onClick={datesort} >Date</th>
                                                 <th scope="col">Investor</th>
                                                 <th scope="col">Recipt</th>
@@ -87,7 +87,7 @@ const InvestmentMaster = ({
                                         <tbody>
                                             {investments.map(investment => (
                                                 <tr key={investment._id}>
-                                                    <td>{`${investment.amount}`}</td>
+                                                    <td>₹{`${investment.amount}`}</td>
                                                     <td>{moment(investment.date).format("DD-MM-YYYY")}</td>
                                                     <td>{!investment.investor ? "NA" : investment.investor}</td>
                                                     <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></td>

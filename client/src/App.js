@@ -10,6 +10,7 @@ import './App.css';
 import Alert from "./components/UI/Alert";
 import Navbar from './components/UI/navbar';
 import Login from './components/UI/Login';
+//import Register from './components/UI/Register';
 
 
 import Dashboard from './components/UI/Dashboard';
@@ -85,6 +86,7 @@ const App = () => {
             <Route path="/admin/view-expense" component={ViewExpenses} />
             <Route path="/admin/viewinvestment" component={ViewInvestment} />
             <Route exact path="/login" component={Login} />
+
             <Route exact path="/" component={DashboardGuest} />
             <Route path="/admin/ration/allRation" component={ViewAllRation} />
 
@@ -103,3 +105,4 @@ const App = () => {
 }
 
 export default App;
+
