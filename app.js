@@ -21,7 +21,7 @@ const investmentRoutes = require('./routes/investmentRoutes')
 const rationRoutes = require('./routes/rationRoutes')
 
 const DB =
-    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority";
+    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority"; //investor_portal
 
 mongoose
     .connect(DB, {

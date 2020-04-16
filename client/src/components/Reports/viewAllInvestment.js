@@ -113,16 +113,22 @@ const ViewAllInvestment = ({
 
                                     <tbody>
                                         {allinvestments.map(investment => (
-                                            <tr key={investment._id}>
 
+                                            <tr key={investment._id}>
                                                 <td>₹{`${investment.amount}`}<br />
-                                                    <small className="text-danger">{`${Math.round((investment.amount / 785) * 10) / 10}Kit`}</small></td>
+                                                    <small className="text-danger">{`${Math.round((investment.amount / 785) * 10) / 10} Kit`}</small></td>
                                                 <td>{moment(investment.date).format("DD-MM-YYYY")}</td>
                                                 <td>{!investment.investor ? "Hidden" : investment.investor}</td>
-                                                <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></td>
+
+                                                <td><a href={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} target="_blank" >
+                                                    <img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></a></td>
+
+
                                                 <td>{`${investment.user.username}`}</td>
 
                                             </tr>
+
+
                                         ))}
                                     </tbody>
                                 </table>
@@ -147,6 +153,8 @@ const ViewAllInvestment = ({
 
                 </section>
             </div>
+
+
         </Fragment>
     );
 };

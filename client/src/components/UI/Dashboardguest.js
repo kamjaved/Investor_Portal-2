@@ -100,7 +100,7 @@ const Dashboard = ({
                                                 <a href="#"><div className="circle-tile-heading red"><i className="fa fa-inr fa-fw fa-2x"></i></div></a>
                                                 <div className="circle-tile-content red">
                                                     <div className="circle-tile-description text-faded">Balance (INR)</div>
-                                                    <div className="circle-tile-number text-faded ">{balanceRemaining}</div>
+                                                    <div className="circle-tile-number text-faded ">{balanceRemaining} = <small className="text-white">{`(${Math.round((balanceRemaining / 785) * 10) / 10} Kit)`}</small></div>
                                                 </div>
                                             </div>
                                         </div>
