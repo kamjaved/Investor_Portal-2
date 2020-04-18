@@ -12,7 +12,6 @@ import Navbar from './components/UI/navbar';
 import Login from './components/UI/Login';
 //import Register from './components/UI/Register';
 
-
 import Dashboard from './components/UI/Dashboard';
 import Profile from './components/UI/Profile';
 import AddInvestment from './components/Investment/addInvestment';
@@ -40,6 +39,18 @@ import AddRation from './components/Ration/addRation';
 import ViewRation from './components/Ration/viewRation';
 import EditRation from './components/Ration/editRation';
 import ViewAllRation from './components/Reports/viewAllRation';
+import Footer from './components/UI/footer';
+import Payment_landing from './components/PaymentMode/payment_landing';
+import AddPayAcc from './components/PaymentMode/addPayAcc';
+import AddUPI from './components/PaymentMode/addUPI';
+import ViewPayAcc from './components/PaymentMode/viewPayAcc';
+import EditPayAcc from './components/PaymentMode/editPayAcc';
+import ViewUPI from './components/PaymentMode/viewUPI';
+import EditUPI from './components/PaymentMode/editUPI';
+import PaymentLanding from './components/Reports/PaymentMode/PaymentLanding';
+import AddWhatGroup from './components/PaymentMode/addWhatGroup';
+import ViewWhatGroup from './components/PaymentMode/viewWhatGroup';
+import EditWhatGroup from './components/PaymentMode/editWhatGroup';
 
 
 
@@ -79,6 +90,20 @@ const App = () => {
             <PrivateRoute path={`/admin/editRation/:id`} component={EditRation} />
 
 
+            <PrivateRoute path={`/admin/payment`} component={Payment_landing} />
+            <PrivateRoute path={`/admin/accountpayment`} component={AddPayAcc} />
+            <PrivateRoute path={`/admin/upipayment`} component={AddUPI} />
+
+
+            <PrivateRoute path={`/admin/view-accpay`} component={ViewPayAcc} />
+            <PrivateRoute path={`/admin/view-upipay`} component={ViewUPI} />
+            <PrivateRoute path={`/admin/editAccPay/:id`} component={EditPayAcc} />
+            <PrivateRoute path={`/admin/editUpiPay/:id`} component={EditUPI} />
+            <PrivateRoute path={`/admin/whatsgroup`} component={AddWhatGroup} />
+            <PrivateRoute path={`/admin/view-whatgroup`} component={ViewWhatGroup} />
+            <PrivateRoute path={`/admin/editWhatGroup/:id`} component={EditWhatGroup} />
+
+
             <Route exact path="/dashboardguest" component={DashboardGuest} />
             <Route path="/admin/myreport" component={ReportsLanding} />
             <Route path="/admin/investment/viewAllinvestment" component={ViewAllInvestment} />
@@ -90,6 +115,8 @@ const App = () => {
             <Route exact path="/" component={DashboardGuest} />
             <Route path="/admin/ration/allRation" component={ViewAllRation} />
 
+            <Route path="/admin/allPayment" component={PaymentLanding} />
+
 
             <Route path="/forgetPassword" component={ForgotPassword} />
             <Route path="/resetPassword" component={ResetPassword} />
@@ -97,6 +124,7 @@ const App = () => {
 
 
           </Switch>
+          <Footer />
         </Fragment>
       </Router>
     </Provider >

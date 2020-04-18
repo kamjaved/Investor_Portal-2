@@ -2714,3 +2714,15 @@ article.single-post p {
   margin-right: 3.333%;
   margin-bottom: 30px; */
 }
+
+/*-------------------- FOOTER------------------- */
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(46, 46, 46);
+  color: white;
+  text-align: center;
+}

@@ -180,3 +180,6 @@ export default connect(
 
 
 //{`${Math.round((investment.amount / 785) * 10) / 10}Kit`}
+//Website devloped & donated by Globuslabs
+//Bank Branch
+// Whatsapp

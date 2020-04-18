@@ -187,6 +187,20 @@ const Dashboard = ({
                                     </div>
 
                                     <div className="col-xl-2 col-sm-6 py-2">
+                                        <Link to="/admin/payment" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white purple h-100 w-100">
+                                                <div className="card-body purple">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-money fa-4x"></i>
+                                                    </div>
+                                                    <h4 className="text-uppercase text-white">Payment Mode</h4>
+                                                    <small>Add Payment Mode</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+
+                                    <div className="col-xl-2 col-sm-6 py-2">
                                         <Link onClick={logout} to="/login" style={{ textDecoration: "none" }}>
                                             <div className="card text-white bg-danger h-100 w-100">
                                                 <div className="card-body bg-danger">

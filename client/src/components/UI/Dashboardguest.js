@@ -122,7 +122,7 @@ const Dashboard = ({
                                                     <div className="rotate">
                                                         <i className="fa fa-money fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase">View Donation</h4>
+                                                    <h4 className="text-uppercase">Donation Detail</h4>
                                                 </div>
                                             </div>
                                         </Link>
@@ -134,7 +134,7 @@ const Dashboard = ({
                                                     <div className="rotate">
                                                         <i className="fa fa-shopping-cart fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase">View Expenses</h4>
+                                                    <h4 className="text-uppercase">Expenses Detail</h4>
                                                 </div>
                                             </div>
                                         </Link>
@@ -155,13 +155,13 @@ const Dashboard = ({
                                     </div> <br />
 
                                     <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link to="/admin/myreport" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-dark h-100 w-100">
-                                                <div className="card-body bg-dark">
+                                        <Link to="/admin/allPayment" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white purple h-100 w-100">
+                                                <div className="card-body purple">
                                                     <div className="rotate">
-                                                        <i className="fa fa-bar-chart fa-4x"></i>
+                                                        <i className="fa fa-money fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase text-white">Reports</h4>
+                                                    <h4 className="text-uppercase text-white">Donate Now</h4>
                                                     <small>View All Reports</small>
                                                 </div>
                                             </div>

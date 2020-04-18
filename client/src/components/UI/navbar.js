@@ -87,6 +87,26 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
 
                                         </li>
+                                        <li className="nav-item dropdown dropdown-slide">
+
+                                            <Link className="nav-link dropdown-toggle" to="" data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Payment Mode <span><i className="fa fa-angle-down"></i></span>  </Link>
+
+                                            <div className="dropdown-menu dropdown-menu-right">
+                                                <Link className="dropdown-item" to="/admin/accountpayment">Add Account</Link>
+                                                <Link className="dropdown-item" to="/admin/view-accpay">View Account</Link>
+                                                <Link className="dropdown-item" to="/admin/upipayment">Add UPI</Link>
+                                                <Link className="dropdown-item" to="/admin/view-upipay">View UPI</Link>
+                                                <Link className="dropdown-item" to="/admin/view-whatgroup">View Whatsapp</Link>
+
+
+                                            </div>
+
+
+
+                                        </li>
 
 
 
@@ -178,17 +198,6 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }, props) => 
 
 
                                         </li>
-
-
-
-
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="/admin/myreport">
-                                                Reports
-                                     </Link>
-                                        </li>
-
-
 
                                     </ul>
 

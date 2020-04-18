@@ -19,6 +19,10 @@ const userRouter = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
 const investmentRoutes = require('./routes/investmentRoutes')
 const rationRoutes = require('./routes/rationRoutes')
+const accountRoutes = require('./routes/AccountRoutes')
+const upiRoutes = require('./routes/UPIRoutes')
+const whatRoutes = require('./routes/whatsappRoutes')
+
 
 const DB =
     "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority"; //investor_portal
@@ -109,6 +113,10 @@ app.use("/api/user", userRouter);
 app.use("/api/expense", expenseRoutes);
 app.use('/api/investment', investmentRoutes)
 app.use('/api/ration', rationRoutes)
+app.use('/api/account', accountRoutes)
+app.use('/api/upi', upiRoutes)
+app.use('/api/whatsgroup', whatRoutes)
+
 
 
 

@@ -5,6 +5,10 @@ import error from './errorsReducer'
 import expense from './expenseReducer'
 import investment from './investmentReducer'
 import ration from './rationReducer'
+import accPay from './accPayReducer'
+import upiPay from './upiPayReducer'
+import whatgroup from './whatsGroupReducer'
+
 
 
 export default combineReducers({
@@ -13,7 +17,10 @@ export default combineReducers({
     error,
     expense,
     investment,
-    ration
+    ration,
+    accPay,
+    upiPay,
+    whatgroup,
 
 
 })

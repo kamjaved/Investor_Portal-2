@@ -4,12 +4,11 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Spinner from "../UI/Spinner";
 import { connect } from 'react-redux';
-import './reports.css'
-import { logout } from '../../_actions/authAction';
+import '../Reports/reports.css'
 
 const ReportLanding = ({
     loading,
-    logout
+
 
 }) => {
 
@@ -26,55 +25,41 @@ const ReportLanding = ({
                                 <div className="row mb-1  animated fadeIn">
 
                                     <div className="col-xl-3 col-sm-6 py-2">
-                                        <Link to="/admin/investment/viewAllinvestment" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-success h-100">
-                                                <div className="card-body bg-success">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-money fa-4x"></i>
-                                                    </div>
-                                                    <h3 className="text-uppercase">Total Donation</h3>
-                                                    <small>View Total Donation</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                    <div className="col-xl-3 col-sm-6 py-2">
-                                        <Link to="/admin/expenses/viewAllexpenses" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-info h-100">
-                                                <div className="card-body bg-info">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-shopping-cart fa-4x"></i>
-                                                    </div>
-                                                    <h3 className="text-uppercase">Total Expenses</h3>
-                                                    <small>View All Expenses on Projects</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-
-                                    <div className="col-xl-3 col-sm-6 py-2">
-                                        <Link to="/admin/ration/allRation" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-warning h-100">
-                                                <div className="card-body bg-warning">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-medkit fa-4x"></i>
-                                                    </div>
-                                                    <h3 className="text-uppercase">Total Disptach Ration Kit</h3>
-                                                    <small>View Dispatch ration Kit</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-
-                                    <div className="col-xl-3 col-sm-6 py-2">
-                                        <Link to="/admin/allPayment" style={{ textDecoration: "none" }}>
+                                        <Link to="/admin/accountpayment" style={{ textDecoration: "none" }}>
                                             <div className="card text-white purple h-100">
                                                 <div className="card-body purple">
                                                     <div className="rotate">
-                                                        <i className="fa fa-money fa-4x"></i>
+                                                        <i className="fa fa-university fa-4x"></i>
                                                     </div>
-                                                    <h3 className="text-uppercase">View Payment Modes</h3>
-                                                    <small>View Added Payment Modes</small>
+                                                    <h3 className="text-uppercase text-white">Account No. Mode</h3>
+                                                    <small>Add Account Based Transcation Option</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="col-xl-3 col-sm-6 py-2">
+                                        <Link to="/admin/upipayment" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white purple h-100">
+                                                <div className="card-body purple">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-qrcode fa-4x"></i>
+                                                    </div>
+                                                    <h3 className="text-uppercase text-white">UPI Mode</h3>
+                                                    <small>Add UPI Based Transaction Option</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+
+                                    <div className="col-xl-3 col-sm-6 py-2">
+                                        <Link to="/admin/whatsgroup" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white purple h-100">
+                                                <div className="card-body purple">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-whatsapp fa-4x"></i>
+                                                    </div>
+                                                    <h3 className="text-uppercase text-white">Whatsapp Group</h3>
+                                                    <small>Invite on Whatsapp Group</small>
                                                 </div>
                                             </div>
                                         </Link>
@@ -95,7 +80,6 @@ const ReportLanding = ({
     );
 }
 ReportLanding.propTypes = {
-    logout: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -103,7 +87,7 @@ const mapStateToProps = state => ({
     loading: state.auth.loading,
 
 });
-export default connect(mapStateToProps, { logout })(withRouter(ReportLanding));
+export default connect(mapStateToProps, null)(withRouter(ReportLanding));
 
 
 // <div className="col-xl-3 col-sm-6 py-2">
