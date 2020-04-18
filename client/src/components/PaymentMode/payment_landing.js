@@ -21,7 +21,7 @@ const ReportLanding = ({
             ) : (
                     <div>
                         <div>
-                            <div className="container">
+                            <div className="container mb-4 pb-4">
                                 <div className="row mb-1  animated fadeIn">
 
                                     <div className="col-xl-3 col-sm-6 py-2">

@@ -51,16 +51,16 @@ const RationMaster = ({
 
     return (
         <Fragment>
-            <div className="container-fluid">
+            <div className="container-fluid  pb-4 mb-4">
 
-                <section className="container-fluid mt-4  justify-content-center ">
+                <section className=" mt-2  justify-content-center ">
 
                     <div className="container">
                         <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
-                                <h2 className="text-center pt-2"> Total Ration Kit Dispatch</h2>
+                                <h2 className="text-center pt-2"> Total Kit Delivered</h2>
 
-                                <p><strong>1 Ration Kit =</strong> <em>( 5 kg rice, 5 kg flour, 1 kg sugar, 1 kg masoor daal, 1 kg onions,1kg potatoes, 1 kg chana, 1 turmeric powder, 1 red chilli powder, 1 scrub, 250 gm tea, 1 kg refined oil, 1 paparr packet,1 packet Salt) </em> </p>
+                                <p><strong>1 Kit =</strong> <em>( 5 kg rice, 5 kg flour, 1 kg sugar, 1 kg masoor daal, 1 kg onions,1kg potatoes, 1 kg chana, 1 turmeric powder, 1 red chilli powder, 1 scrub, 250 gm tea, 1 kg refined oil, 1 paparr packet,1 packet Salt) </em> </p>
                                 <br />
                                 <div className="row">
 
@@ -68,7 +68,7 @@ const RationMaster = ({
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col" onClick={datesort} >Date</th>
-                                                <th scope="col">RationKit Dispatch</th>
+                                                <th scope="col">Kit Delivered</th>
                                                 <th scope="col">Desc</th>
 
                                             </tr>

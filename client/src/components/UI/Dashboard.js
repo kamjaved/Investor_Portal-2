@@ -104,7 +104,7 @@ const Dashboard = ({
                                         <div className="circle-tile ">
                                             <Link to="/admin/ration/allRation"><div className="circle-tile-heading orange"><i className="fa fa fa-medkit fa-fw fa-2x"></i></div></Link>
                                             <div className="circle-tile-content orange">
-                                                <div className="circle-tile-description text-faded">RationKit Dipsatched</div>
+                                                <div className="circle-tile-description text-faded">Kit Delivered</div>
                                                 <div className="circle-tile-number text-faded ">{!totalRationKit[0] ? 0 : totalRationKit[0]}</div>
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@ const Dashboard = ({
                         </div>
 
                         <div>
-                            <div className="container">
+                            <div className="container pb-4 mb-4">
                                 <div className="row mb-1  animated fadeIn">
 
                                     <div className="col-xl-2 col-sm-6 py-2">
@@ -163,8 +163,8 @@ const Dashboard = ({
                                                     <div className="rotate">
                                                         <i className="fa fa-medkit fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase">Add Ration Kit</h4>
-                                                    <small>Add new Ration Kit</small>
+                                                    <h4 className="text-uppercase">Add Delivered Kit</h4>
+                                                    <small>Add New Delivered Kit</small>
                                                 </div>
                                             </div>
                                         </Link>

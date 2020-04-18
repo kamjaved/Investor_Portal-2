@@ -65,7 +65,7 @@ const EditRation = ({
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-warning">
                                         <div>
-                                            <h3 className="bg-warning text-center text-white p-4"><Link to="/admin/view-ration" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Edit Ration Kit</h3></div>
+                                            <h3 className="bg-warning text-center text-white p-4"><Link to="/admin/view-ration" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Edit Delivered Kit</h3></div>
                                         <fieldset className="p-4">
 
                                             <input name="rationKit"

@@ -60,9 +60,9 @@ const ViewAllExpenses = ({
 
     return (
         <Fragment>
-            <div className="container-fluid">
+            <div className="container-fluid  pb-4 mb-4">
 
-                <section className="container-fluid mt-4  justify-content-center ">
+                <section className="mt-2  justify-content-center ">
 
                     <div className="container">
                         <h2 className="text-center pt-2">View All Expenses </h2>

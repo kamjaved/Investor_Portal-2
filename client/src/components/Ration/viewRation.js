@@ -67,7 +67,7 @@ const ViewRation = ({
                     <div className="container">
                         <div className="row justify-content-center animated fadeIn">
                             <div className="col-lg-10 col-md-10 align-item-center">
-                                <h2 className="text-center pt-2"> Your Added Ration Kit </h2>
+                                <h2 className="text-center pt-2"> Your Added Delivered Kit </h2>
                                 <br />
                                 <div className="row">
 
@@ -75,7 +75,7 @@ const ViewRation = ({
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col" onClick={datesort} >Date</th>
-                                                <th scope="col">RationKit Dispatch</th>
+                                                <th scope="col">Kit Delivered</th>
                                                 <th scope="col">Desc</th>
                                                 <th scope="col" className="text-right">
                                                     Action

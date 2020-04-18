@@ -89,7 +89,7 @@ const Dashboard = ({
                                             <div className="circle-tile ">
                                                 <Link to="/admin/ration/allRation"><div className="circle-tile-heading orange"><i className="fa fa-medkit fa-fw fa-2x"></i></div></Link>
                                                 <div className="circle-tile-content orange">
-                                                    <div className="circle-tile-description text-faded">RationKit Dipsatched</div>
+                                                    <div className="circle-tile-description text-faded">Kit Delivered</div>
                                                     <div className="circle-tile-number text-faded ">{!totalRationKit[0] ? 0 : totalRationKit[0]}</div>
                                                 </div>
                                             </div>
@@ -112,47 +112,22 @@ const Dashboard = ({
                         </div>
 
                         <div>
-                            <div className="container">
+                            <div className="container mb-4 pb-4">
                                 <div className="row mb-1  animated fadeIn">
 
                                     <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link to="/admin/investment/viewAllinvestment" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-success h-100 w-100">
-                                                <div className="card-body bg-success">
+                                        <Link to="/admin/myreport" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white bg-dark h-100 w-100">
+                                                <div className="card-body bg-dark">
                                                     <div className="rotate">
-                                                        <i className="fa fa-money fa-4x"></i>
+                                                        <i className="fa fa-bar-chart fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase">Donation Detail</h4>
+                                                    <h4 className="text-uppercase text-white">Reports</h4>
+                                                    <small>View All Reports</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
-                                    <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link to="/admin/expenses/viewAllexpenses" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-info h-100 w-100">
-                                                <div className="card-body bg-info">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-shopping-cart fa-4x"></i>
-                                                    </div>
-                                                    <h4 className="text-uppercase">Expenses Detail</h4>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-
-                                    <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link to="/admin/ration/allRation" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-warning h-100 w-100">
-                                                <div className="card-body bg-warning">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-medkit fa-4x"></i>
-                                                    </div>
-                                                    <h4 className="text-uppercase">View Ration Kit</h4>
-                                                    <small>View Dispatch Ration Kits</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div> <br />
 
                                     <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/allPayment" style={{ textDecoration: "none" }}>

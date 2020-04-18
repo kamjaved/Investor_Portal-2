@@ -22,7 +22,7 @@ const ReportLanding = ({
             ) : (
                     <div>
                         <div>
-                            <div className="container">
+                            <div className="container  pb-4 mb-4">
                                 <div className="row mb-1  animated fadeIn">
 
                                     <div className="col-xl-3 col-sm-6 py-2">
@@ -59,8 +59,8 @@ const ReportLanding = ({
                                                     <div className="rotate">
                                                         <i className="fa fa-medkit fa-4x"></i>
                                                     </div>
-                                                    <h3 className="text-uppercase">Total Disptach Ration Kit</h3>
-                                                    <small>View Dispatch ration Kit</small>
+                                                    <h3 className="text-uppercase">Total Delivered Kit</h3>
+                                                    <small>View Dilevered Kit</small>
                                                 </div>
                                             </div>
                                         </Link>

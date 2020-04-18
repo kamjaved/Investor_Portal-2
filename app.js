@@ -25,7 +25,7 @@ const whatRoutes = require('./routes/whatsappRoutes')
 
 
 const DB =
-    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/investor_portal?retryWrites=true&w=majority"; //investor_portal
+    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority"; //investor_portal
 
 mongoose
     .connect(DB, {

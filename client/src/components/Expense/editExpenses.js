@@ -80,7 +80,7 @@ const EditExpense = ({
     return (
         <Fragment>
 
-            <div className="container-fluid">
+            <div className="container-fluid  pb-4 mb-4">
                 <form onSubmit={e => onSubmitHandler(e)}>
                     <section className="login py-2 border-top-1">
                         <div className="container">

@@ -79,8 +79,8 @@ const ViewAllInvestment = ({
 
     return (
         <Fragment>
-            <div className="container-fluid">
-                <section className="container-fluid mt-2  justify-content-center ">
+            <div className="container-fluid pb-4 mb-4">
+                <section className="mt-2  justify-content-center ">
 
                     <div className="container ">
                         <h2 className="text-center pt-2"> View All Donations </h2>
