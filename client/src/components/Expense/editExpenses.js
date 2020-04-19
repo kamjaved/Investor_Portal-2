@@ -108,12 +108,15 @@ const EditExpense = ({
 
 
 
-                                            <input name="date"
-                                                placeholder="Date"
-                                                selected={Date.now()}
-                                                type="date"
-                                                value={date}
-                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+                                            <div>
+                                                <small>Select Date</small>
+                                                <input name="date"
+                                                    placeholder="Date"
+                                                    type="date"
+                                                    value={date}
+                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+
+                                            </div>
 
                                             <input name="purpose"
                                                 placeholder="Purpose"

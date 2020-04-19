@@ -109,7 +109,8 @@ const InvestmentMaster = ({
                                                     <td>₹{`${investment.amount}`}</td>
                                                     <td>{moment(investment.date).format("DD-MM-YYYY")}</td>
                                                     <td>{!investment.investor ? "NA" : investment.investor}</td>
-                                                    <td><img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></td>
+                                                    <td><a href={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} target="_blank" >
+                                                        <img src={`${process.env.PUBLIC_URL}/uploads/${investment.image}`} alt={investment.image} className="profileImg"></img></a></td>
                                                     <td className="text-right">
                                                         <Link
                                                             to={`/admin/editInvestment/${investment._id}`}

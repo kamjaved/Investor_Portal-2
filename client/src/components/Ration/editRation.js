@@ -108,11 +108,16 @@ const EditRation = ({
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" />
 
-                                            <input name="date"
-                                                placeholder="Date"
-                                                type="date"
-                                                value={date}
-                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+                                            <div>
+                                                <small>Select Date</small>
+                                                <input name="date"
+                                                    placeholder="Date"
+                                                    type="date"
+                                                    value={date}
+                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+
+                                            </div>
+
 
 
                                             <button type="submit" className="d-block py-3 px-5 bg-warning text-white border-0 rounded font-weight-bold mt-3">Edit</button>

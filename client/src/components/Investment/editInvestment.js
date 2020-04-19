@@ -103,11 +103,15 @@ const EditInvestment = ({
                                                 className="border p-3 w-100 my-2" />
 
 
-                                            <input name="date"
-                                                placeholder="Date"
-                                                type="date"
-                                                value={date}
-                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+                                            <div>
+                                                <small>Select Date</small>
+                                                <input name="date"
+                                                    placeholder="Date"
+                                                    type="date"
+                                                    value={date}
+                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+
+                                            </div>
 
                                             <div>
                                                 <small>Upload Recipt <b>Max-File-Size-1MB <br />Supported File jpg/png</b></small>

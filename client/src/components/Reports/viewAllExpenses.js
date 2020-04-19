@@ -111,7 +111,8 @@ const ViewAllExpenses = ({
                                                     <td>{moment(expense.date).format("DD-MM-YYYY")}</td>
                                                     <td>{!expense.expensor ? "NA" : expense.expensor}</td>
                                                     <td>{`${expense.purpose}`}</td>
-                                                    <td><img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></td>
+                                                    <td><a href={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} target="_blank" >
+                                                        <img src={`${process.env.PUBLIC_URL}/uploads/${expense.image}`} alt={expense.image} className="profileImg"></img></a></td>
                                                     <td>{`${expense.user.username}`}</td>
 
 
