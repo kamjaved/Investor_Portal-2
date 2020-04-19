@@ -28,35 +28,54 @@ const InvestmentMaster = ({
         deleteInvestment(id);
     };
 
+
+    //----SORTING--------------
+
     const [state, setState] = useState({
         sortDate: [],
-        isToggle: false,
+        sortAmount: [],
+        isToggle: true,
+        isAmntToggle: true,
     })
-    const { sortDate, isToggle } = state;
+    const { sortDate, isToggle, sortAmount, isAmntToggle } = state;
 
 
     const datesort1 = (e) => {
         let newDateSort = investments
-        if (isToggle == false) {
+        if (isToggle) {
             newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
         } else {
-            newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+            newDateSort.sort((a, b) => { return new Date(b.date).getTime() - new Date(a.date).getTime() })
         }
         setState({
-
             sortDate: newDateSort
         })
     }
 
-
+    const amntsort1 = (e) => {
+        let newAmntSort = investments
+        if (isAmntToggle) {
+            newAmntSort.sort((a, b) => a.amount - b.amount)
+        } else {
+            newAmntSort.sort((a, b) => b.amount - a.amount)
+        }
+        setState({
+            sortAmount: newAmntSort
+        })
+    }
 
     const datesort = (e) => {
+        datesort1()
         setState({
             isToggle: !isToggle,
         })
-        datesort1()
     }
-    console.log(sortDate);
+    const amntsort = (e) => {
+        amntsort1()
+        setState({
+            isAmntToggle: !isAmntToggle,
+        })
+    }
 
     return (
         <Fragment>
@@ -74,7 +93,7 @@ const InvestmentMaster = ({
                                     <table className="table table-hover table-sm mt-2">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Amount(INR)</th>
+                                                <th scope="col" onClick={amntsort}>Amount(INR)</th>
                                                 <th scope="col" onClick={datesort} >Date</th>
                                                 <th scope="col">Investor</th>
                                                 <th scope="col">Recipt</th>

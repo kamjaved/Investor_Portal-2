@@ -76,6 +76,8 @@ const ViewRation = ({
                                             <tr>
                                                 <th scope="col" onClick={datesort} >Date</th>
                                                 <th scope="col">Kit Delivered</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Grocery Type</th>
                                                 <th scope="col">Desc</th>
                                                 <th scope="col" className="text-right">
                                                     Action
@@ -88,6 +90,8 @@ const ViewRation = ({
                                                 <tr key={ration._id}>
                                                     <td>{moment(ration.date).format("DD-MM-YYYY")}</td>
                                                     <td>{!ration.rationKit ? "NA" : ration.rationKit}</td>
+                                                    <td>{!ration.location ? "NA" : ration.location}</td>
+                                                    <td>{!ration.grocerykit ? "NA" : ration.grocerykit.groceryKitName}</td>
                                                     <td>{!ration.desc ? "NA" : ration.desc}</td>
 
                                                     <td className="text-right">

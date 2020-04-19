@@ -9,14 +9,23 @@ const rationSchema = new mongoose.Schema({
 
     },
 
-
     desc: {
         type: String,
+    },
+
+    location: {
+        type: String,
+
     },
 
     date: {
         type: Date,
         required: [true, "ration must have a end Date."]
+    },
+
+    grocerykit: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Grocery"
     },
 
     createdAt: {
@@ -26,5 +35,13 @@ const rationSchema = new mongoose.Schema({
 
 });
 
+
+rationSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: "grocerykit",
+        select: "groceryKitName  price"
+    });
+    next();
+});
 
 module.exports = ration = mongoose.model("ration", rationSchema);

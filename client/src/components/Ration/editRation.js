@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { editRation, getCurrentRation } from '../../_actions/rationAction'
+import { getGrocerys } from '../../_actions/groceryAction'
 import '../UI/Dashboard.css'
 import { Link } from "react-router-dom";
 import moment from 'moment';
@@ -11,7 +12,10 @@ const EditRation = ({
     history,
     editRation,
     getCurrentRation,
+    getGrocerys,
+    grocerys,
     match,
+
 
 
 }) => {
@@ -19,22 +23,26 @@ const EditRation = ({
     const [formData, setFormData] = useState({
         rationKit: "",
         desc: "",
+        location: "",
+        grocerykit: "",
         date: new Date(),
     });
 
     //format('2013-03-10T02:00:00Z', 'YYYY-MM-DD'); 
     useEffect(() => {
-
+        getGrocerys();
         getCurrentRation(match.params.id);
         setFormData({
             rationKit: loading || !ration.rationKit ? "" : ration.rationKit,
             desc: loading || !ration.desc ? "" : ration.desc,
+            location: loading || !ration.location ? "" : ration.location,
+            grocerykit: loading || !ration.grocerykit ? "" : ration.grocerykit._id,
             date: loading || !ration.date ? "" : moment(ration.date).format('YYYY-MM-DD'),
         });
         //eslint-disable-next-line
-    }, [loading, getCurrentRation]);
+    }, [loading, getCurrentRation, getGrocerys]);
 
-    const { rationKit, desc, date, image } = formData;
+    const { rationKit, desc, date, location, grocerykit } = formData;
 
     const onChangeHandler = e => {
         e.preventDefault();
@@ -49,8 +57,11 @@ const EditRation = ({
         editRation(formData, history, match.params.id);
     };
 
-
-
+    let groceryTypeOptn = grocerys.map(groce => (
+        <option key={groce._id} value={groce._id}>
+            {groce.groceryKitName}
+        </option>
+    ));
 
 
 
@@ -74,6 +85,21 @@ const EditRation = ({
                                                 value={rationKit}
                                                 onChange={e => onChangeHandler(e)}
                                                 className="border p-3 w-100 my-2" />
+
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="grocerykit"
+                                                value={grocerykit}
+                                                onChange={e => onChangeHandler(e)} required >
+                                                <option>Select Grocery Kit</option>
+                                                {groceryTypeOptn}
+                                            </select>
+
+                                            <input name="location"
+                                                placeholder=" Distribution Location"
+                                                type="text"
+                                                value={location}
+                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
 
                                             <input name="desc"
                                                 placeholder="Desc"
@@ -108,11 +134,12 @@ EditRation.propTypes = {
     editRation: PropTypes.func.isRequired,
     getCurrentRation: PropTypes.func.isRequired,
     ration: PropTypes.object.isRequired,
+    getGrocerys: PropTypes.func.isRequired,
 
 }
 const mapStateToProps = state => ({
     ration: state.ration,
-
+    grocerys: state.grocery.grocerys,
 
 });
-export default connect(mapStateToProps, { editRation, getCurrentRation, })(EditRation);
+export default connect(mapStateToProps, { editRation, getCurrentRation, getGrocerys })(EditRation);

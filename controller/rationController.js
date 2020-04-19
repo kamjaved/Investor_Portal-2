@@ -29,10 +29,10 @@ exports.getUserRations = catchAsync(async (req, res, next) => {
 // Post Ration
 
 exports.createRation = catchAsync(async (req, res, next) => {
-    const { rationKit, desc, date, } = req.body;
+    const { rationKit, desc, date, location, grocerykit } = req.body;
     try {
         const newRation = new Ration({
-            rationKit, date, desc,
+            rationKit, date, desc, location, grocerykit,
             user: req.user.id
         });
 

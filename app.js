@@ -22,10 +22,12 @@ const rationRoutes = require('./routes/rationRoutes')
 const accountRoutes = require('./routes/AccountRoutes')
 const upiRoutes = require('./routes/UPIRoutes')
 const whatRoutes = require('./routes/whatsappRoutes')
+const groceryRoutes = require('./routes/groceryRoutes')
+const settingRoutes = require('./routes/settingRoutes')
 
 
 const DB =
-    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/lockdown?retryWrites=true&w=majority"; //investor_portal
+    "mongodb+srv://kamran:1234@cluster0-fvxek.mongodb.net/investor_portal?retryWrites=true&w=majority"; //investor_portal  lockdown
 
 mongoose
     .connect(DB, {
@@ -116,6 +118,8 @@ app.use('/api/ration', rationRoutes)
 app.use('/api/account', accountRoutes)
 app.use('/api/upi', upiRoutes)
 app.use('/api/whatsgroup', whatRoutes)
+app.use('/api/grocery', groceryRoutes)
+app.use('/api/setting', settingRoutes)
 
 
 
@@ -144,3 +148,5 @@ app.all("*", (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
+
+//todo develper Globus Labs

@@ -32,15 +32,23 @@ const userSchema = new mongoose.Schema({
         type: Number
     },
 
+    grocerykit: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Grocery"
+    },
+
     image: {
         type: String
     },
+
     password: {
         type: String,
         required: [true, "Please provide a password"],
         minlength: 6,
         select: false
     },
+
+
 
     passwordConfirm: {
         type: String,
@@ -110,7 +118,7 @@ userSchema.pre(/^find/, function (next) {
 
 userSchema.pre(/^find/, function (next) {
     this.populate({
-        path: "result"
+        path: "Grocery"
     });
     next();
 });

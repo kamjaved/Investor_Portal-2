@@ -137,7 +137,7 @@ const Dashboard = ({
                                                         <i className="fa fa-money fa-4x"></i>
                                                     </div>
                                                     <h4 className="text-uppercase text-white">Donate Now</h4>
-                                                    <small>View All Reports</small>
+                                                    <small>Donating Options</small>
                                                 </div>
                                             </div>
                                         </Link>

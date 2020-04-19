@@ -6,7 +6,7 @@ import Spinner from "../UI/Spinner";
 import { connect } from 'react-redux';
 import '../Reports/reports.css'
 
-const ReportLanding = ({
+const PaymentLanding = ({
     loading,
 
 
@@ -79,7 +79,7 @@ const ReportLanding = ({
         </Fragment>
     );
 }
-ReportLanding.propTypes = {
+PaymentLanding.propTypes = {
 }
 
 const mapStateToProps = state => ({
@@ -87,7 +87,7 @@ const mapStateToProps = state => ({
     loading: state.auth.loading,
 
 });
-export default connect(mapStateToProps, null)(withRouter(ReportLanding));
+export default connect(mapStateToProps, null)(withRouter(PaymentLanding));
 
 
 // <div className="col-xl-3 col-sm-6 py-2">

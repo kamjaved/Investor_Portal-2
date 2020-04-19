@@ -143,10 +143,10 @@ router.route("/updateMe").patch(upload.single("image"), resizePhoto, catchAsync(
 
     // 2) Filtered out unwanted fields names that are not allowed to be updated
 
-    const { firstName, lastName, email, username, address, phone, image } = req.body
+    const { firstName, lastName, email, username, address, phone, grocerykit, image } = req.body
 
     const doc = await User.findByIdAndUpdate(req.user.id, {
-        firstName, lastName, username, email, address, phone,
+        firstName, lastName, username, email, address, phone, grocerykit,
         new: true,
         runValidators: true,
         image: req.file ? req.file.filename : image,

@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { addRation } from '../../_actions/rationAction'
+import { getGrocerys } from '../../_actions/groceryAction'
 import '../UI/Dashboard.css'
 
 const AddCustomerPay = ({
 
     history,
     addRation,
+    getGrocerys,
+    grocerys,
 
 
 }) => {
@@ -18,11 +21,18 @@ const AddCustomerPay = ({
         rationKit: "",
         desc: "",
         date: "",
+        location: "",
+        grocerykit: "",
 
 
     });
 
-    const { rationKit, date, desc } = formData;
+
+    useEffect(() => {
+        getGrocerys();
+    }, [getGrocerys])
+
+    const { rationKit, date, desc, location, grocerykit } = formData;
 
 
     const onChangeHandler = e => {
@@ -39,6 +49,11 @@ const AddCustomerPay = ({
 
     };
 
+    let groceryTypeOptn = grocerys.map(groce => (
+        <option key={groce._id} value={groce._id}>
+            {groce.groceryKitName}
+        </option>
+    ));
 
 
     return (
@@ -59,6 +74,21 @@ const AddCustomerPay = ({
                                                 type="number"
                                                 value={rationKit}
                                                 onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+
+                                            <select
+                                                className="border p-3 w-100 my-2"
+                                                name="grocerykit"
+                                                value={grocerykit}
+                                                onChange={e => onChangeHandler(e)} required >
+                                                <option>Select Grocery Kit</option>
+                                                {groceryTypeOptn}
+                                            </select>
+
+                                            <input name="location"
+                                                placeholder=" Distribution Location"
+                                                type="text"
+                                                value={location}
+                                                onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
 
                                             <input name="desc"
                                                 placeholder="Description"
@@ -92,8 +122,12 @@ const AddCustomerPay = ({
 AddCustomerPay.propTypes = {
 
     addRation: PropTypes.func.isRequired,
-
+    getGrocerys: PropTypes.func.isRequired,
 
 }
+const mapStateToProps = state => ({
+    grocerys: state.grocery.grocerys,
+});
+export default connect(mapStateToProps, { addRation, getGrocerys })(AddCustomerPay);
 
-export default connect(null, { addRation })(AddCustomerPay);
+//passsword

@@ -17,7 +17,7 @@ const Footer = () => {
             <div className="container-fluid footer">
 
 
-                <p className="mt-2"> Website devloped & donated by <Link data-toggle="modal" data-target="#exampleModalCenter"> <strong className="text-white">Globuslabs </strong></Link>💝</p>
+                <p className="mt-2"> Website developed & donated by <Link data-toggle="modal" data-target="#exampleModalCenter"> <strong className="text-white">Globus Labs </strong></Link>💝</p>
 
 
             </div>

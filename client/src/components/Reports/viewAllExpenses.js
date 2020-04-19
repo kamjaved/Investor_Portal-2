@@ -29,34 +29,54 @@ const ViewAllExpenses = ({
 
 
 
+    //----SORTING--------------
+
     const [state, setState] = useState({
         sortDate: [],
-        isToggle: false,
+        sortAmount: [],
+        isToggle: true,
+        isAmntToggle: true,
     })
-    const { sortDate, isToggle } = state;
+    const { sortDate, isToggle, sortAmount, isAmntToggle } = state;
 
 
     const datesort1 = (e) => {
         let newDateSort = allexpenses
-        if (isToggle == false) {
+        if (isToggle) {
             newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
         } else {
-            newDateSort.sort((a, b) => { return new Date(a.date).getTime() - new Date(b.date).getTime() })
+            newDateSort.sort((a, b) => { return new Date(b.date).getTime() - new Date(a.date).getTime() })
         }
         setState({
-
             sortDate: newDateSort
         })
     }
 
-
+    const amntsort1 = (e) => {
+        let newAmntSort = allexpenses
+        if (isAmntToggle) {
+            newAmntSort.sort((a, b) => a.amount - b.amount)
+        } else {
+            newAmntSort.sort((a, b) => b.amount - a.amount)
+        }
+        setState({
+            sortAmount: newAmntSort
+        })
+    }
 
     const datesort = (e) => {
+        datesort1()
         setState({
             isToggle: !isToggle,
         })
-        datesort1()
     }
+    const amntsort = (e) => {
+        amntsort1()
+        setState({
+            isAmntToggle: !isAmntToggle,
+        })
+    }
+
 
     return (
         <Fragment>
@@ -74,7 +94,7 @@ const ViewAllExpenses = ({
                                     <table className="table table-hover table-responsive-md mt-2" id="table-exp">
                                         <thead className="thead-dark">
                                             <tr>
-                                                <th scope="col">Amount(INR)</th>
+                                                <th scope="col" onClick={amntsort}>Amount(INR)</th>
                                                 <th scope="col" onClick={datesort}>Date</th>
                                                 <th scope="col">Expensed by</th>
                                                 <th scope="col">Purpose</th>

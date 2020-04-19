@@ -13,6 +13,8 @@ import { loadUser } from '../../_actions/authAction'
 import { getOverAllSumInv } from '../../_actions/investmentAction'
 import { getOverAllSumExp } from '../../_actions/expenseAction'
 import { getTotalRations } from '../../_actions/rationAction'
+import { getSettings } from '../../_actions/settingAction'
+
 
 import { logout } from '../../_actions/authAction';
 
@@ -20,18 +22,21 @@ const Dashboard = ({
     loading,
     overAllInvestment,
     overAllExpenses,
+    getSettings,
     overAllCustPay,
     totalRation,
+    settings,
     auth: { firstName, lastName, user: { username, image, email, role } },
-    loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay, getTotalRations
+    loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay, getTotalRations,
 }) => {
 
     useEffect(() => {
         loadUser()
         getOverAllSumInv()
         getOverAllSumExp()
+        getSettings()
         getTotalRations()
-    }, [loadUser, getOverAllSumInv, getOverAllSumExp, getTotalRations]);
+    }, [loadUser, getOverAllSumInv, getOverAllSumExp, getTotalRations, getSettings]);
 
     const me = <Link to="/myprofile">{!username ? "" : username}</Link>;
 
@@ -45,7 +50,12 @@ const Dashboard = ({
     const totalExpense = overAllExpenses.map(p => (
         p.totalExpense
     ))
-
+    const groceryPrice = settings.map(p => (
+        p.default_grocery.price
+    ))
+    // console.log(groceryPrice);
+    // console.log(groceryPrice[0]);
+    // console.log(settings);
 
     const balence = ((totalInvest[0] ? totalInvest[0] : 0))
     //console.log(balence)
@@ -64,7 +74,7 @@ const Dashboard = ({
                                     <div className="circle-tile-content">
                                         <Link to="/admin/your_profile">
                                             <div className="row">
-                                                <div className="col-lg-7 mr-2 circle-tile-description">Welcome, <strong>{`${firstName} ${lastName}`}</strong>
+                                                <div className="col-lg-6 mr-2 circle-tile-description">Welcome, <strong>{`${firstName} ${lastName}`}</strong>
                                                     <div className="circle-tile-number text-dark ">{email}</div>
                                                 </div>
 
@@ -115,7 +125,7 @@ const Dashboard = ({
                                             <a href="#"><div className="circle-tile-heading red"><i className="fa fa-inr fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content red">
                                                 <div className="circle-tile-description text-faded">Balance (INR)</div>
-                                                <div className="circle-tile-number text-faded ">{balanceRemaining} = <small className="text-white">{`(${Math.round((balanceRemaining / 785) * 10) / 10} Kit)`}</small></div>
+                                                <div className="circle-tile-number text-faded ">{balanceRemaining} = <small className="text-white">{`(${Math.round((balanceRemaining / groceryPrice[0]) * 10) / 10} Kit)`}</small></div>
                                             </div>
                                         </div>
                                     </div>
@@ -201,18 +211,32 @@ const Dashboard = ({
                                     </div>
 
                                     <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link onClick={logout} to="/login" style={{ textDecoration: "none" }}>
+                                        <Link to="/admin/add-grocery" style={{ textDecoration: "none" }}>
                                             <div className="card text-white bg-danger h-100 w-100">
                                                 <div className="card-body bg-danger">
                                                     <div className="rotate">
-                                                        <i className="fa fa-unlock fa-4x"></i>
+                                                        <i className="fa fa-cutlery fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase">Logout</h4>
-                                                    <small>Logout from your Account</small>
+                                                    <h4 className="text-uppercase">Add Grocery</h4>
+                                                    <small>Add Grocery Item</small>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
+
+                                    <div className="col-xl-2 col-sm-6 py-2">
+                                        <Link to="/admin/setting" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white gray h-100 w-100">
+                                                <div className="card-body gray">
+                                                    <div className="rotate">
+                                                        <i className="fa fa fa-cog fa-4x"></i>
+                                                    </div>
+                                                    <h4 className="text-uppercase">Setting</h4>
+                                                    <small>Change App Setting</small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div><br />
                                 </div>
 
 
@@ -233,7 +257,7 @@ Dashboard.propTypes = {
     logout: PropTypes.func.isRequired,
     getOverAllSumExp: PropTypes.func.isRequired,
     getTotalRations: PropTypes.func.isRequired,
-
+    getSettings: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -243,9 +267,10 @@ const mapStateToProps = state => ({
     overAllExpenses: state.expense.overAllExpenses,
     totalRation: state.ration.totalRation,
     getTotalRations: PropTypes.func.isRequired,
+    settings: state.setting.settings
 });
 
-export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getTotalRations })(withRouter(Dashboard));
+export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getTotalRations, getSettings })(withRouter(Dashboard));
 
 
 // <div className="row">

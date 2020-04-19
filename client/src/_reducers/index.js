@@ -8,6 +8,10 @@ import ration from './rationReducer'
 import accPay from './accPayReducer'
 import upiPay from './upiPayReducer'
 import whatgroup from './whatsGroupReducer'
+import setting from './settingReducer'
+import grocery from './groceryReducer'
+
+
 
 
 
@@ -21,6 +25,8 @@ export default combineReducers({
     accPay,
     upiPay,
     whatgroup,
+    grocery,
+    setting,
 
 
 })

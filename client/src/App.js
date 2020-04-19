@@ -51,7 +51,12 @@ import PaymentLanding from './components/Reports/PaymentMode/PaymentLanding';
 import AddWhatGroup from './components/PaymentMode/addWhatGroup';
 import ViewWhatGroup from './components/PaymentMode/viewWhatGroup';
 import EditWhatGroup from './components/PaymentMode/editWhatGroup';
-
+import AddGrocery from './components/Grocery/addGrocery';
+import ViewGrocery from './components/Grocery/viewGrocery';
+import EditGrocery from './components/Grocery/editGrocery'
+import SettingLanding from './components/Setting/settingLanding';
+import DefaultGrocery from './components/Setting/defaultGrocery';
+import EditdefaultGrocery from './components/Setting/editdefaultGrocery';
 
 
 
@@ -88,6 +93,10 @@ const App = () => {
             <PrivateRoute path={`/admin/add-ration`} component={AddRation} />
             <PrivateRoute path={`/admin/view-ration`} component={ViewRation} />
             <PrivateRoute path={`/admin/editRation/:id`} component={EditRation} />
+            <PrivateRoute path={`/admin/add-grocery`} component={AddGrocery} />
+            <PrivateRoute path={`/admin/view-grocery`} component={ViewGrocery} />
+            <PrivateRoute path={`/admin/edit-grocery/:id`} component={EditGrocery} />
+
 
 
             <PrivateRoute path={`/admin/payment`} component={Payment_landing} />
@@ -102,6 +111,11 @@ const App = () => {
             <PrivateRoute path={`/admin/whatsgroup`} component={AddWhatGroup} />
             <PrivateRoute path={`/admin/view-whatgroup`} component={ViewWhatGroup} />
             <PrivateRoute path={`/admin/editWhatGroup/:id`} component={EditWhatGroup} />
+
+            <PrivateRoute path={`/admin/setting`} component={SettingLanding} />
+            <PrivateRoute path={`/admin/defaultGrocery`} component={DefaultGrocery} />
+            <PrivateRoute path={`/admin/editdefaultGrocery/:id`} component={EditdefaultGrocery} />
+
 
 
             <Route exact path="/dashboardguest" component={DashboardGuest} />
