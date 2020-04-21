@@ -64,5 +64,41 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+
+    <footer>
+      <!-- Quantcast Tag -->
+      <script type="text/javascript">
+        var _qevents = _qevents || [];
+
+        (function () {
+          var elem = document.createElement("script");
+          elem.src =
+            (document.location.protocol == "https:"
+              ? "https://secure"
+              : "http://edge") + ".quantserve.com/quant.js";
+          elem.async = true;
+          elem.type = "text/javascript";
+          var scpt = document.getElementsByTagName("script")[0];
+          scpt.parentNode.insertBefore(elem, scpt);
+        })();
+
+        _qevents.push({
+          qacct: "p-27vhQFZCJpUuW",
+        });
+      </script>
+
+      <noscript>
+        <div style="display: none;">
+          <img
+            src="//pixel.quantserve.com/pixel/p-27vhQFZCJpUuW.gif"
+            border="0"
+            height="1"
+            width="1"
+            alt="Quantcast"
+          />
+        </div>
+      </noscript>
+      <!-- End Quantcast tag -->
+    </footer>
   </body>
 </html>

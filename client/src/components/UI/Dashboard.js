@@ -13,7 +13,7 @@ import { loadUser } from '../../_actions/authAction'
 import { getOverAllSumInv } from '../../_actions/investmentAction'
 import { getOverAllSumExp } from '../../_actions/expenseAction'
 import { getTotalRations } from '../../_actions/rationAction'
-import { getSettings } from '../../_actions/settingAction'
+import { getGrocerys } from '../../_actions/groceryAction'
 
 
 import { logout } from '../../_actions/authAction';
@@ -22,10 +22,10 @@ const Dashboard = ({
     loading,
     overAllInvestment,
     overAllExpenses,
-    getSettings,
+    getGrocerys,
     overAllCustPay,
     totalRation,
-    settings,
+    grocerys,
     auth: { firstName, lastName, user: { username, image, email, role } },
     loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay, getTotalRations,
 }) => {
@@ -34,9 +34,9 @@ const Dashboard = ({
         loadUser()
         getOverAllSumInv()
         getOverAllSumExp()
-        getSettings()
+        getGrocerys()
         getTotalRations()
-    }, [loadUser, getOverAllSumInv, getOverAllSumExp, getTotalRations, getSettings]);
+    }, [loadUser, getOverAllSumInv, getOverAllSumExp, getTotalRations, getGrocerys]);
 
     const me = <Link to="/myprofile">{!username ? "" : username}</Link>;
 
@@ -50,12 +50,17 @@ const Dashboard = ({
     const totalExpense = overAllExpenses.map(p => (
         p.totalExpense
     ))
-    const groceryPrice = settings.map(p => (
-        p.default_grocery.price
+
+    //---- SELECT DEFAULT GROCERY----
+    let activeKit = []
+    activeKit = grocerys.filter(p => p.active === true)
+
+    //console.log(activeKit);
+
+    let Kitprice = activeKit.map(kp => (
+        kp.price
     ))
-    // console.log(groceryPrice);
-    // console.log(groceryPrice[0]);
-    // console.log(settings);
+    //console.log(Kitprice);
 
     const balence = ((totalInvest[0] ? totalInvest[0] : 0))
     //console.log(balence)
@@ -125,7 +130,7 @@ const Dashboard = ({
                                             <a href="#"><div className="circle-tile-heading red"><i className="fa fa-inr fa-fw fa-2x"></i></div></a>
                                             <div className="circle-tile-content red">
                                                 <div className="circle-tile-description text-faded">Balance (INR)</div>
-                                                <div className="circle-tile-number text-faded ">{balanceRemaining} = <small className="text-white">{`(${Math.round((balanceRemaining / groceryPrice[0]) * 10) / 10} Kit)`}</small></div>
+                                                <div className="circle-tile-number text-faded ">{balanceRemaining} = <small className="text-white">{`(${Math.round((balanceRemaining / Kitprice[0]) * 10) / 10} Kit)`}</small></div>
                                             </div>
                                         </div>
                                     </div>
@@ -257,7 +262,7 @@ Dashboard.propTypes = {
     logout: PropTypes.func.isRequired,
     getOverAllSumExp: PropTypes.func.isRequired,
     getTotalRations: PropTypes.func.isRequired,
-    getSettings: PropTypes.func.isRequired,
+    getGrocerys: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -267,10 +272,10 @@ const mapStateToProps = state => ({
     overAllExpenses: state.expense.overAllExpenses,
     totalRation: state.ration.totalRation,
     getTotalRations: PropTypes.func.isRequired,
-    settings: state.setting.settings
+    grocerys: state.grocery.grocerys
 });
 
-export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getTotalRations, getSettings })(withRouter(Dashboard));
+export default connect(mapStateToProps, { loadUser, logout, getOverAllSumInv, getOverAllSumExp, getTotalRations, getGrocerys })(withRouter(Dashboard));
 
 
 // <div className="row">
