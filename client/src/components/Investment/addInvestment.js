@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { addInvestment } from '../../_actions/investmentAction'
 import { getAllUsers } from "../../_actions/authAction"
 import '../UI/Dashboard.css'
+import moment from 'moment';
 
 const AddInvestment = ({
     history,
@@ -100,7 +101,7 @@ const AddInvestment = ({
                                                     placeholder="Date"
                                                     type="date"
                                                     value={date}
-                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
 
                                             </div>
 

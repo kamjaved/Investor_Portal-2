@@ -109,7 +109,7 @@ const EditInvestment = ({
                                                     placeholder="Date"
                                                     type="date"
                                                     value={date}
-                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" required />
+                                                    onChange={e => onChangeHandler(e)} className="border p-3 w-100 my-2" />
 
                                             </div>
 

@@ -69,7 +69,7 @@ a:hover {
 .wrapper {
   background-size: cover;
   background-repeat: no-repeat;
-  background: url("../images/bg-registration-form-2.jpg");
+  /* background: url("../images/bg-registration-form-2.jpg"); */
   display: flex;
   flex-direction: column;
   align-items: center;

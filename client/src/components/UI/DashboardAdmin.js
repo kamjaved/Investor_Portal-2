@@ -26,7 +26,7 @@ const Dashboard = ({
     overAllCustPay,
     totalRation,
     grocerys,
-    auth: { firstName, lastName, user: { username, image, email, role } },
+    auth: { firstName, lastName, user: { username, image, email, role, organisation } },
     loadUser, logout, getOverAllSumInv, getOverAllSumExp, getOverAllSumCustPay, getTotalRations,
 }) => {
 
@@ -51,16 +51,16 @@ const Dashboard = ({
         p.totalExpense
     ))
 
-    //---- SELECT DEFAULT GROCERY----
+
     let activeKit = []
     activeKit = grocerys.filter(p => p.active === true)
 
-    //console.log(activeKit);
+    console.log(activeKit);
 
     let Kitprice = activeKit.map(kp => (
         kp.price
     ))
-    //console.log(Kitprice);
+    console.log(Kitprice);
 
     const balence = ((totalInvest[0] ? totalInvest[0] : 0))
     //console.log(balence)
@@ -74,23 +74,19 @@ const Dashboard = ({
                     <div>
                         <div className="ml-3 row mr-4 pb-4">
                             <div className="col-lg-4 col-md-6 col-sm-6 ">
-                                <div className="circle-tile">
 
-                                    <div className="circle-tile-content">
+                                <div className="card mb-2" style={{ "width": "20rem" }} >
+                                    <div className="card-body">
                                         <Link to="/admin/your_profile">
-                                            <div className="row">
-                                                <div className="col-lg-6 mr-2 circle-tile-description">Welcome, <strong>{`${firstName} ${lastName}`}</strong>
-                                                    <div className="circle-tile-number text-dark ">{email}</div>
-                                                </div>
-
-                                                <div className="col-lg-4 circle-tile-description"><strong>{username}</strong>
-                                                    <div className="circle-tile-number text-dark text-uppercase">{role}</div>
-                                                </div>
-
-                                            </div>
+                                            <h5 className="card-title">Welcome, <strong>{`${firstName} ${lastName}`}</strong></h5>
+                                            <h6 className="card-subtitle mb-2 text-muted">{email}</h6>
                                         </Link>
+                                        <em className="card-text">{username} , <strong>{role}</strong></em> <hr />
+
+                                        <Link to={`/admin/org_profile`} className="card-link">Organisation:- <strong>{organisation.orgName}</strong></Link>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div className="col-sm-12 col-md-8 col-lg-8">
@@ -201,33 +197,7 @@ const Dashboard = ({
                                         </Link>
                                     </div>
 
-                                    <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link to="/admin/payment" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white purple h-100 w-100">
-                                                <div className="card-body purple">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-money fa-4x"></i>
-                                                    </div>
-                                                    <h4 className="text-uppercase text-white">Payment Mode</h4>
-                                                    <small>Add Payment Mode</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
 
-                                    <div className="col-xl-2 col-sm-6 py-2">
-                                        <Link to="/admin/add-grocery" style={{ textDecoration: "none" }}>
-                                            <div className="card text-white bg-danger h-100 w-100">
-                                                <div className="card-body bg-danger">
-                                                    <div className="rotate">
-                                                        <i className="fa fa-cutlery fa-4x"></i>
-                                                    </div>
-                                                    <h4 className="text-uppercase">Add Grocery</h4>
-                                                    <small>Add Grocery Item</small>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
 
                                     <div className="col-xl-2 col-sm-6 py-2">
                                         <Link to="/admin/setting" style={{ textDecoration: "none" }}>
@@ -236,8 +206,8 @@ const Dashboard = ({
                                                     <div className="rotate">
                                                         <i className="fa fa fa-cog fa-4x"></i>
                                                     </div>
-                                                    <h4 className="text-uppercase">Setting</h4>
-                                                    <small>Change App Setting</small>
+                                                    <h4 className="text-uppercase">Settings</h4>
+                                                    <small>Change App Settings</small>
                                                 </div>
                                             </div>
                                         </Link>

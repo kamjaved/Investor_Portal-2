@@ -13,11 +13,12 @@ const sendEmail = async options => {
 
     // 2) Define the email options
     const mailOptions = {
-        from: "Globus Labs <zeeshan@globuslabs.com>",
-        to: options.email,
+        from: process.env.EMAIL_FROM,
+        to: options.to,
+        bcc: options.bcc,
         subject: options.subject,
-        text: options.message
-        // html:
+        text: options.message,
+        html: options.output
     };
 
     // 3) Actually send the email
@@ -25,3 +26,5 @@ const sendEmail = async options => {
 };
 
 module.exports = sendEmail;
+
+//50.28.67.11

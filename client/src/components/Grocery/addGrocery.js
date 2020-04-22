@@ -50,7 +50,7 @@ const AddCustomerPay = ({
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-danger">
                                         <div>
-                                            <h3 className="bg-danger text-center p-4 text-white"><Link to="/dashboard" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Grocery Kit</h3></div>
+                                            <h3 className="bg-danger text-center p-4 text-white"><Link to="/admin/setting" className="text-white"><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Grocery Kit</h3></div>
                                         <fieldset className="p-4">
 
                                             <input name="groceryKitName"

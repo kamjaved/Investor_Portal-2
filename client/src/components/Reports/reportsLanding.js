@@ -78,6 +78,34 @@ const ReportLanding = ({
                                                 </div>
                                             </div>
                                         </Link>
+                                    </div><br />
+
+                                    <div className="col-xl-3 col-sm-6 py-2">
+                                        <Link to="/admin/view-kitrequest" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white bg-warning h-100">
+                                                <div className="card-body bg-warning">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-medkit fa-4x"></i>
+                                                    </div>
+                                                    <h3 className="text-uppercase">View Requested Kits</h3>
+                                                    <small>Needy users requested kits </small>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+
+                                    <div className="col-xl-3 col-sm-6 py-2">
+                                        <Link to="/admin/view-contactus" style={{ textDecoration: "none" }}>
+                                            <div className="card text-white gray h-100">
+                                                <div className="card-body gray">
+                                                    <div className="rotate">
+                                                        <i className="fa fa-phone-square fa-4x"></i>
+                                                    </div>
+                                                    <h3 className="text-uppercase">View Contacted Form</h3>
+                                                    <small>See Who Contacted You!</small>
+                                                </div>
+                                            </div>
+                                        </Link>
                                     </div>
 
 

@@ -34,7 +34,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 
     return (
-        <div className="container-fluid  landing animated fadeIn">
+        <div className="container-fluid animated fadeIn">
             <form onSubmit={e => onSubmitHandler(e)}>
                 <section className="login py-5 border-top-1">
                     <div className="container">

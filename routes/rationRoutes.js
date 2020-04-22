@@ -18,8 +18,8 @@ router.use(authController.protect);
 
 router
     .route("/")
-    .get(authController.restrictTo('admin'), rationController.getAllRations)
-    .post(authController.restrictTo('admin'), rationController.createRation);
+    .get(authController.restrictTo('admin', 'deliveryboy'), rationController.getAllRations)
+    .post(authController.restrictTo('admin', 'deliveryboy'), rationController.createRation);
 
 router
     .route("/:id")
