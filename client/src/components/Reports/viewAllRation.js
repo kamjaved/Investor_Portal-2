@@ -55,53 +55,68 @@ const RationMaster = ({
 
                 <section className=" mt-2  justify-content-center ">
 
-                    <div className="container">
-                        <div className="row justify-content-center animated fadeIn">
-                            <div className="col-lg-10 col-md-10 align-item-center">
-                                <h2 className="text-center pt-2"> Total Kit Delivered</h2>
 
-                                <p><strong>1 Kit =</strong> <em>( 5 kg rice, 5 kg flour, 1 kg sugar, 1 kg masoor daal, 1 kg onions,1kg potatoes, 1 kg chana, 1 turmeric powder, 1 red chilli powder, 1 scrub, 250 gm tea, 1 kg refined oil, 1 paparr packet,1 packet Salt) </em> </p>
-                                <br />
-                                <div className="row">
+                    <div className="row justify-content-center animated fadeIn">
+                        <div className="col-lg-10 col-md-10 align-item-center">
+                            <h2 className="text-center pt-2"> Total Delivered  Kit</h2>
 
-                                    <table className="table table-hover table-sm mt-2" id="table-inv">
-                                        <thead className="thead-dark">
-                                            <tr>
-                                                <th scope="col" onClick={datesort} >Date</th>
-                                                <th scope="col">Kit Delivered</th>
-                                                <th scope="col">Location</th>
-                                                <th scope="col">Grocery Type</th>
-                                                <th scope="col">Desc</th>
+                            <br />
+                            <div className="row">
+
+                                <table className="table table-hover table-sm mt-2" id="table-inv">
+                                    <thead className="thead-dark">
+                                        <tr>
+                                            <th scope="col" onClick={datesort}>
+                                                Date
+                                          </th>
+                                            <th scope="col">Kit type</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">State</th>
+                                            <th scope="col">City</th>
+                                            <th scope="col">Area</th>
+                                            <th scope="col">Road</th>
+                                            <th scope="col">House No</th>
+                                            <th scope="col">Landmark</th>
+                                            <th scope="col">Description</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {allRations.map(ration => (
+                                            <tr key={ration._id}>
+                                                <td>{moment(ration.date).format("DD-MM-YYYY")}</td>
+                                                <td>{!ration.kitType ? "NA" : ration.kitType}</td>
+                                                <td>
+                                                    {!ration.kitQuantity ? "NA" : ration.kitQuantity}
+                                                </td>
+                                                <td>{!ration.state ? "NA" : ration.state}</td>
+                                                <td>{!ration.city ? "NA" : ration.city}</td>
+                                                <td>{!ration.area ? "NA" : ration.area}</td>
+                                                <td className="text-danger">{!ration.road ? "NA" : ration.road}</td>
+                                                <td className="text-danger">{!ration.houseNo ? "NA" : ration.houseNo}</td>
+                                                <td>{!ration.landmark ? "NA" : ration.area}</td>
+
+                                                <td>
+                                                    {!ration.description ? "NA" : ration.description}
+                                                </td>
 
                                             </tr>
-                                        </thead>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                        <tbody>
-                                            {allRations.map(ration => (
-                                                <tr key={ration._id}>
-                                                    <td>{moment(ration.date).format("DD-MM-YYYY")}</td>
-                                                    <td>{!ration.rationKit ? "NA" : ration.rationKit}</td>
-                                                    <td>{!ration.location ? "NA" : ration.location}</td>
-                                                    <td>{!ration.grocerykit ? "NA" : ration.grocerykit.groceryKitName}</td>
-                                                    <td>{!ration.desc ? "NA" : ration.desc}</td>
+                        </div></div>
 
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <ReactToExcel
+                        className=" btn btn-danger "
+                        table="table-inv" // id of table which you want to export
+                        filename={`Rat-${Date.now()}`} // name of the file 
+                        sheet="sheet"
+                        buttonText="Export Table" // button name 
+                    />
 
-                            </div></div>
 
-                        <ReactToExcel
-                            className=" btn btn-danger "
-                            table="table-inv" // id of table which you want to export
-                            filename={`Rat-${Date.now()}`} // name of the file 
-                            sheet="sheet"
-                            buttonText="Export Table" // button name 
-                        />
-
-                    </div>
 
 
                 </section>

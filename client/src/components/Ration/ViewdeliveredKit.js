@@ -59,7 +59,7 @@ const ViewRation = ({
 
   return (
     <Fragment>
-      <div className="container-fluid">
+      <div className="container-fluid pb-4 mb-4">
         <section className="container-fluid mt-4  justify-content-center ">
 
           <div className="row justify-content-center animated fadeIn">

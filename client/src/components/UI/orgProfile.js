@@ -11,7 +11,10 @@ const OrgProfile = ({
     history,
 }) => {
 
-    console.log(organisation);
+    useEffect(() => {
+        loadUser()
+
+    }, [loadUser]);
 
     return (
         <Fragment>
@@ -33,19 +36,17 @@ const OrgProfile = ({
                         <div className="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
                             <div className="widget welcome-message">
                                 <Link><h2>View profile <i className="fa fa-pencil-square fa-lg ml-4" data-toggle="tooltip" title="Edit Details"></i></h2></Link>
-
-
                                 <p>GlobusLabs has a team of highly trained engineers, and executives from different verticals who keep researching on new technology to come up with more cutting edge solutions and products for our customers. We believe in providing cutting edge solutions using latest technology.</p>
                             </div>
 
 
                             <div className="row">
-                                <div className="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center">
-                                    <h3 className="widget-header user">View Personal Information </h3></div>
                                 <div className="col-lg-10 col-md-10">
-
                                     <div className="widget personal-info">
-                                        <h3>Organisation Name- {organisation.orgName}</h3>
+                                        <h3><strong>Organisation Name- </strong>{organisation.orgName}</h3>
+                                        <h3><strong>State- </strong>{organisation.state}</h3>
+                                        <h3><strong>City- </strong>{organisation.city}</h3>
+                                        <h3><strong>address- </strong>{organisation.address}</h3>
                                     </div>
                                 </div>
 
@@ -63,13 +64,14 @@ const OrgProfile = ({
 
 OrgProfile.propTypes = {
     user: PropTypes.object.isRequired,
+    loadUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    user: state.auth.user
+    user: state.auth && state.auth.user
 });
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, { loadUser })(
     OrgProfile
 );
 

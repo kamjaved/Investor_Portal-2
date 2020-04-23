@@ -21,7 +21,7 @@ const KitReq = ({
 
     return (
         <Fragment>
-            <div className="container">
+            <div className="container mb-4 pb-4">
                 <div class="row">
                     {kitreqs.map(cu => (
                         <div class="col-sm-4 mb-2">

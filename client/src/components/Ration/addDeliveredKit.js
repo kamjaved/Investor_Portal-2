@@ -119,7 +119,9 @@ const AddCustomerPay = ({
     </Fragment>
   ));
 
-  console.log(moment(date).format("YYYY-MM-DD"));
+  console.log(deliveries);
+
+
 
   return (
     <Fragment>
@@ -187,6 +189,7 @@ const AddCustomerPay = ({
               <thead className="thead-dark" align="center">
                 <tr>
                   <th scope="col">Date</th>
+                  <th scope="col">Org.Name</th>
                   <th scope="col">Kit type</th>
                   <th scope="col">Qty</th>
                   <th scope="col">State</th>
@@ -202,14 +205,15 @@ const AddCustomerPay = ({
                   ? deliveries.map((del) => (
                     <tr key={del._id}>
                       <td>{moment(del.date).format("DD-MM-YYYY")}</td>
+                      <td>{del.orgName}</td>
                       <td>{del.kitType}</td>
                       <td>{del.kitQuantity}</td>
                       <td>{del.state}</td>
                       <td>{del.city}</td>
                       <td>{del.area}</td>
-                      <td>{del.road}</td>
+                      <td className="text-danger">{del.road}</td>
                       <td>{del.landmark}</td>
-                      <td>{del.houseNo}</td>
+                      <td className="text-danger">{del.houseNo}</td>
                     </tr>
                   ))
                   : null}

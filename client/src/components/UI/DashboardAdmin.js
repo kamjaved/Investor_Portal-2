@@ -55,12 +55,12 @@ const Dashboard = ({
     let activeKit = []
     activeKit = grocerys.filter(p => p.active === true)
 
-    console.log(activeKit);
+    //console.log(activeKit);
 
     let Kitprice = activeKit.map(kp => (
         kp.price
     ))
-    console.log(Kitprice);
+    //console.log(Kitprice);
 
     const balence = ((totalInvest[0] ? totalInvest[0] : 0))
     //console.log(balence)
