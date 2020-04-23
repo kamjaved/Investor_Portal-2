@@ -7,7 +7,7 @@ import logo from "../images/logo1.png";
 import "./Dashboard.css";
 
 const Navbar = (
-  { auth: { isAuthenticated, loading, role }, logout },
+  { auth: { isAuthenticated, loading, role, user }, logout, organisation },
   props
 ) => {
   const authLinksAdmin = (
@@ -18,7 +18,7 @@ const Navbar = (
             <div className="col-md-12">
               <nav className="navbar navbar-expand-lg  navigation">
                 <Link className="navbar-brand" to="/dashboard">
-                  <img src={logo} alt="globus labs logo" width="200px" />
+                  <img src={!organisation.logo ? logo : organisation.logo} alt="globus labs logo" width="200px" />
                 </Link>
                 <button
                   className="navbar-toggler"
@@ -150,7 +150,7 @@ const Navbar = (
             <div className="col-md-12">
               <nav className="navbar navbar-expand-lg  navigation">
                 <Link className="navbar-brand" to="/">
-                  <img src={logo} alt="globus labs logo" width="220px" />
+                  <img src={!organisation.logo ? logo : organisation.logo} alt="globus labs logo" width="220px" />
                 </Link>
                 <button
                   className="navbar-toggler"
@@ -233,7 +233,7 @@ const Navbar = (
             <div className="col-md-12">
               <nav className="navbar navbar-expand-lg  navigation">
                 <Link className="navbar-brand" to="/">
-                  <img src={logo} alt="globus labs logo" width="220px" />
+                  <img src={!organisation.logo ? logo : organisation.logo} alt="globus labs logo" width="220px" />
                 </Link>
                 <button
                   className="navbar-toggler"
@@ -323,6 +323,7 @@ Navbar.propTypes = {
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  organisation: state.auth.user.organisation ? state.auth.user.organisation : ""
 });
 export default connect(mapStateToProps, { logout })(Navbar);
 
