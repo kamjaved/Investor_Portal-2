@@ -7,7 +7,7 @@ import { loadUser } from '../../_actions/authAction';
 
 
 const OrgProfile = ({
-    user: { organisation },
+    organisation,
     history,
 }) => {
 
@@ -68,7 +68,7 @@ OrgProfile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    user: state.auth && state.auth.user
+    organisation: state.auth.user.organisation ? state.auth.user.organisation : ""
 });
 
 export default connect(mapStateToProps, { loadUser })(

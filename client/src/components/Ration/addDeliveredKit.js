@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { addRation, searchDelivery } from "../../_actions/rationAction";
 import { getGrocerys } from "../../_actions/groceryAction";
-import { getCities, populateAreas } from "../../_actions/cityAction";
+import { getCities, populateAreas, getStates, populateCities } from "../../_actions/cityAction";
 import "../UI/Dashboard.css";
 
 const AddCustomerPay = ({
@@ -15,11 +15,15 @@ const AddCustomerPay = ({
   searchDelivery,
   getGrocerys,
   getCities,
+  getStates,
+  states,
   cities,
+  newCities,
   areas,
   grocerys,
   deliveries,
   populateAreas,
+  populateCities,
   orgIdState,
   orgNameState,
   orgState,
@@ -62,12 +66,13 @@ const AddCustomerPay = ({
   useEffect(() => {
     getGrocerys();
     getCities();
+    getStates();
     setFormData({
       orgId: !orgIdState ? "" : orgIdState,
       orgName: !orgNameState ? "" : orgNameState,
       state: !orgState ? "" : orgState,
     });
-  }, [getGrocerys, getCities]);
+  }, [getGrocerys, getCities, getStates]);
 
   // ON CHANGE HANDLERS....
   const onChangeHandler = (e) => {
@@ -80,6 +85,13 @@ const AddCustomerPay = ({
 
     setFormData({ ...formData, city: e.target.value });
     populateAreas(e.target.value);
+  };
+
+  const onChangeState = (e) => {
+    e.preventDefault();
+
+    setFormData({ ...formData, state: e.target.value });
+    populateCities(e.target.value);
   };
 
   const onChangeSearch = (e) => {
@@ -107,9 +119,14 @@ const AddCustomerPay = ({
     </option>
   ));
 
-  let cityOptions = cities.map((cit) => (
+  let cityOptions = newCities.map((cit) => (
     <option key={cit._id} value={cit.city}>
       {cit.city}
+    </option>
+  ));
+  let stateOptions = states.map((st) => (
+    <option key={st._id} value={st._id}>
+      {st.state}
     </option>
   ));
 
@@ -134,6 +151,20 @@ const AddCustomerPay = ({
                   <div className="col-lg-12 col-md-12">
                     <div className="bg-light border border-warning">
                       <fieldset className="p-4">
+
+                        <select
+                          className="border p-2 w-25 my-2"
+                          name="state"
+                          value={state}
+                          onChange={(e) => onChangeState(e)}
+                          required
+                        >
+                          <option value="" disabled selected hidden>
+                            -Select State-
+                      </option>
+                          {stateOptions}
+                        </select>
+
                         <select
                           className="border p-2 w-25 my-2"
                           name="city"
@@ -164,7 +195,7 @@ const AddCustomerPay = ({
 
                         <input
                           name="searchString"
-                          placeholder="Search..."
+                          placeholder="Search term..."
                           type="text"
                           value={searchString}
                           onChange={(e) => onChangeSearch(e)}
@@ -174,7 +205,7 @@ const AddCustomerPay = ({
 
                         <button
                           type="submit"
-                          className="d-block w-75 py-2 px-5 bg-warning border-0 rounded font-weight-bold mt-3"
+                          className="d-block w-100 py-2 px-5 bg-warning border-0 rounded font-weight-bold mt-3"
                         >
                           Search
                         </button>
@@ -236,6 +267,18 @@ const AddCustomerPay = ({
                         </h3>
                       </div>
                       <fieldset className="p-4">
+                        <div>
+                          <small>Select Date</small>
+                          <input
+                            name="date"
+                            placeholder={date}
+                            type="date"
+                            value={date}
+                            onChange={(e) => onChangeHandler(e)}
+                            className="border p-2 w-100 my-2"
+
+                          />
+                        </div>
                         <select
                           className="border p-2 w-100 my-2"
                           name="kitType"
@@ -243,7 +286,9 @@ const AddCustomerPay = ({
                           onChange={(e) => onChangeHandler(e)}
                           required
                         >
-                          <option>Select Grocery Kit</option>
+                          <option value="" disabled selected hidden>
+                            -Select Kit Type-
+                      </option>
                           {groceryTypeOptn}
                         </select>
 
@@ -257,14 +302,18 @@ const AddCustomerPay = ({
                           required
                         />
 
-                        <input
-                          name="state"
-                          placeholder="State"
-                          type="text"
-                          value={state}
-                          onChange={(e) => onChangeHandler(e)}
+                        <select
                           className="border p-2 w-100 my-2"
-                        />
+                          name="state"
+                          value={state}
+                          onChange={(e) => onChangeState(e)}
+                          required
+                        >
+                          <option value="" disabled selected hidden>
+                            -Select State-
+                      </option>
+                          {stateOptions}
+                        </select>
 
                         <select
                           className="border p-2 w-100 my-2"
@@ -325,18 +374,7 @@ const AddCustomerPay = ({
                           className="border p-2 w-100 my-2"
                         />
 
-                        <div>
-                          <small>Select Date</small>
-                          <input
-                            name="date"
-                            placeholder={date}
-                            type="date"
-                            value={date}
-                            onChange={(e) => onChangeHandler(e)}
-                            className="border p-2 w-100 my-2"
 
-                          />
-                        </div>
 
                         <button
                           type="submit"
@@ -363,13 +401,17 @@ AddCustomerPay.propTypes = {
   getGrocerys: PropTypes.func.isRequired,
   getAreas: PropTypes.func.isRequired,
   getCities: PropTypes.func.isRequired,
+  getStates: PropTypes.func.isRequired,
   populateAreas: PropTypes.func.isRequired,
+  populateCities: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   grocerys: state.grocery.grocerys,
   deliveries: state.ration.deliveries,
   areas: state.city.areas,
   cities: state.city.cities,
+  states: state.city.states,
+  newCities: state.city.newCities,
   orgIdState: state.auth.user.organisation && state.auth.user.organisation._id,
   orgNameState: state.auth.user.organisation && state.auth.user.organisation.orgName,
   orgState: state.auth.user.organisation && state.auth.user.organisation.state,
@@ -379,6 +421,9 @@ export default connect(mapStateToProps, {
   searchDelivery,
   getGrocerys,
   getCities,
+  getStates,
   populateAreas,
+  populateCities
 })(AddCustomerPay);
+
 

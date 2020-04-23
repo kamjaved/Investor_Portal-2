@@ -39,7 +39,9 @@ const Cities = ({
                   <table className="table table-hover table-sm mt-2">
                     <thead className="thead-dark">
                       <tr>
+
                         <th scope="col">City</th>
+                        <th scope="col">State</th>
                         <th scope="col">Areas</th>
                         <th scope="col" className="text-right">
                           Action
@@ -51,6 +53,7 @@ const Cities = ({
                       {cities.map((city) => (
                         <tr key={city._id}>
                           <td>{!city.city ? "NA" : city.city}</td>
+                          <td>{!city.state ? "NA" : city.state.state}</td>
                           <td>
                             {" "}
                             <ul style={{ padding: "0", listStyleType: "none" }}>

@@ -3,6 +3,8 @@ import * as types from "./../_actions/types";
 const initialState = {
   city: null,
   cities: [],
+  newCities: [],
+  states: [],
   areas: [],
   error: {},
   filtered: null,
@@ -25,12 +27,26 @@ export default function (state = initialState, action) {
         cities: payload.data,
         loading: false,
       };
+    case types.GET_STATES:
+      return {
+        ...state,
+        states: payload.data,
+        loading: false,
+      };
     case types.POPULATE_AREAS:
       return {
         ...state,
         areas: state.cities.find((city) => city.city === payload).areas,
         loading: false,
       };
+
+    case types.POPULATE_CITIES:
+      return {
+        ...state,
+        newCities: payload.data,
+        loading: false,
+      };
+
 
     case types.ADD_CITY:
       return {

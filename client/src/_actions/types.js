@@ -195,6 +195,8 @@ export const CLEAR_CITY = "CLEAR_CITY";
 export const FILTER_CITY = "FILTER_CITY";
 export const GET_TOTAL_CITY = "GET_TOTAL_CITY";
 export const GET_ALL_CITIES = "CITIES";
+export const GET_STATES = "GET_STATES";
+
 
 export const GET_AREA = "GET_AREA";
 export const SET_CURRENT_AREA = "SET_CURRENT_AREA";
@@ -208,6 +210,8 @@ export const FILTER_AREA = "FILTER_AREA";
 export const GET_TOTAL_AREA = "GET_TOTAL_AREA";
 export const GET_ALL_AREAS = "GET_ALL_AREAS";
 export const POPULATE_AREAS = "POPULATE_AREAS";
+
+export const POPULATE_CITIES = 'POPULATE_CITIES'
 
 
 
@@ -248,3 +252,6 @@ export const CLEAR_ORGANISATION = "CLEAR_ORGANISATION";
 export const FILTER_ORGANISATION = "FILTER_ORGANISATION";
 export const GET_TOTAL_ORGANISATION = "GET_TOTAL_ORGANISATION";
 export const GET_ALL_ORGANISATIONS = "ORGANISATIONS";
+
+
+

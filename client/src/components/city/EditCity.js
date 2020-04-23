@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getCurrentCity, editCity } from "../../_actions/cityAction";
+import { getCurrentCity, editCity, getStates } from "../../_actions/cityAction";
 import "../UI/Dashboard.css";
 
 const EditCity = ({
@@ -10,15 +10,19 @@ const EditCity = ({
   editCity,
   getCurrentCity,
   match,
+  states,
+  getStates,
   loading,
   cityFront,
 }) => {
   const [formData, setFormData] = useState({
+    state: "",
     city: "",
     areas: "",
   });
 
   useEffect(() => {
+    getStates();
     getCurrentCity(match.params.id);
     setFormData({
       city: loading || !cityFront.city ? "" : cityFront.city,
@@ -27,7 +31,7 @@ const EditCity = ({
     //eslint-disable-next-line
   }, [loading, getCurrentCity]);
 
-  const { city, areas } = formData;
+  const { city, areas, state } = formData;
 
   const onChangeHandler = (e) => {
     e.preventDefault();
@@ -39,6 +43,12 @@ const EditCity = ({
 
     editCity(formData, history, match.params.id);
   };
+
+  const stateOpt = states.map(st => (
+    <option key={st._id} value={st._id}>
+      {st.state}
+    </option>
+  ))
 
   return (
     <Fragment>
@@ -58,6 +68,14 @@ const EditCity = ({
                       </h3>
                     </div>
                     <fieldset className="p-4">
+                      <select className="border p-3 w-100 my-2" name="state" value={state} onChange={e => onChangeHandler(e)} required>
+
+                        <option value="" disabled selected hidden>
+                          -Select State-
+                </option>
+
+                        {stateOpt}
+                      </select>
                       <input
                         name="city"
                         placeholder="City Name"
@@ -101,11 +119,13 @@ EditCity.propTypes = {
   editCity: PropTypes.func.isRequired,
   getCurrentCity: PropTypes.func.isRequired,
   cityFront: PropTypes.object.isRequired,
+  getStates: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  states: state.city.states,
   cityFront: state.city.city,
   loading: state.city.loading,
 });
 
-export default connect(mapStateToProps, { editCity, getCurrentCity })(EditCity);
+export default connect(mapStateToProps, { editCity, getCurrentCity, getStates })(EditCity);

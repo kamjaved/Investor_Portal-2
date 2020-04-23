@@ -1,17 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { addCity } from "../../_actions/cityAction";
+import { addCity, getStates } from "../../_actions/cityAction";
 import "../UI/Dashboard.css";
 
-const AddCity = ({ history, addCity }) => {
+
+const AddCity = ({ history, addCity, getStates, states }) => {
   const [formData, setFormData] = useState({
+    state: "",
     city: "",
     areas: "",
   });
 
-  const { city, areas } = formData;
+  const { city, areas, state } = formData;
 
   const onChangeHandler = (e) => {
     e.preventDefault();
@@ -24,6 +26,15 @@ const AddCity = ({ history, addCity }) => {
     addCity(formData, history);
   };
 
+  useEffect(() => {
+    getStates();
+  }, [getStates]);
+
+  const stateOpt = states.map(st => (
+    <option key={st._id} value={st._id}>
+      {st.state}
+    </option>
+  ))
   return (
     <Fragment>
       <div className="container-fluid  pb-4 mb-4">
@@ -42,6 +53,16 @@ const AddCity = ({ history, addCity }) => {
                       </h3>
                     </div>
                     <fieldset className="p-4">
+                      <select className="border p-3 w-100 my-2" name="state" value={state} onChange={e => onChangeHandler(e)} required>
+
+                        <option value="" disabled selected hidden>
+                          -Select State-
+                    </option>
+
+                        {stateOpt}
+                      </select>
+
+
                       <input
                         name="city"
                         placeholder="City Name"
@@ -83,6 +104,13 @@ const AddCity = ({ history, addCity }) => {
 
 AddCity.propTypes = {
   addCity: PropTypes.func.isRequired,
+  getStates: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addCity })(AddCity);
+const mapStateToProps = (state) => ({
+  states: state.city.states,
+  filtered: state.city.filtered,
+  loading: state.city.loading,
+});
+
+export default connect(mapStateToProps, { addCity, getStates })(AddCity);

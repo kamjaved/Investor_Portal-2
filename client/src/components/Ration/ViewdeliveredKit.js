@@ -75,7 +75,6 @@ const ViewRation = ({
                         </th>
                       <th scope="col">Kit type</th>
                       <th scope="col">Quantity</th>
-                      <th scope="col">State</th>
                       <th scope="col">City</th>
                       <th scope="col">Area</th>
                       <th scope="col">Road</th>
@@ -96,7 +95,6 @@ const ViewRation = ({
                         <td>
                           {!ration.kitQuantity ? "NA" : ration.kitQuantity}
                         </td>
-                        <td>{!ration.state ? "NA" : ration.state}</td>
                         <td>{!ration.city ? "NA" : ration.city}</td>
                         <td>{!ration.area ? "NA" : ration.area}</td>
                         <td className="text-danger">{!ration.road ? "NA" : ration.road}</td>

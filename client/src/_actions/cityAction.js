@@ -42,6 +42,7 @@ export const getCities = () => async (dispatch) => {
 
 // Add City
 export const addCity = (formData, history) => async (dispatch) => {
+  console.log(formData);
   try {
     const res = await axios.post(
       "https://donation-central.herokuapp.com/api/city",
@@ -156,5 +157,45 @@ export const populateAreas = (city) => async (dispatch) => {
       type: types.AREA_ERROR,
       payload: { status: err.response },
     });
+  }
+};
+
+//  Populate cities
+export const populateCities = (id) => async (dispatch) => {
+  // console.log(state);
+  try {
+    const res = await axios.get(
+      `https://donation-central.herokuapp.com/api/city?state=${id}`
+    );
+    dispatch({
+      type: types.POPULATE_CITIES,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    // dispatch({
+    //   type: types.RATION_ERROR,
+    //   payload: { msg: err.response.data, status: err.response.status }
+    // });
+  }
+};
+
+
+//Get all states
+export const getStates = () => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "https://donation-central.herokuapp.com/api/state"
+    );
+    dispatch({
+      type: types.GET_STATES,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    // dispatch({
+    //   type: types.RATION_ERROR,
+    //   payload: { msg: err.response.data, status: err.response.status }
+    // });
   }
 };
