@@ -24,10 +24,10 @@ export const getCurrentKitReq = id => async dispatch => {
 export const getKitReqs = () => async dispatch => {
     try {
         const res = await axios.get("/api/kitrequest");
-        console.log(res.data.data);
+        console.log(res.data);
         dispatch({
             type: types.GET_KIT_REQS,
-            payload: res.data.data
+            payload: res.data
         });
     } catch (err) {
         console.log(err);

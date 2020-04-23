@@ -148,7 +148,7 @@ const Dashboard = ({
               <div className="container mb-4 pb-4">
                 <div className="row mb-1  animated fadeIn">
                   <div className="col-xl-2 col-sm-6 py-2">
-                    <Link to="/admin/myreport" style={{ textDecoration: "none" }}>
+                    <Link to="/guest/myreport" style={{ textDecoration: "none" }}>
                       <div className="card text-white bg-dark h-100 w-100">
                         <div className="card-body bg-dark">
                           <div className="rotate">
@@ -194,7 +194,7 @@ const Dashboard = ({
                           <h4 className="text-uppercase text-dark">
                             Kit Request
                         </h4>
-                          <small>Need Kit for Poor People</small>
+                          <small>Request Kit for Needy People</small>
                         </div>
                       </div>
                     </Link>

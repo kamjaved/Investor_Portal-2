@@ -21,6 +21,9 @@ const contactUsSchema = new mongoose.Schema({
         type: String,
         required: [true, "state missing"],
     },
+    stateName: {
+        type: String,
+    },
     city: {
         type: String,
         required: [true, "city missing"],

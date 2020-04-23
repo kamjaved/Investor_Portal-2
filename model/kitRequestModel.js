@@ -11,6 +11,10 @@ const kitRequestSchema = new mongoose.Schema({
         type: String,
         required: [true, "state missing"],
     },
+    stateName: {
+        type: String,
+        //required: [true, "state missing"],
+    },
     city: {
         type: String,
         required: [true, "city missing"],

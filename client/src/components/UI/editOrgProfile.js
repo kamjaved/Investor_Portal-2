@@ -68,10 +68,10 @@ const EditOrganisation = ({
 
     return (
         <Fragment>
-            <div className="container-fluid">
+            <div className="container-fluid pb-4 mb-4">
                 <form onSubmit={e => onSubmitHandler(e)} >
                     <section className="login py-2 border-top-1">
-                        <div className="container">
+                        <div className="container ">
                             <div className="row justify-content-center animated fadeIn">
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-danger">

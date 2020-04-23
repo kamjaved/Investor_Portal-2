@@ -5,13 +5,19 @@ import { Link } from "react-router-dom";
 import { addContactUs } from '../../_actions/ContactUsAction'
 import '../UI/Dashboard.css'
 import Spinner from "../UI/Spinner";
+import { getCities, populateAreas, getStates, populateCities } from "../../_actions/cityAction";
 
 const AddContactUs = ({
 
     history,
     addContactUs,
-    sendingLoader
-
+    sendingLoader,
+    getCities,
+    getStates,
+    states,
+    newCities,
+    populateAreas,
+    populateCities,
 
 }) => {
 
@@ -20,6 +26,7 @@ const AddContactUs = ({
         ngo: "",
         email: "",
         state: "",
+        stateName: "",
         city: "",
         area: "",
         road: "",
@@ -31,12 +38,19 @@ const AddContactUs = ({
 
     });
 
-    const { name, ngo, email, state, city, area, road, landmark, houseNo, phone, pincode, website } = formData;
+    const { name, ngo, email, state, stateName, city, area, road, landmark, houseNo, phone, pincode, website } = formData;
+
+
+    useEffect(() => {
+        getCities();
+        getStates();
+
+    }, [getCities, getStates]);
 
 
     const onChangeHandler = e => {
         e.preventDefault();
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value, stateName: stname[0] });
 
     };
 
@@ -44,10 +58,47 @@ const AddContactUs = ({
     const onSubmitHandler = e => {
         e.preventDefault();
         addContactUs(formData, history);
-        console.log(formData)
+        // console.log(formData)
 
     };
 
+
+    const onChangeCity = (e) => {
+        e.preventDefault();
+
+        setFormData({ ...formData, city: e.target.value, stateName: stname[0] });
+        populateAreas(e.target.value);
+    };
+
+    let cityOptions = newCities.map((cit) => (
+        <option key={cit._id} value={cit.city}>
+            {cit.city}
+        </option>
+    ));
+
+    let stateOptions = states.map((st) => (
+        <option key={st._id} value={st._id}>
+            {st.state}
+        </option>
+    ));
+
+
+
+    let stateNameOpt = []
+    stateNameOpt = states.filter(x => x._id === state)
+    //console.log(stateNameOpt);
+
+    let stname = stateNameOpt.map(nd => (
+        nd.state
+    ))
+    //console.log(stname);
+
+
+    const onChangeState = (e) => {
+        e.preventDefault();
+        setFormData({ ...formData, state: e.target.value, stateName: stname[0] });
+        populateCities(e.target.value);
+    };
 
 
     return (
@@ -90,24 +141,36 @@ const AddContactUs = ({
                                                         required
                                                     />
 
-                                                    <input
+                                                    <select
+                                                        className="border p-2 w-100 my-2"
                                                         name="state"
-                                                        placeholder="State"
-                                                        type="text"
                                                         value={state}
-                                                        onChange={(e) => onChangeHandler(e)}
-                                                        className="border p-2 w-100 my-2"
-                                                        required />
-
-                                                    <input
-                                                        name="city"
-                                                        placeholder="City"
-                                                        type="text"
-                                                        value={city}
-                                                        onChange={(e) => onChangeHandler(e)}
-                                                        className="border p-2 w-100 my-2"
+                                                        onChange={(e) => onChangeState(e)}
                                                         required
+                                                    >
+                                                        <option value="" disabled selected hidden>
+                                                            -Select State-
+                                                     </option>
+                                                        {stateOptions}
+                                                    </select>
+
+                                                    <input name="stateName"
+                                                        type="hidden"
+                                                        value={stateName}
                                                     />
+
+                                                    <select
+                                                        className="border p-2 w-100 my-2"
+                                                        name="city"
+                                                        value={city}
+                                                        onChange={(e) => onChangeCity(e)}
+                                                        required
+                                                    >
+                                                        <option value="" disabled selected hidden>
+                                                            -Select City-
+                                                </option>
+                                                        {cityOptions}
+                                                    </select>
 
 
                                                     <input
@@ -193,10 +256,20 @@ const AddContactUs = ({
 
 AddContactUs.propTypes = {
     addContactUs: PropTypes.func.isRequired,
+    getCities: PropTypes.func.isRequired,
+    getStates: PropTypes.func.isRequired,
+    populateCities: PropTypes.func.isRequired,
+    populateAreas: PropTypes.func.isRequired,
+
 }
 
 const mapStateToProps = state => ({
-    sendingLoader: state.contactus.sendingLoader
+    sendingLoader: state.contactus.sendingLoader,
+    newCities: state.city.newCities,
+    states: state.city.states,
 });
 
-export default connect(mapStateToProps, { addContactUs })(AddContactUs);
+export default connect(mapStateToProps, {
+    addContactUs, getCities, getStates,
+    populateCities, populateAreas,
+})(AddContactUs);

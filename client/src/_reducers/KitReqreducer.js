@@ -5,6 +5,7 @@ const initialKitReq = {
     kitreqs: [],
     allKitReqs: [],
     totalKitReq: [],
+    req_length: null,
     sendingLoader: false,
     error: {},
     filtered: null,
@@ -24,7 +25,8 @@ export default function (state = initialKitReq, action) {
         case types.GET_KIT_REQS:
             return {
                 ...state,
-                kitreqs: payload,
+                kitreqs: payload.data,
+                req_length: payload.result,
                 loading: false
             };
 

@@ -26,6 +26,10 @@ import ViewAllInvestment from "./components/Reports/viewAllInvestment";
 import ViewAllExpenses from "./components/Reports/viewAllExpenses";
 import NotFound from "./components/UI/notFound";
 
+import ReportsLandingGuest from "./components/Reports/GuestReport/reportsLandingGuest";
+import ViewGuestRation from "./components/Reports/GuestReport/viewAllRationGuest";
+
+
 import EditOrgProfile from "./components/UI/editOrgProfile";
 import ForgotPassword from "./components/UI/forgotPassword";
 import ResetPassword from "./components/UI/ResetPassword";
@@ -34,6 +38,7 @@ import AddDeliveredKit from "./components/Ration/addDeliveredKit";
 import ViewdeliveredKit from "./components/Ration/ViewdeliveredKit";
 import EditDeliveredKit from "./components/Ration/editDeliveredKit";
 import ViewAllRation from "./components/Reports/viewAllRation";
+
 import Footer from "./components/UI/footer";
 import Payment_landing from "./components/PaymentMode/payment_landing";
 import AddPayAcc from "./components/PaymentMode/addPayAcc";
@@ -149,6 +154,9 @@ const App = () => {
               path={`/admin/editdefaultGrocery/:id`}
               component={EditdefaultGrocery}
             />
+            <PrivateRoute path="/admin/myreport" component={ReportsLanding} />
+            <PrivateRoute path="/admin/ration/allRation" component={ViewAllRation} />
+
 
             <PrivateRoute path={`/addCity`} component={AddCity} />
             <PrivateRoute path={`/cities`} component={Cities} />
@@ -157,21 +165,17 @@ const App = () => {
             <PrivateRoute path={`/addArea`} component={AddArea} />
 
             <Route exact path="/dashboardguest" component={DashboardGuest} />
-            <Route path="/admin/myreport" component={ReportsLanding} />
-            <Route
-              path="/admin/investment/viewAllinvestment"
-              component={ViewAllInvestment}
-            />
-            <Route
-              path="/admin/expenses/viewAllexpenses"
-              component={ViewAllExpenses}
-            />
+            <Route path="/guest/myreport" component={ReportsLandingGuest} />
+
+            <Route path="/admin/investment/viewAllinvestment" component={ViewAllInvestment} />
+            <Route path="/admin/expenses/viewAllexpenses" component={ViewAllExpenses} />
+
             <Route path="/admin/view-expense" component={ViewExpenses} />
             <Route path="/admin/viewinvestment" component={ViewInvestment} />
             <Route exact path="/login" component={Login} />
 
             <Route exact path="/" component={DashboardGuest} />
-            <Route path="/admin/ration/allRation" component={ViewAllRation} />
+            <Route path="/guest/ration/allRation" component={ViewGuestRation} />
 
             <Route path="/admin/allPayment" component={PaymentLanding} />
 

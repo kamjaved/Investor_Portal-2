@@ -5,13 +5,19 @@ import { Link } from "react-router-dom";
 import { addKitReq } from '../../_actions/kitReqAction'
 import '../UI/Dashboard.css'
 import Spinner from "../UI/Spinner";
-
+import { getCities, populateAreas, getStates, populateCities } from "../../_actions/cityAction";
 
 const AddKitReq = ({
 
     history,
     addKitReq,
     sendingLoader,
+    getCities,
+    getStates,
+    states,
+    newCities,
+    populateAreas,
+    populateCities,
 
 }) => {
 
@@ -19,6 +25,7 @@ const AddKitReq = ({
         name: "",
         kitQuantity: "",
         state: "",
+        stateName: "",
         city: "",
         area: "",
         road: "",
@@ -29,25 +36,69 @@ const AddKitReq = ({
 
     });
 
-    const { name, kitQuantity, state, city, area, road, landmark, houseNo, phone, email, } = formData;
+    const { name, kitQuantity, state, stateName, city, area, road, landmark, houseNo, phone, email, } = formData;
+
+    useEffect(() => {
+        getCities();
+        getStates();
+
+    }, [getCities, getStates]);
 
 
     const onChangeHandler = e => {
         e.preventDefault();
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value, stateName: stname[0] });
 
     };
+
+    const onChangeCity = (e) => {
+        e.preventDefault();
+
+        setFormData({ ...formData, city: e.target.value, stateName: stname[0] });
+        populateAreas(e.target.value);
+    };
+
+
 
 
     const onSubmitHandler = e => {
         e.preventDefault();
         addKitReq(formData, history);
-        console.log(formData)
+        //console.log(formData)
 
     };
 
 
+    let cityOptions = newCities.map((cit) => (
+        <option key={cit._id} value={cit.city}>
+            {cit.city}
+        </option>
+    ));
 
+    let stateOptions = states.map((st) => (
+        <option key={st._id} value={st._id}>
+            {st.state}
+        </option>
+    ));
+
+
+    let stateNameOpt = []
+    stateNameOpt = states.filter(x => x._id === state)
+    //console.log(stateNameOpt);
+
+    let stname = stateNameOpt.map(nd => (
+        nd.state
+    ))
+    //console.log(stname);
+
+
+    const onChangeState = (e) => {
+        e.preventDefault();
+        setFormData({ ...formData, state: e.target.value, stateName: stname[0] });
+        populateCities(e.target.value);
+    };
+
+    //console.log(formData);
     return (
         <Fragment>
             <div className="container-fluid mb-4 pb-4">
@@ -58,7 +109,7 @@ const AddKitReq = ({
                                 <div className="col-lg-7 col-md-10 align-item-center">
                                     <div className="bg-light border border-warning">
                                         <div>
-                                            <h3 className="bg-warning text-center p-4 "><Link to="/" className=""><i className="fa fa-arrow-left mr-2 float-left"></i></Link> Add Kit Request</h3></div>
+                                            <h3 className="bg-warning text-center p-4 "><Link to="/" className=""><i className="fa fa-arrow-left mr-2 float-left"></i></Link>Kit Request</h3></div>
 
                                         {sendingLoader ? (
                                             <Spinner />
@@ -88,24 +139,37 @@ const AddKitReq = ({
                                                         required
                                                     />
 
-                                                    <input
-                                                        name="state"
-                                                        placeholder="State"
-                                                        type="text"
-                                                        value={state}
-                                                        onChange={(e) => onChangeHandler(e)}
-                                                        className="border p-2 w-100 my-2"
-                                                        required />
-
-                                                    <input
-                                                        name="city"
-                                                        placeholder="City"
-                                                        type="text"
-                                                        value={city}
-                                                        onChange={(e) => onChangeHandler(e)}
-                                                        className="border p-2 w-100 my-2"
-                                                        required
+                                                    <input name="stateName"
+                                                        type="hidden"
+                                                        value={stateName}
                                                     />
+
+                                                    <select
+                                                        className="border p-2 w-100 my-2"
+                                                        name="state"
+                                                        value={state}
+                                                        onChange={(e) => onChangeState(e)}
+                                                        required
+                                                    >
+                                                        <option value="" disabled selected hidden>
+                                                            -Select State-
+                                                         </option>
+                                                        {stateOptions}
+                                                    </select>
+
+                                                    <select
+                                                        className="border p-2 w-100 my-2"
+                                                        name="city"
+                                                        value={city}
+                                                        onChange={(e) => onChangeCity(e)}
+                                                        required
+                                                    >
+                                                        <option value="" disabled selected hidden>
+                                                            -Select City-
+                                                        </option>
+                                                        {cityOptions}
+                                                    </select>
+
 
 
                                                     <input
@@ -173,9 +237,19 @@ const AddKitReq = ({
 
 AddKitReq.propTypes = {
     addKitReq: PropTypes.func.isRequired,
+    getCities: PropTypes.func.isRequired,
+    getStates: PropTypes.func.isRequired,
+    populateCities: PropTypes.func.isRequired,
+    populateAreas: PropTypes.func.isRequired,
+
 }
 
 const mapStateToProps = state => ({
-    sendingLoader: state.kitreq.sendingLoader
+    sendingLoader: state.kitreq.sendingLoader,
+    newCities: state.city.newCities,
+    states: state.city.states,
 });
-export default connect(mapStateToProps, { addKitReq })(AddKitReq);
+export default connect(mapStateToProps, {
+    addKitReq, getCities, getStates,
+    populateCities, populateAreas,
+})(AddKitReq);

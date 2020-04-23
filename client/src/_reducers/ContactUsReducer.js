@@ -5,6 +5,7 @@ const initialContact = {
     contacts: [],
     allContacts: [],
     totalContact: [],
+    contact_length: null,
     sendingLoader: false,
     error: {},
     filtered: null,
@@ -24,7 +25,8 @@ export default function (state = initialContact, action) {
         case types.GET_CONTACTUSS:
             return {
                 ...state,
-                contacts: payload,
+                contacts: payload.data,
+                contact_length: payload.result,
                 loading: false
             };
 

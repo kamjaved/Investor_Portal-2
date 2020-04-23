@@ -14,7 +14,7 @@ exports.deleteKitRequest = factory.deleteOne(KitRequest);
 
 exports.createKitRequest = catchAsync(async (req, res, next) => {
   const {
-    name, state, city, area, road, landmark, houseNo, kitQuantity, phone, email
+    name, state, stateName, city, area, road, landmark, houseNo, kitQuantity, phone, email
   } = req.body;
 
   const receiverOutput = `
@@ -26,7 +26,7 @@ exports.createKitRequest = catchAsync(async (req, res, next) => {
 
         </ul>
       <ul>
-        <li>There is a needy people in ${state}, ${city} ${road}, ${houseNo} they Required ${kitQuantity} Kits. </li>
+        <li>There is a needy people in ${stateName}, ${city} ${road}, ${houseNo} they Required ${kitQuantity} Kits. </li>
         <li></li>
     
       </ul>`;
@@ -40,7 +40,7 @@ exports.createKitRequest = catchAsync(async (req, res, next) => {
 
     </ul>
   <ul>
-    <li>There is a needy people in ${state}, ${city} ${road}, ${houseNo} they Required ${kitQuantity} Kits. </li>
+    <li>There is a needy people in ${stateName}, ${city} ${road}, ${houseNo} they Required ${kitQuantity} Kits. </li>
     <li></li>
 
   </ul>
@@ -52,7 +52,7 @@ exports.createKitRequest = catchAsync(async (req, res, next) => {
     let maillist = ["kamran@globuslabs.com", "zeeshan.globuslabs@gmail.com"];
 
     const newKitRequest = new KitRequest({
-      name, state, city, area, road, landmark, houseNo, kitQuantity, phone, email
+      name, state, stateName, city, area, road, landmark, houseNo, kitQuantity, phone, email
     });
     const doc = await newKitRequest.save();
     console.log(req.body);

@@ -24,10 +24,10 @@ export const getCurrentContactUs = id => async dispatch => {
 export const getContactUss = () => async dispatch => {
     try {
         const res = await axios.get("/api/contactus");
-        console.log(res.data.data);
+        console.log(res.data);
         dispatch({
             type: types.GET_CONTACTUSS,
-            payload: res.data.data
+            payload: res.data
         });
     } catch (err) {
         console.log(err);

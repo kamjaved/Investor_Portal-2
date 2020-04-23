@@ -16,7 +16,7 @@ exports.deleteContactUs = factory.deleteOne(ContactUs);
 
 exports.createContactUs = catchAsync(async (req, res, next) => {
     const {
-        name, ngo, state, city, area, road, landmark, houseNo, phone, pincode, email, website
+        name, ngo, state, stateName, city, area, road, landmark, houseNo, phone, pincode, email, website
     } = req.body;
 
     console.log(req.body);
@@ -31,7 +31,7 @@ exports.createContactUs = catchAsync(async (req, res, next) => {
 
         </ul>
       <ul>
-        <li>We Need Your Application. We Are From ${state}, ${city} ${road}, ${houseNo}, ${pincode}  </li>
+        <li>We Need Your Application. We Are From ${stateName}, ${city} ${road}, ${houseNo}, ${pincode}  </li>
         <li></li>
     
       </ul>`;
@@ -41,7 +41,7 @@ exports.createContactUs = catchAsync(async (req, res, next) => {
         let maillist = ["kamran@globuslabs.com", "zeeshan.globuslabs@gmail.com"];
 
         const newContactUs = new ContactUs({
-            name, ngo, state, city, area, road, landmark, houseNo, phone, pincode, email, website,
+            name, ngo, state, stateName, city, area, road, landmark, houseNo, phone, pincode, email, website,
         });
         const doc = await newContactUs.save();
 

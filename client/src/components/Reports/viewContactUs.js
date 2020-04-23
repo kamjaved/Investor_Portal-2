@@ -36,7 +36,7 @@ const ContactUs = ({
 
                                     <em> <strong>House No-</strong>{cu.houseNo},  <strong>Landmark-</strong>{!cu.landmark ? "" : cu.landmark} <br />
                                         <strong>Road No-</strong>{cu.road}, <strong>Area-</strong>{cu.area}<br />
-                                        <strong>City-</strong>{cu.city}, <strong>State-</strong>{cu.state} <br />
+                                        <strong>City-</strong>{cu.city}, <strong>State-</strong>{cu.stateName} <br />
                                         <strong>Pincode-</strong>{cu.pincode}</em>
 
                                 </div>
