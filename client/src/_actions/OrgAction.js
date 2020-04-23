@@ -112,7 +112,7 @@ export const editOrganisation = (formData, history, id) => async dispatch => {
             payload: res.data
         });
 
-        history.push("/admin/view-grocery");
+        history.push("/admin/dashboard");
 
         dispatch(setAlert("Organisation Updated", "success"));
     } catch (err) {

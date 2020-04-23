@@ -26,7 +26,7 @@ import ViewAllInvestment from "./components/Reports/viewAllInvestment";
 import ViewAllExpenses from "./components/Reports/viewAllExpenses";
 import NotFound from "./components/UI/notFound";
 
-import EditProfile from "./components/UI/editProfile";
+import EditOrgProfile from "./components/UI/editOrgProfile";
 import ForgotPassword from "./components/UI/forgotPassword";
 import ResetPassword from "./components/UI/ResetPassword";
 import DashboardGuest from "./components/UI/Dashboardguest";
@@ -82,7 +82,7 @@ const App = () => {
             <PrivateRoute path="/admin/your_profile" component={Profile} />
             <PrivateRoute path="/admin/org_profile" component={OrgProfile} />
 
-            <PrivateRoute path="/admin/editmyprofile" component={EditProfile} />
+            <PrivateRoute path={`/edit-orgProfile/:id`} component={EditOrgProfile} />
             <PrivateRoute
               path="/admin/addinvestment"
               component={AddInvestment}
